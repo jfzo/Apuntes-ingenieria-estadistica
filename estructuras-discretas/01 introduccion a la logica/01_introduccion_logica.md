@@ -1,29 +1,69 @@
 ---
-marp: true
-theme: gaia
-_class: lead
-backgroundImage: "linear-gradient(to bottom, #F1F6F9, #FFFFF0)"
-footer: ![width:150px opacity:.5](logo_ie_pucv.png)
-paginate: true
-_paginate: false
+title: 
+- Introducción a la Lógica
+#subtitle:
+#- EST-1132 / Estructuras Discretas
+bibliography: [./references.bib]
+author:
+- Juan Zamora O.
+reference-section-title: Referencias
+#biblio-style: apalike 
+csl: apa.csl
+#output: 
+#  beamer_presentation:
+#    citation_package: natbib
+#theme:
+#- Copenhagen
+#date:
+#- Clasificación con datos desbalanceados
+nocite: |
+  @*
+header-includes: |
+    \usepackage{breqn}
+    \usepackage{tikz}
+    \usetikzlibrary{calc,tikzmark,arrows,shapes,backgrounds}
+    \usetikzlibrary{fit, arrows.meta, shapes, positioning}      
+    \usetikzlibrary{bayesnet}  
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{url}
+    \usepackage{colortbl}
+
+    \setbeamertemplate{footline}{%
+    \raisebox{5pt}{\makebox[0.5\paperwidth]{\hfill\makebox[20pt]{\color{black}\scriptsize\insertframenumber}}}\hspace*{5pt}}
+    \newcommand{\bigCI}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-10mu\perp$}}}}
+
+    \definecolor{LightRed}{RGB}{252,160,140}
+    \definecolor{LightBlue}{RGB}{140,186,252}   
+    
+    \newcolumntype{a}{>{\columncolor{LightRed}}c}
+    \newcolumntype{b}{>{\columncolor{LightBlue}}c}
+
+    \newcommand{\empt}[2]{#1^{( #2 )}}
+    \thispagestyle{empty}
+
+    \titlegraphic { 
+    \begin{tikzpicture}[overlay,remember picture]
+    \node[below=-2.6cm] at (current page.south){
+        \includegraphics[width=6cm]{logosAzul.png}
+    };
+    \end{tikzpicture}
+    }
+    \logo{
+	\begin{tikzpicture}[overlay,remember picture]
+		\node[opacity=0.4,right=-0.6cm, above=0.07cm] at ([xshift=-0.6cm]current page.south east){
+    			\includegraphics[height=1cm]{logoAzul.png}
+        };
+	\end{tikzpicture}
+    }
 ---
-
-<!-- marp .\01_introduccion.md -o .\01_introduccion.pdf --allow-local-files --html=true -->
-
-<!-- headingDivider: 3 -->
-
-### .: Introducción a la Lógica :.
-
-#### EST-1132
-##### Estructuras Discretas
-##### Primer semestre 2022
-
-
-**Juan Zamora O.**
-juan.zamora@pucv.cl
 
 
 # Introducción
+
+<!--
+  pandoc -t beamer .\slides.md -o .\slides.pdf  --citeproc  --katex --slide-level=2 --from markdown+pipe_tables
+ -->
 
 * La lógica formal nos permite razonar acerca de frases declarativas o proposiciones
 * Corresponde a la base del razonamiento matemático: Teoremas y pruebas.
@@ -52,7 +92,7 @@ juan.zamora@pucv.cl
 
 * Depende del valor de verdad de cada proposición simple y del conector usado ... existen algunas reglas para determinar esto
 
-### Ejemplos
+## Ejemplos
 
 Por ejemplo, analicemos las siguientes proposiciones:
 
@@ -73,7 +113,7 @@ Por ejemplo, analicemos las siguientes proposiciones:
 - "El día de hoy es jueves y esta clase corresponde al curso de estructuras discretas"
 
 
-## Representaciones simbólicas
+# Representaciones simbólicas
 
 Necesitamos una manera de poder tratar proposiciones y conectores que:
 1. Sirva para todas las proposiciones (Generalidad)
@@ -82,13 +122,13 @@ Necesitamos una manera de poder tratar proposiciones y conectores que:
 * Letras mayúsculas del principio del alfabeto representaran proposiciones (simples y también compuestas)
 
 
-### Conjunciones y Disyunciones
+## Conjunciones y Disyunciones
 
 * Los símbolos $\lor$ y $\land$ representan conectores (iremos agregando otros cuando se haga necesario)
 
 * Decimos entonces que la proposición compuesta $A\land B$ dependerá de los valores de ambas proposiciones $A$ y $B$.
 
-### Siga su intuición
+## Siga su intuición
 
 1. Si $A$ es **V** y $B$ es **F**, ¿Que valor tiene la proposición $A\land B$?
 1. Si $A$ es **F** y $B$ es **V**, ¿Que valor tiene la proposición $A\land B$?
@@ -96,9 +136,15 @@ Necesitamos una manera de poder tratar proposiciones y conectores que:
 1. Si $A$ es **F** y $B$ es **F**, ¿Que valor tiene la proposición $A\land B$?
 
 
-### Ahora considere la Tabla
+## Ahora considere la Tabla
 
-<div align="center"><img src="tabla_and.png" width="170px"></div>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=1cm] at (current page.south) 
+    {
+        \includegraphics[width=0.5\textwidth]{tabla_and.png}
+    };
+
+\end{tikzpicture}
 
 Analice nuevamente y compare con su respuesta anterior...
 
@@ -107,7 +153,7 @@ Analice nuevamente y compare con su respuesta anterior...
 1. Si $A$ es **F** y $B$ es **V**, ¿Que valor tiene la proposición $A\land B$?
 1. Si $A$ es **F** y $B$ es **F**, ¿Que valor tiene la proposición $A\land B$?
 
-### Conjunciones y Disyunciones
+## Conjunciones y Disyunciones
 
 - A la expresión $A\land B$ se le denomina **conjunción**.
 - Otro conector muy usado es el de la **disyunción** ($\lor$), cuya Tabla de verdad es:
@@ -115,7 +161,7 @@ Analice nuevamente y compare con su respuesta anterior...
 
 - **Ejercicio** Siguiendo los ejemplos anteriores de conjunciones, construya una proposición compuesta para cada fila de la tabla de este conector.
 
-### Implicancias
+## Implicancias
 
 - Las proposiciones también pueden ser combinadas de la forma 
 	"Si $A$, entonces $B$" (antecedente y consecuente)
@@ -123,7 +169,7 @@ Analice nuevamente y compare con su respuesta anterior...
 - Indica que el valor de verdad de $A$ implica o conduce al valor de verdad de $B$
 - Recuerda que lo que nos interesa es obtener el valor de verdad de la proposición compuesta a partir de los valores de sus componentes $A$ y $B$.
 
-### Consideremos la siguiente proposición:
+## Consideremos la siguiente proposición:
 
 <center>"Si llueve, entonces me mojo"</center>
 
@@ -132,7 +178,7 @@ Examinemos varios casos. Entonces, cuando sabemos que
 - llovió y que no me encuentro mojado, la declaración es **F**
 - **no** llovió, entonces independientemente de si me encuentro o no mojado, no podemos decir que la declaración es **F**. Por convención, en este caso la declaración es **V**
 
-### Equivalencias
+## Equivalencias
 
 - Conector simbolizado por $\Leftrightarrow$
 - Es en realidad un "atajo" para la expresión 
@@ -141,7 +187,7 @@ $$(A\Rightarrow B)\land(B\Rightarrow A)$$
 - *Ejercicio*: Estructure como implicancia la frase: "*El fuego es una condición necesaria para el humo*".
 
 
-### La Negación
+## La Negación
 
 - Es un conector **unario**, ya que actua sobre una declaración
 - Es simbolizado por $\neg$
@@ -149,7 +195,7 @@ $$(A\Rightarrow B)\land(B\Rightarrow A)$$
 - Por ejemplo, $\neg A$ tiene valor **V** cuando $A$ es **F**
 - Ejercicio: Usando los conectores $\lnot$, $\land$ y $\lor$, construya una expresión equivalente a $A\Rightarrow B$ para todos los valores posibles de $A$ y $B$
 
-### Ejercicios
+## Ejercicios
 
 - Aplique la negación a cada una de las proposiciones y determine la proposición resultante:
 1. Saldrá el sol mañana.
@@ -157,7 +203,7 @@ $$(A\Rightarrow B)\land(B\Rightarrow A)$$
 3. El cielo es oscuro o está contaminado.
 4. A María le gusta el chocolate pero odia las almendras
 
-## Orden de precedencia de operadores
+# Orden de precedencia de operadores
 
 - ¿Cómo resolvería la siguiente proposición $A\land B\Rightarrow C$ ?
 * Es posible indicar qué operaciones se calculan primero usando paréntesis
@@ -174,7 +220,7 @@ El orden en el cual los conectores son aplicados se denomina orden de precedenci
 1. $\Rightarrow$
 1. $\Leftrightarrow$
 
-### Ejemplo
+## Ejemplo
 
 - $\neg A\lor  B$ es distinto de $\neg (A\lor B)$
 - $A\land \neg(B\Rightarrow C)$ lo último que se calcula es $\land$
@@ -186,12 +232,12 @@ El orden en el cual los conectores son aplicados se denomina orden de precedenci
 
 $$((A\lor B)\land C)\Rightarrow(B\lor \neg C)$$
 
-### Acerca de la notación
+## Acerca de la notación
 
 - También usaremos letras del final del alfabeto ($P,Q,R$) para representar proposiciones arbitrariamente simples y compuestas
 - Por ejemplo, la expresión $((A\lor B)\land C)\Rightarrow(B\lor \neg C)$ puede ser también representada por $P \Rightarrow Q$
 
-### Ejercicio
+## Ejercicio
 
 Construya la tabla de verdad para la siguiente proposición
 
@@ -207,7 +253,7 @@ $$(A\Rightarrow B)\Leftrightarrow (B\Rightarrow A)$$
 - ¡Asociela con una frase del mundo real!
 
 
-### Algunas equivalencias tautológicas
+## Algunas equivalencias tautológicas
 
 **Disyunciones**
 
@@ -230,7 +276,7 @@ $$(A\Rightarrow B)\Leftrightarrow (B\Rightarrow A)$$
 
 - Escoja dos de las tautologías y demuestre construyendo su tabla de verdad.
 
-### Leyes de De Morgan
+## Leyes de De Morgan
 
 $$\neg(A\lor B) \Leftrightarrow \neg A\land \neg B$$
 
