@@ -48,7 +48,6 @@ header-includes: |
     }
 ---
 
-
 # Introducción
 
 <!--
