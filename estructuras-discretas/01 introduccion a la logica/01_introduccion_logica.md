@@ -1,8 +1,8 @@
 ---
 title: 
 - Introducción a la Lógica
-#subtitle:
-#- EST-1132 / Estructuras Discretas
+subtitle:
+- EST-1132 / Estructuras Discretas
 author:
 - Juan Zamora O.
 #output: 
@@ -10,8 +10,8 @@ author:
 #    citation_package: natbib
 #theme:
 #- Copenhagen
-#date:
-#- Clasificación con datos desbalanceados
+date:
+- Otoño 2023
 header-includes: |
     \usepackage{tikz}
     \usepackage[T1]{fontenc}
@@ -21,7 +21,7 @@ header-includes: |
 
     \setbeamertemplate{footline}{%
     \raisebox{5pt}{\makebox[0.5\paperwidth]{\hfill\makebox[20pt]{\color{black}\scriptsize\insertframenumber}}}\hspace*{5pt}}
-    \newcommand{\bigCI}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-10mu\perp$}}}}
+    \newcommand{\bigCI}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-1 0mu\perp$}}}}
 
     \definecolor{LightRed}{RGB}{252,160,140}
     \definecolor{LightBlue}{RGB}{140,186,252}   
@@ -49,7 +49,7 @@ header-includes: |
 ---
 
 
-# Introducción
+## Introducción
 
 <!--
   pandoc -t beamer .\slides.md -o .\slides.pdf  --citeproc  --katex --slide-level=2 --from markdown+pipe_tables
@@ -61,7 +61,7 @@ header-includes: |
 
 
 
-# Declaraciones
+## Declaraciones
 
 - Una declaración o proposición es una frase cuyo resultado puede ser **V**erdadero o **F**also
 - A este resultado de la proposición lo denominamos *Valor de verdad*
@@ -103,7 +103,7 @@ Por ejemplo, analicemos las siguientes proposiciones:
 - "El día de hoy es jueves y esta clase corresponde al curso de estructuras discretas"
 
 
-# Representaciones simbólicas
+## Representaciones simbólicas
 
 Necesitamos una manera de poder tratar proposiciones y conectores que:
 1. Sirva para todas las proposiciones (Generalidad)
@@ -149,7 +149,17 @@ Analice nuevamente y compare con su respuesta anterior...
 
 - A la expresión $A\land B$ se le denomina **conjunción**.
 - Otro conector muy usado es el de la **disyunción** ($\lor$), cuya Tabla de verdad es:
-<div align="center"><img src="tabla_or.png" width="150px"></div>
+
+
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=3cm, xshift=3cm] at (current page.south) 
+    {
+        \includegraphics[width=0.3\textwidth]{tabla_or.png}
+    };
+
+	\end{tikzpicture}
+	
+\vspace{2.5cm}
 
 - **Ejercicio** Siguiendo los ejemplos anteriores de conjunciones, construya una proposición compuesta para cada fila de la tabla de este conector.
 
@@ -195,7 +205,7 @@ $$(A\Rightarrow B)\land(B\Rightarrow A)$$
 3. El cielo es oscuro o está contaminado.
 4. A María le gusta el chocolate pero odia las almendras
 
-# Orden de precedencia de operadores
+## Orden de precedencia de operadores
 
 - ¿Cómo resolvería la siguiente proposición $A\land B\Rightarrow C$ ?
 * Es posible indicar qué operaciones se calculan primero usando paréntesis
@@ -235,7 +245,7 @@ Construya la tabla de verdad para la siguiente proposición
 
 $$(A\Rightarrow B)\Leftrightarrow (B\Rightarrow A)$$
 
-# Tautologías
+## Tautologías
 
 - Es una expresión cuyos valores de verdad son siempre verdaderos.
 - Por ejemplo la proposición $A\lor \neg A$ (¡Asociela con una frase del mundo real!)
