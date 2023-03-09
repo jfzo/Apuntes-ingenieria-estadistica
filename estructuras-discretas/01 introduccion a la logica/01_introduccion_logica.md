@@ -12,14 +12,8 @@ author:
 #- Copenhagen
 #date:
 #- Clasificación con datos desbalanceados
-nocite: |
-  @*
 header-includes: |
-    \usepackage{breqn}
     \usepackage{tikz}
-    \usetikzlibrary{calc,tikzmark,arrows,shapes,backgrounds}
-    \usetikzlibrary{fit, arrows.meta, shapes, positioning}      
-    \usetikzlibrary{bayesnet}  
     \usepackage[T1]{fontenc}
     \usepackage[utf8]{inputenc}
     \usepackage{url}
@@ -135,12 +129,14 @@ Necesitamos una manera de poder tratar proposiciones y conectores que:
 ## Ahora considere la Tabla
 
 \begin{tikzpicture}[remember picture, overlay]
-    \node[above left, yshift=1cm] at (current page.south) 
+    \node[above left, yshift=2cm] at (current page.south) 
     {
-        \includegraphics[width=0.5\textwidth]{tabla_and.png}
+        \includegraphics[width=0.3\textwidth]{tabla_and.png}
     };
 
 \end{tikzpicture}
+
+---
 
 Analice nuevamente y compare con su respuesta anterior...
 
