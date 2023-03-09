@@ -3,12 +3,8 @@ title:
 - Introducción a la Lógica
 #subtitle:
 #- EST-1132 / Estructuras Discretas
-bibliography: [./references.bib]
 author:
 - Juan Zamora O.
-reference-section-title: Referencias
-#biblio-style: apalike 
-csl: apa.csl
 #output: 
 #  beamer_presentation:
 #    citation_package: natbib
