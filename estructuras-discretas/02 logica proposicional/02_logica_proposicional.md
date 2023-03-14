@@ -1,27 +1,53 @@
 ---
-marp: true
-theme: gaia
-_class: lead
-backgroundImage: "linear-gradient(to bottom, #F1F6F9, #FFFFF0)"
-footer: ![width:150px opacity:.5](logo_ie_pucv.png)
-paginate: true
-_paginate: false
+title: 
+- Lógica Proposicional y de Predicados
+subtitle:
+- EST-1132 / Estructuras Discretas
+author:
+- Juan Zamora O.
+#output: 
+#  beamer_presentation:
+#    citation_package: natbib
+#theme:
+#- Copenhagen
+date:
+- Otoño 2023
+header-includes: |
+    \usepackage{tikz}
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{url}
+    \usepackage{colortbl}
+
+    \setbeamertemplate{footline}{%
+    \raisebox{5pt}{\makebox[0.5\paperwidth]{\hfill\makebox[20pt]{\color{black}\scriptsize\insertframenumber}}}\hspace*{5pt}}
+    \newcommand{\bigCI}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-1 0mu\perp$}}}}
+
+    \definecolor{LightRed}{RGB}{252,160,140}
+    \definecolor{LightBlue}{RGB}{140,186,252}   
+    
+    \newcolumntype{a}{>{\columncolor{LightRed}}c}
+    \newcolumntype{b}{>{\columncolor{LightBlue}}c}
+
+    \newcommand{\empt}[2]{#1^{( #2 )}}
+    \thispagestyle{empty}
+
+    \titlegraphic { 
+    \begin{tikzpicture}[overlay,remember picture]
+    \node[below=-2.6cm] at (current page.south){
+        \includegraphics[width=6cm]{logosAzul.png}
+    };
+    \end{tikzpicture}
+    }
+    \logo{
+	\begin{tikzpicture}[overlay,remember picture]
+		\node[opacity=0.4,right=-0.6cm, above=0.07cm] at ([xshift=-0.6cm]current page.south east){
+    			\includegraphics[height=1cm]{logoAzul.png}
+        };
+	\end{tikzpicture}
+    }
 ---
 
-<!-- marp .\01_introduccion.md -o .\01_introduccion.pdf --allow-local-files --html=true -->
-
-<!-- headingDivider: 3 -->
-
-
-### .: Lógica Proposicional y de Predicados :.
-
-#### EST-1132
-##### Estructuras Discretas
-##### Primer semestre 2022
-
-
-**Juan Zamora O.**
-juan.zamora@pucv.cl
 
 # Cálculo Proposicional
 
@@ -37,6 +63,8 @@ $$P_1\land P_2 \land P_3\land  \ldots P_m \Rightarrow Q$$
 - Donde $P_1\land P_2 \land \ldots$ son declaraciones o afirmaciones dadas inicialmente, englobadas como **la hipótesis** del argumento.
 - $Q$ es **la conclusión** del argumento.
 
+---
+
 ### Argumentos válidos
 
 - Un argumento es válido cuando la conclusión se deduce lógicamente de las premisas
@@ -46,19 +74,23 @@ $$P_1\land P_2 \land P_3\land  \ldots P_m \Rightarrow Q$$
 Por ejemplo: 
 $$P\land Q \Rightarrow Q$$
 
+---
+
 ### Ejercicio
 
 Represente formalmente el argumento:
 
-    La manzana es una fruta y el tomate también. Por lo tanto, Valparaíso está en cuarentena.
+>"La manzana es una fruta y el tomate también. Por lo tanto, Valparaíso está en cuarentena."
 
 Demuestre que este argumento **no** es válido.    
 
+---
+
 ### Ejercicio
 
 Represente formalmente el argumento:
 
-    Si mi padre tiene un hijo, entonces yo existo. Mi padre sí tiene un hijo. Por lo tanto, existo.
+>Si mi padre tiene un hijo, entonces yo existo. Mi padre sí tiene un hijo. Por lo tanto, existo.
 
 - Demuestre que este argumento **sí** es válido.
 - Averigue acerca del *Modus Ponens*
@@ -103,6 +135,8 @@ Represente formalmente el argumento:
 
 - *Hint*: equivalencia entre columnas 1 y 2 es en **una dirección**.
 
+---
+
 ### Ejemplo
 
 - Si se tienen las siguientes dos hipotesis de un argumento,
@@ -111,7 +145,8 @@ Represente formalmente el argumento:
 
 - Continue la demostración a partir de las hipotesis.
 
-### 
+---
+
 **(Solución)**
 
 - Se aplican reglas señalandolas en cada paso:
@@ -123,21 +158,25 @@ Represente formalmente el argumento:
 4. $\neg A\lor B$ (D.Mor, D.Neg.)
 
 
+---
+
 ### Ejercicio
 
 En una escena de un crimen, los investigadores establecen el siguiente argumento:
 
-    El robo no fue el objeto del asesinato, puesto que nada desapareció.
+>El robo no fue el objeto del asesinato, puesto que nada desapareció.
 
 - **¿Es válido?**
 
 
-### 
+---
+
 **(Solución mediante propiedades)**
 
 - Primero hay que formalizar esta proposición de manera simbólica    
    - Si fue un robo, entonces algo habría desaparecido
    - Nada desapareció
+   
 $$
 \begin{array}{l}
    P\Rightarrow Q  \\
@@ -145,21 +184,24 @@ $$
    \neg P
 \end{array}
 $$
+
 - ¿Cómo se llama la propiedad aplicada?
 - Demuestre ahora usando la tabla de verdad.
 
 
 
+---
 
-### Ejericicio
+### Ejercicio
 
 Demuestre la validez del argumento
 
 $$[(A\lor \neg B)\Rightarrow C]\land (C\Rightarrow D)\land A\Rightarrow D$$
 
-###
+---
+
 $$
-\begin{array}{ll}
+\begin{array}{lll}
 1. & (A\lor \neg B)\Rightarrow C & \mbox{hip}\\
 2. & C\Rightarrow D & \mbox{hip} \\ 
 3. & A & \mbox{hip} \\ 
@@ -171,7 +213,7 @@ $$
 **Ejercicio**: Averigue en qué consisten los silogismos hipotético y disyuntivo.
 
 
-###
+---
 
 Demuestre la validez del argumento
 
@@ -187,46 +229,47 @@ $$P_1\land P_2\land \ldots \land P_m \Rightarrow (R\Rightarrow S)$$
 
 **Ejemplo** Pruebe que $[A\Rightarrow (A\Rightarrow B)]\Rightarrow (A\Rightarrow  B)$ es una tautología (En otras palabras, derive $(A\Rightarrow B)$ partir de las premisas)
 
-###
+---
 
 $$[A\Rightarrow (A\Rightarrow B)]\Rightarrow (A\Rightarrow  B)$$
 
 
 
 $$
-\begin{array}{ll}
+\begin{array}{lll}
 1. & A\Rightarrow (A\Rightarrow B) & \mbox{hip}\\
 2. & A & \mbox{hip*} \\ 
 3. & A\Rightarrow B & 1,2,\mbox{Mod.P}\\ \hline
    & B & 2,3,\mbox{Mod.P}
-
 \end{array}
 $$
 
 * Cualquier argumento que podamos probar con este método será una tautología.
 
 
-### 
+---
+
 **Demuestre** usando el método de deducción que 
 $$(P\Rightarrow Q)\land (Q\Rightarrow R)\Rightarrow (P\Rightarrow R)$$
 
 **Demuestre** el siguiente argumento:
 
-    Si la seguridad es un problema, entonces aumentaran las regulaciones.
-    Si la seguridad no es un problema, entonces creceran las transacciones en la WEB.
-    Por lo tanto, si la regulación no aumenta, entonces creceran las transacciones en la WEB.
+>Si la seguridad es un problema, entonces aumentaran las regulaciones. Si la seguridad no es un problema, entonces creceran las transacciones en la WEB. Por lo tanto, si la regulación no aumenta, entonces creceran las transacciones en la WEB.
 
 
 
-### 
+---
+
 **(Pequeña ayuda)**
 Utilice las siguientes sentencias para formalizar el argumento:
 
-$P:\mbox{la seguridad es un problema}$
-$Q:\mbox{aumentaran la regulaciones}$
-$R:\mbox{creceran las transacciones en la WEB}$
+- $P:\mbox{la seguridad es un problema}$
+- $Q:\mbox{aumentaran la regulaciones}$
+- $R:\mbox{creceran las transacciones en la WEB}$
 
-<!--$$(P\Rightarrow Q)\land (\neg P\Rightarrow R)\Rightarrow (\neg Q\Rightarrow R)$$-->
+[comment]: <> ($$(P\Rightarrow Q)\land (\neg P\Rightarrow R)\Rightarrow (\neg Q\Rightarrow R)$$)
+
+---
 
 ### Ejercicios
 
@@ -236,7 +279,8 @@ Siendo $A$ verdadero, $B$ falso, y $C$ verdadero, ¿Cuál es el valor de verdad 
 3. $\neg (A\land B)\lor C$
 4. $\neg A\lor\neg(\neg B\land C)$
 
-###
+---
+
 Escriba la negación de cada proposición:
 
 1. Si la comida es buena, entonces el servicio es excelente.
@@ -245,29 +289,33 @@ Escriba la negación de cada proposición:
 1. La comida no es buena y el servicio tampoco es excelente
 1. Si el precio es alto, entonces la comida es buena y el servicio es excelente 
 
-###
+---
+
 Use las letras indicadas para cada proposición simple y represente simbólicamente cada proposición compuesta:
 1. $A:\mbox{los precios suben}$;$B:\mbox{la vivienda será abundante}$;$C:\mbox{la vivienda será costosa}$. *Si los precios suben, entonces la vivienda será abundante y cara; pero si la vivienda no es cara, entonces todavía será abundante*.
 2. $A:\mbox{irse a dormir}$;$B:\mbox{ir a nadar}$;$C:\mbox{cambiarse ropa}$. *Ya sea irse a dormir o a nadar es una condición suficiente para cambiarse ropa; de cualquier manera, cambiarse ropa no implica ir a nadar*.
 
-###
+---
+
 1. $A:\mbox{va a llover}$;$B:\mbox{va a nevar}$. *Va a llover o a nevar, pero no ambas*.
 1. $A:\mbox{Javiera gana}$;$B:\mbox{Javiera pierde}$; $C:\mbox{Javiera estará cansada}$. *Si Javiera gana or pierde, estará cansada*.
 1. $A:\mbox{Javiera gana}$;$B:\mbox{Javiera pierde}$; $C:\mbox{Javiera estará cansada}$. *Javiera va a ganar, o bien, si ella pierde, estará cansada*.
 
-###
+---
+
 Represente formalmente cada argumento e indique qué regla de inferencia es ilustrada por cada argumento: 
 
 1. Si María es la autora, entonces el libro es de ficción. Sin embargo, el libro no es de ficción. Por lo tanto, María no es la autora.
 2. El perro tiene un abrigo brillante y adora ladrar. En consecuencia, el perro adora ladrar.
 3. Si Pablito es un buen nadador, entonces es un buen corredor. Si Pablito es un buen corredor, entonces es un buen ciclista. Por lo tanto, si Pablito es un buen nadador, entonces es un buen ciclista.
 
-###
+---
+
 Justifique cada paso de la prueba con la regla correcta:
 1. $$A\land (B \Rightarrow C)\Rightarrow (B\Rightarrow (A\land C))$$
 
 $$
-\begin{array}{ll}
+\begin{array}{lll}
 1. & A & \mbox{?}\\
 2. & B\Rightarrow C & \mbox{?} \\ 
 3. & B & \mbox{?}\\
@@ -276,10 +324,12 @@ $$
 \end{array}
 $$
 
-###
+---
+
 2. $$\neg A\land B\land [B\Rightarrow (A\lor C)]\Rightarrow C$$
+
 $$
-\begin{array}{ll}
+\begin{array}{lll}
 1. & \neg A & \mbox{?}\\
 2. & B  & \mbox{?} \\ 
 3. & B\Rightarrow (A\lor C) & \mbox{?}\\
@@ -290,7 +340,8 @@ $$
 \end{array}
 $$
 
-###
+---
+
 Utilice lógica proposicional para demostrar que cada argumento es válido:
 
 1. $\neg(A\lor \neg B)\land (B\Rightarrow C)\Rightarrow (\neg A\land C)$
@@ -308,7 +359,8 @@ Utilice lógica proposicional para demostrar que cada argumento es válido:
     * Díficil de representar usando letras, paréntesis y conectores lógicos
 * Poder expresivo de proposiciones actuales es limitada
 
-## 
+---
+
 **Por lo tanto ...**
 - Dado que poder expresivo de proposiciones es limitada
 - Necesitamos un mecanismo para 
@@ -340,13 +392,18 @@ Para el ejemplo anterior $P(x)$ simboliza $x>0$
 * Por ejemplo
     * $Dom(x)$: animales de 4 patas y $P(x)$ tiene cola
     * $(\forall x)P(x)$ indica que todos los animales de 4 patas tienen cola.
-    * $(\exists x)P(x)$ indica que existe al menos un animal de 4 patas tiene cola.
+    * $(\exists x)P(x)$ indica que existe al menos un animal de 4 patas tiene 
+	
+	
+---
 
 ### Ejemplos adicionales
 
 1. Sea $P(x)$ el predicado que indica "$x > 3$". ¿Cuales son los valores de verdad de $P(4)$ y $P(2)$?
 1. Sea $Q(w)$ el predicado "$w$ es una carrera del IES-PUCV". Suponga que solo Ingeniería Estadística (IE) y Estadistica (E) son impartidas por el IES, y que Teología (T) es otra carrea PUCV ¿Qué valores de verdad tienen los predicados $Q(E)$, $Q(T)$ y $Q(IE)$?
 
+
+---
 
 ### Ejercicios
 
@@ -361,12 +418,15 @@ Hasta ahora solo hemos revisado predicados que representan la propiedad de un so
     - "María es madre de Teresa"
     - "Los números 2, 3 y 4 son sucesores entre sí"
 
-###
+---
 
 -  Podemos ahora integrar el uso de estos predicados con los cuantificadores anteriores
     - "Para todo número entero $x$, existe otro $y$ tal que este $y$ es mayor que $x$"
     - La expresión $(\forall x)(\exists y)Q(x, y)$ simboliza esta última proposición.
     - ¿Qué indicaría $(\exists y)(\forall x)Q(x, y)$?
+
+	
+---
 
 ### Ejemplos
 
@@ -374,17 +434,20 @@ Hasta ahora solo hemos revisado predicados que representan la propiedad de un so
 1. Sea $Q(x,y)$ la sentencia que indica "x=y+3". ¿Qué valores de verdad tienen las proposiciones $Q(10, 7)$ y $Q(7, 10)$?
 1. Sea $F(a, b)$ la sentencia $a$ es *follower* de $b$. Se sabe que María (M) sigue a Tomas (T) y Pepa (P), y esta última solo sigue a María de vuelta. Entonces, ¿qué valores tienen las proposiciones $F(M, T)$, $F(P, M)$ y $F(P, T)$?
 
+---
 
 ### Acerca de la notación
 
 - Hasta ahora hemos usado variables ($x, y \ldots$) y constantes (*Tom*, *María* $\ldots$) sin hacer mayor distinción
 - Es importante notar que en expresiones como $(\forall x)P(x)$, $x$ es una variable que representa a cualquier elemento del dominio **(comienzan con minúscula)**
 
-###
+---
 
 - El valor de verdad de esta proposición es independiente de qué individuo del dominio sea referenciado
 - Podría haberse escrito $(\forall z)P(z)$ o $(\forall w)P(w)$ y tendría la misma interpretación
 - Las constantes sirven para hacer referencia a objetos específicos en el dominio **(comienzan con mayúscula)**
+
+---
 
 ### En síntesis
 
@@ -395,7 +458,8 @@ Para interpretar una expresión que contenga predicados se necesita:
 
 Ahora podemos usar toda la simbología revisada hasta ahora para construir proposiciones con predicados simples y compuestas
 
-### 
+---
+
 Como interpretaría la siguiente sentencia
 $$(\forall x)(\exists y)[S(x,y)\land L(y, a)]$$
 Si el dominio consiste en todas las ciudades de Chile, $S(x,y)$ denota la relación "$x$ e $y$ están en la misma región" y $L(y, a)$ denota "$y$ comienza con la misma letra que $a$".
@@ -413,6 +477,8 @@ Entonces,
 
 $$(\forall x)[P(x)\Rightarrow Q(x)]$$
 
+---
+
 ### Más ejemplos
 
 Considere la frase "Hay alguien que conoce a todo el mundo".
@@ -422,11 +488,13 @@ Considere la frase "Hay alguien que conoce a todo el mundo".
 
 ¿Como podría corregirse la representación? Por ejemplo, introduzca una relación $Q(x,y)$ que indice "$x$ conoce a $y$".
 
-###
+---
 
 - Exprese ahora como un predicado la frase "Todo el mundo tiene a alguien que sea su madre".
     - Utilice la relación $M(x,y)$ que indica "$x$ es la madre de $y$".
     - Considere que el predicado $\exists x M(x,y)$ indica "alguien es la madre de $y$".
+
+---
 
 ### Ejercicio
 
@@ -436,6 +504,8 @@ Traduzca las siguientes sentencias:
 1. Todos los perros persiguen a todos los conejos.
 2. Algunos perros persiguen a todos los conejos.
 3. Solo los perros persiguen a los conejos. 
+
+---
 
 ### Negando expresiones con cuantificadores
 
@@ -447,7 +517,7 @@ Traduzca las siguientes sentencias:
 * Estas dos expresiones son equivalentes, es decir 
 $$\neg\exists x P(x) \equiv\forall x\neg P(x)$$-->
 
-### 
+---
 
 Para un universo finito de $n$ individuos $A_1,A_2,\ldots A_n$ 
 $$\forall x P(x) \equiv P(A_1)\land P(A_2)\land \ldots P(A_n)$$
@@ -456,13 +526,14 @@ donde $P(x)$ es $V$ o $F$ para c/individuo del **dominio** (siempre debe haber u
 Para el cuantificador existencial también existe una expresión similar
 $$\exists x P(x) \equiv P(A_1)\lor P(A_2)\lor \ldots P(A_n)$$
 
-###
+---
 
 Usando las definiciones anteriores **demuestre** que 
 1. $$\neg [\forall x P(x)] \equiv \exists x \neg P(x)$$
 2. $$\neg [\exists x P(x)] \equiv \forall x \neg P(x)$$
 
-### 
+---
+
 Considerando a los seres vivos del planeta tierra como dominio ¿Como fomalizaría las siguientes expresiones?
 1. "Todos los seres humanos son mamíferos"
     - $\forall x (humano(x) \Rightarrow mamifero(x))$
@@ -473,7 +544,8 @@ Considerando a los seres vivos del planeta tierra como dominio ¿Como fomalizar�
 
 *Observe* asociaciones $\forall$ con $\Rightarrow$, y $\exists$ con $\land$ usadas para **restringir** el dominio
 
-###
+---
+
 Cual sería la expresión resultante de 
 $$\neg [ \forall x (piensa(x) \Rightarrow humano(x))]$$
 
@@ -488,18 +560,19 @@ Intente tomar el predicado resultante y expresarlo en lenguaje natural ¿Tiene s
 - para proposiciones usabamos tablas de verdad... No es posible para predicados
 - Basta un caso o interpretación en que el predicado sea falso para decidir su no validez 
 
-###
+---
+
 Una **interpretación** de una expresión con predicados consiste de:
 1. Colección de objetos, denominada dominio de interpretación
 1. La asignación de una propiedad de los objs. del dominio para cada predicado
 1. La asignación de un obj. particular del dominio para cada simbolo constante en la expresión
 
+---
+
 ### Una posible interpretación para $\exists x \forall y Q(x,y)$
 
 **Considere** un universo de discurso o dominio constituido por  3 personas: **J**uan, **M**aría y **X**imena. Además, definamos $Q(x,y)$ cómo el predicado "*$x$ admira a $y$*", cuyas asignaciones son las siguientes:
 
-
-<center>
 
 | $x \| y$  | J | M | X |
 |---|---|---|---|
@@ -507,11 +580,10 @@ Una **interpretación** de una expresión con predicados consiste de:
 | **M** | V | F | F |
 | **X** | F | V | V |
 
-</center>
 
 Examinemos si es cierta o no la frase: "Hay alguien que admira a todo el mundo".
 
-###
+---
 
 * Primero debemos expresar esta frase en términos de un predicado. 
 * $\forall y Q(x,y)$ equivale a decir "$x$ admira a todo el mundo".
@@ -522,10 +594,14 @@ Examinemos si es cierta o no la frase: "Hay alguien que admira a todo el mundo".
 
 <!-- SOLUC. No existe ningun caso, entonces la frase es falsa.-->
 
+---
+
 ### Acerca de determinar la validez
 + No es posible examinar todas las interpretaciones
 + Deberemos razonar usando las reglas que ya conocemos 
 + A veces resultará mejor encontrar una interpretación que sea falsa para demostrar la "no validez"
+
+---
 
 ### Algunas expresiones (genéricas) válidas
 
@@ -545,7 +621,8 @@ $$P(x)\Rightarrow [Q(x)\Rightarrow P(x)] \mbox{(hint: revise tabla de implicanci
 * Su validez consiste en poder deducir lógicamente $Q$ a partir únicamente de la estructura interna de las premisas y **no** de los valores particulares de las premisas.
 * Ahora estudiaremos el mismo proceso, pero considerando predicados, cuantificadores y conectores lógicos.
 
-### 
+---
+
 * Por lo tanto, buscaremos demostrar que la expresión bien formada
 $$P_1\land \ldots \land P_n\Rightarrow Q$$
 es verdadera in todas las posibles interpretaciones.
@@ -554,12 +631,16 @@ es verdadera in todas las posibles interpretaciones.
 * Para esto, usaremos reglas de derivación para poder transitar desde las hipotesis hasta la conclusión
 * Todas las reglas ya vistas también son parte de este sistema
 
+---
+
 ### Nuevas reglas de inferencia 
 
 * Idea general para la demostración de validez:
     * Quitar los cuantificadores, manipular usando reglas proposicionales y re-incorporar los cuantificadores
 * Proveen de un mecanismo para quitar y luego insertar los cuantificadores
 * Son 4: **Instanciación** (Universal | Existencial); **Generalización** (Universal | Existencial);
+
+---
 
 ### Instanciación Universal
 
@@ -572,9 +653,9 @@ es verdadera in todas las posibles interpretaciones.
 
 #### Ejemplo
 Considere el argumento 
-<center>
+
 "Todos los humanos son mortales. Socrates es humano. Por lo tanto, Socrates es mortal."
-</center>
+
 
 Esto puede formalizado como
 - $H(x)$ es "x es humano".
@@ -599,6 +680,7 @@ $$
 \end{array}
 $$
 
+---
 ### Ejercicio
 
 Demostrar el argumento expresado como
@@ -619,6 +701,7 @@ $$
 \end{array}
 $$
 
+---
 
 ### Instanciación Existencial
 
@@ -627,10 +710,12 @@ $$
 * La constante usada en la derivación debe haber sido introducida justo antes de usar la regla
 
 ---
+
 #### Ejemplo
 
 Demostrar el argumento expresado como
 $$\forall x[P(x)\Rightarrow Q(x)]\land \exists y P(y)\Rightarrow Q(A)$$
+
 ---
 Demostrando $\forall x[P(x)\Rightarrow Q(x)]\land \exists y P(y)\Rightarrow Q(A)$
 
@@ -646,6 +731,7 @@ $$
 
 La I.E. **debe** ser la primera regla usada. Si se invierte el orden de los pasos 3 y 4, **no** se podría suponer que ese $A$ específico es el que cumple con $P(A)$.
 
+---
 
 ### Generalización Universal
 
@@ -654,6 +740,8 @@ La I.E. **debe** ser la primera regla usada. Si se invierte el orden de los paso
 * Si sabemos que se cumple $P(x)$ para cualquier objeto del dominio, entonces podemos concluir que $\forall xP(x)$.
 * Deberemos tener cuidado de que $x$ no represente a un individuo en particular.
 
+
+---
 
 ### Ejemplo
 
@@ -673,6 +761,7 @@ $$
    6.& \forall x Q(x)                   & \mbox{5, G.U.}\\
 \end{array}
 $$
+
 ---
 
 - No existe restricción de re-usar la variable $x$ sobre I.U. en el paso 4.
@@ -683,6 +772,7 @@ $$
 **Ejemplo** Siendo $P(x)$ una de las hipotesis, *no* podría derivarse $\forall  x P(x)$, debido a que $x$ aparece **libre**.
 
 ---
+
 #### Ejemplo
 
 Dada la hipotesis $(\forall x)(\exists y)Q(x,y)$, ¿sería válida la secuencia?
@@ -695,6 +785,8 @@ $$
    4.& (\forall x)Q(x,A)                & \mbox{3, G.U.}\\ 
 \end{array}
 $$
+
+---
 
 ### Generalización Existencial
 
@@ -718,12 +810,15 @@ $$
 - Por **ejemplo**: A partir de $P(A,y)$ derivar $(\exists y)P(y,y)$
     - No es válido porque la variable que sustituyó a la const. $A$ aparece en el predicado sobre el cual se aplicó la G.E.
 
+---
 
 ### Estrategia General
 
 * Quitar los cuantificadores
 * Operar con las expresiones resultantes
 * Insertar cuantificadores tanto como sea necesario
+
+---
 
 ### El Método de la deducción con cuantificadores
 
@@ -750,19 +845,4 @@ $$
    6.& \forall x [\neg P(x)\Rightarrow \neg S(x)]   & \mbox{5, G.U.}\\
 \end{array}
 $$
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
