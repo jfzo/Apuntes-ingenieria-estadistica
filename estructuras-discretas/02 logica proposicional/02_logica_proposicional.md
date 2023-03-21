@@ -139,11 +139,10 @@ Represente formalmente el argumento:
 
 ### Ejemplo
 
-- Si se tienen las siguientes dos hipotesis de un argumento,
-1. $(A\land \neg B)\Rightarrow C$
-2. $\neg C$
+Considere el siguiente argumento: $$[(A\land \neg B)\Rightarrow C]\land \neg C \Rightarrow (\neg A\lor B)$$
 
-- Continue la demostración a partir de las hipotesis.
+- Identifique y enumere las premisas
+- Demuestre la validez del argumento
 
 ---
 
@@ -198,6 +197,8 @@ Demuestre la validez del argumento
 
 $$[(A\lor \neg B)\Rightarrow C]\land (C\Rightarrow D)\land A\Rightarrow D$$
 
+- Para realizar esta actividad, averigue primero acerca de la regla del Silogismo Hipotético.
+
 ---
 
 $$
@@ -205,12 +206,13 @@ $$
 1. & (A\lor \neg B)\Rightarrow C & \mbox{hip}\\
 2. & C\Rightarrow D & \mbox{hip} \\ 
 3. & A & \mbox{hip} \\ 
-4. & (A\lor \neg B)\Rightarrow D & 1,2,\mbox{Silogismo Hipot.}\\ \hline
-   & D & 4,\mbox{Adicion, M.Ponens}
+4. & (A\lor \neg B)\Rightarrow D & 1,2,\mbox{Silogismo Hipot.}\\
+5. & A\lor \neg B & 3, Adición.\\\hline
+   & D & 4,5,\mbox{M.Ponens}
 \end{array}
 $$
 
-**Ejercicio**: Averigue en qué consisten los silogismos hipotético y disyuntivo.
+
 
 
 ---
@@ -269,11 +271,13 @@ Utilice las siguientes sentencias para formalizar el argumento:
 
 [comment]: <> ($$(P\Rightarrow Q)\land (\neg P\Rightarrow R)\Rightarrow (\neg Q\Rightarrow R)$$)
 
----
+
+# Ejercicios
 
 ### Ejercicios
 
 Siendo $A$ verdadero, $B$ falso, y $C$ verdadero, ¿Cuál es el valor de verdad de cada una de las formas?
+
 1. $A\land (B\lor C)$
 2. $(A\land B)\lor C$
 3. $\neg (A\land B)\lor C$
@@ -292,14 +296,28 @@ Escriba la negación de cada proposición:
 ---
 
 Use las letras indicadas para cada proposición simple y represente simbólicamente cada proposición compuesta:
-1. $A:\mbox{los precios suben}$;$B:\mbox{la vivienda será abundante}$;$C:\mbox{la vivienda será costosa}$. *Si los precios suben, entonces la vivienda será abundante y cara; pero si la vivienda no es cara, entonces todavía será abundante*.
-2. $A:\mbox{irse a dormir}$;$B:\mbox{ir a nadar}$;$C:\mbox{cambiarse ropa}$. *Ya sea irse a dormir o a nadar es una condición suficiente para cambiarse ropa; de cualquier manera, cambiarse ropa no implica ir a nadar*.
+
+1. $A:\mbox{los precios suben}$;$B:\mbox{la vivienda será abundante}$;$C:\mbox{la vivienda será costosa}$. 
+
+	*Si los precios suben, entonces la vivienda será abundante y cara; pero si la vivienda no es cara, entonces todavía será abundante*.
+
+2. $A:\mbox{irse a dormir}$;$B:\mbox{ir a nadar}$;$C:\mbox{cambiarse ropa}$. 
+
+	*Ya sea irse a dormir o a nadar es una condición suficiente para cambiarse ropa; de cualquier manera, cambiarse ropa no implica ir a nadar*.
 
 ---
 
-1. $A:\mbox{va a llover}$;$B:\mbox{va a nevar}$. *Va a llover o a nevar, pero no ambas*.
-1. $A:\mbox{Javiera gana}$;$B:\mbox{Javiera pierde}$; $C:\mbox{Javiera estará cansada}$. *Si Javiera gana or pierde, estará cansada*.
-1. $A:\mbox{Javiera gana}$;$B:\mbox{Javiera pierde}$; $C:\mbox{Javiera estará cansada}$. *Javiera va a ganar, o bien, si ella pierde, estará cansada*.
+1. $A:\mbox{va a llover}$;$B:\mbox{va a nevar}$. 
+
+	*Va a llover o a nevar, pero no ambas*.
+	
+1. $A:\mbox{Javiera gana}$;$B:\mbox{Javiera pierde}$; $C:\mbox{Javiera estará cansada}$. 
+
+	*Si Javiera gana or pierde, estará cansada*.
+	
+1. $A:\mbox{Javiera gana}$;$B:\mbox{Javiera pierde}$; $C:\mbox{Javiera estará cansada}$. 
+
+	*Javiera va a ganar, o bien, si ella pierde, estará cansada*.
 
 ---
 
@@ -312,6 +330,7 @@ Represente formalmente cada argumento e indique qué regla de inferencia es ilus
 ---
 
 Justifique cada paso de la prueba con la regla correcta:
+
 1. $$A\land (B \Rightarrow C)\Rightarrow (B\Rightarrow (A\land C))$$
 
 $$
