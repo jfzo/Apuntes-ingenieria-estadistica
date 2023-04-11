@@ -381,6 +381,7 @@ Utilice lógica proposicional para demostrar que cada argumento es válido:
 ---
 
 **Por lo tanto ...**
+
 - Dado que poder expresivo de proposiciones es limitada
 - Necesitamos un mecanismo para 
     - representar propiedades de objetos/individuos de un cierto dominio, 
@@ -471,6 +472,7 @@ Hasta ahora solo hemos revisado predicados que representan la propiedad de un so
 ### En síntesis
 
 Para interpretar una expresión que contenga predicados se necesita:
+
 * Colección no vacía de objetos, es decir el Dominio 
 * La asignación de una propiedad de los objetos del dominio para cada predicado
 * La asociación de un objeto específico del dominio a cada constante usada en la expresión
@@ -488,6 +490,7 @@ Establezca en lenguaje natural la afirmación planteada por la proposición.
 ## Traduciendo del lenguaje natural
 
 Si se dice "Todo auto tiene una falla", lo que realmente se está indicando es que 
+
 1. Para cualquier cosa, 
 2. si es un auto ($P(x)$), entonces 
 3. tiene una falla ($Q(x)$)
@@ -505,7 +508,7 @@ Considere la frase "Hay alguien que conoce a todo el mundo".
 - Formalización inicial: $\exists x(x\mbox{ conoce a todo el mundo})$
 - $x$ conoce a todo el mundo aún no tiene el suficiente nivel de representación simbólica, ya que se está expresando una propiedad usando lenguaje natural
 
-¿Como podría corregirse la representación? Por ejemplo, introduzca una relación $Q(x,y)$ que indice "$x$ conoce a $y$".
+¿Como podría corregirse la representación? Por ejemplo, introduzca una relación $Q(x,y)$ que indica "$x$ conoce a $y$".
 
 ---
 
@@ -520,6 +523,7 @@ Considere la frase "Hay alguien que conoce a todo el mundo".
 Siendo las sentencias $D(x)$ "$x$ es un perro", $R(x)$ "$x$ es un conejo" y $C(x,y)$ "$x$ persigue a $y$".
 
 Traduzca las siguientes sentencias:
+
 1. Todos los perros persiguen a todos los conejos.
 2. Algunos perros persiguen a todos los conejos.
 3. Solo los perros persiguen a los conejos. 
@@ -532,6 +536,7 @@ Traduzca las siguientes sentencias:
 * Esto equivale en el cálculo de predicados a que ningún individuo posea una cierta propiedad
 * Por ejemplo, "Nadie es perfecta".
     * Suponiendo que $P(x)$ indica "$x$ es perfecta"
+	
 <!--    * Podría expresarse de dos maneras: $\neg\exists x P(x)$ o $\forall x\neg P(x)$
 * Estas dos expresiones son equivalentes, es decir 
 $$\neg\exists x P(x) \equiv\forall x\neg P(x)$$-->
@@ -548,12 +553,14 @@ $$\exists x P(x) \equiv P(A_1)\lor P(A_2)\lor \ldots P(A_n)$$
 ---
 
 Usando las definiciones anteriores **demuestre** que 
+
 1. $$\neg [\forall x P(x)] \equiv \exists x \neg P(x)$$
 2. $$\neg [\exists x P(x)] \equiv \forall x \neg P(x)$$
 
 ---
 
 Considerando a los seres vivos del planeta tierra como dominio ¿Como fomalizaría las siguientes expresiones?
+
 1. "Todos los seres humanos son mamíferos"
     - $\forall x (humano(x) \Rightarrow mamifero(x))$
 1. "Algunos seres humanos son mujeres"
@@ -582,6 +589,7 @@ Intente tomar el predicado resultante y expresarlo en lenguaje natural ¿Tiene s
 ---
 
 Una **interpretación** de una expresión con predicados consiste de:
+
 1. Colección de objetos, denominada dominio de interpretación
 1. La asignación de una propiedad de los objs. del dominio para cada predicado
 1. La asignación de un obj. particular del dominio para cada simbolo constante en la expresión
@@ -673,19 +681,23 @@ es verdadera in todas las posibles interpretaciones.
 #### Ejemplo
 Considere el argumento 
 
-"Todos los humanos son mortales. Socrates es humano. Por lo tanto, Socrates es mortal."
+	"Todos los humanos son mortales. Socrates es humano. 
+	        Por lo tanto, Socrates es mortal."
 
 
 Esto puede formalizado como
+
 - $H(x)$ es "x es humano".
 - $S$ es una constante que simboliza a Socrates.
 - $M(x)$ es "x es mortal"
 
 ---
+
 El argumento queda expresado como
 $$(\forall x)[H(x)\Rightarrow M(x)]\land H(S)\Rightarrow M(S)$$
 
 ---
+
 El argumento queda expresado como
 $$(\forall x)[H(x)\Rightarrow M(x)]\land H(S)\Rightarrow M(S)$$
 
@@ -700,6 +712,7 @@ $$
 $$
 
 ---
+
 ### Ejercicio
 
 Demostrar el argumento expresado como
@@ -736,6 +749,7 @@ Demostrar el argumento expresado como
 $$\forall x[P(x)\Rightarrow Q(x)]\land \exists y P(y)\Rightarrow Q(A)$$
 
 ---
+
 Demostrando $\forall x[P(x)\Rightarrow Q(x)]\land \exists y P(y)\Rightarrow Q(A)$
 
 $$
@@ -768,6 +782,7 @@ Demostrar el argumento expresado como
 $$\forall x[P(x)\Rightarrow Q(x)]\land \forall x P(x)\Rightarrow \forall x Q(x)$$
 
 ---
+
 Demostrando $\forall x[P(x)\Rightarrow Q(x)]\land \forall x P(x) \Rightarrow \forall x Q(x)$
 
 $$
@@ -864,4 +879,5 @@ $$
    6.& \forall x [\neg P(x)\Rightarrow \neg S(x)]   & \mbox{5, G.U.}\\
 \end{array}
 $$
+
 

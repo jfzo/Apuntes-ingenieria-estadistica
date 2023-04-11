@@ -1,29 +1,55 @@
 ---
-marp: true
-theme: gaia
-_class: lead
-backgroundImage: "linear-gradient(to bottom, #E7F1FD, #FFFFFF)"
-footer: ![width:150px opacity:.5](logo_ie_pucv.png)
-paginate: true
-_paginate: false
+title: 
+- Demostraciones e Inducción
+subtitle:
+- EST-1132 / Estructuras Discretas
+author:
+- Juan Zamora O.
+#output: 
+#  beamer_presentation:
+#    citation_package: natbib
+#theme:
+#- Copenhagen
+date:
+- Otoño 2023
+header-includes: |
+    \usepackage{tikz}
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{url}
+    \usepackage{colortbl}
+
+    \setbeamertemplate{footline}{%
+    \raisebox{5pt}{\makebox[0.5\paperwidth]{\hfill\makebox[20pt]{\color{black}\scriptsize\insertframenumber}}}\hspace*{5pt}}
+    \newcommand{\bigCI}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-1 0mu\perp$}}}}
+
+    \definecolor{LightRed}{RGB}{252,160,140}
+    \definecolor{LightBlue}{RGB}{140,186,252}   
+    
+    \newcolumntype{a}{>{\columncolor{LightRed}}c}
+    \newcolumntype{b}{>{\columncolor{LightBlue}}c}
+
+    \newcommand{\empt}[2]{#1^{( #2 )}}
+    \thispagestyle{empty}
+
+    \titlegraphic { 
+    \begin{tikzpicture}[overlay,remember picture]
+    \node[below=-2.6cm] at (current page.south){
+        \includegraphics[width=6cm]{logosAzul.png}
+    };
+    \end{tikzpicture}
+    }
+    \logo{
+	\begin{tikzpicture}[overlay,remember picture]
+		\node[opacity=0.4,right=-0.6cm, above=0.07cm] at ([xshift=-0.6cm]current page.south east){
+    			\includegraphics[height=1cm]{logoAzul.png}
+        };
+	\end{tikzpicture}
+    }
 ---
-<!-- marp .\01_introduccion.md -o .\01_introduccion.pdf --allow-local-files --html=true -->
-
-<!-- marp .\03_demostraciones_e_induccion.md --html=true -p -o .\03_demostraciones_e_induccion.html -->
-<!-- headingDivider: 3 -->
-
-
-### .: Demostraciones e Inducción :.
-
-#### EST-1132
-##### Estructuras Discretas
-##### Primer semestre 2022
-
-
-**Juan Zamora O.**
-juan.zamora@pucv.cl
 
 # Demostraciones
+
 
 - Anteriormente, consideramos argumentos de la forma $P\Rightarrow Q$
 - El objetivo consistía en probar que el argumento era universalmente verdadero para todas las interpretaciones
@@ -32,14 +58,18 @@ juan.zamora@pucv.cl
 
 
 # Tipos de Razonamiento
+
 <!-- seccion 2.1 de Gersting ugeda para lectua -->
-- Razonamiento deductivo (Top-Down)
-	- Comienzan con premisas que llevan o derivan una conclusión
 
 - Razonamiento inductivo (Bottom-up)
 	- Premisa particular y generalización repetitiva
 	- Conclusiones se obtienen a partir de observaciones sucesivas
 
+	
+- Razonamiento deductivo (Top-Down)
+	- Comienzan con premisas que llevan o derivan una conclusión
+
+	
 # El método de Inducción
 
 **Objetivos**
@@ -69,15 +99,13 @@ juan.zamora@pucv.cl
 - ¿Qué hace especial a $\mathbb{Z}$ y su subconjunto $\mathbb{Z}^+$?
   - $\mathbb{Z}^+=\{x\in\mathbb{Z}|x>0\}=\{x\in\mathbb{Z}|x\geq 1\}$
 - No podemos establecer la misma definicion para los racionales y los reales
-- Todo subconjunto no vacío $X$ de $\mathbb{Z}^
-+$ contiene un entero $a\in X | a\leq x, \forall x\in X$ denominado mínimo 
+- Todo subconjunto no vacío $X$ de $\mathbb{Z}^+$ contiene un entero $a\in X | a\leq x, \forall x\in X$ denominado mínimo 
 
 ---
 
 **El principio del buen orden**
 
-Cualquier subconjunto no vacío de $\mathbb{Z}^
-+$ contiene elemento mínimo.
+Cualquier subconjunto no vacío de $\mathbb{Z}^+$ contiene elemento mínimo.
 
 - Esto es la base de la Inducción matemática
 
@@ -87,10 +115,12 @@ Cualquier subconjunto no vacío de $\mathbb{Z}^
 - Los escalones del ejemplo anterior se encuentran numerados por enteros positivos $1,2,3\ldots$
 - En lugar de *"alcanzar un escalón arbitrariamente alto"* usaremos otra propiedad arbitraria $P$  sobre los números positivos
 - Necesitamos entonces probar que
+
 $$
-\begin{array}{llr}
+\begin{array}{lll}
    1.& P(1)  & \mbox{1 tiene la propiedad $P$}\\
-   2.& \forall k\in\mathbb{Z}^+ [P(k)\Rightarrow P(k+1)]             & \mbox{Si un numero cualquiera la cumple, tambien el sgte.}
+   2.& \forall k\in\mathbb{Z}^+ [P(k)\Rightarrow P(k+1)] & \mbox{Si un numero cualquiera la}\\
+    &  & \mbox{ cumple, tambien el sgte.}   
 \end{array}   
 $$
 
@@ -102,27 +132,34 @@ $$
 - Luego usamos G.U. 
 - Útil cuando se desea probar que algo se cumple para cada entero positivo
 
-**<center>Inducción matemática se usa solamente para confirmar una conjetura que es correcta</center>**
+**Inducción matemática se usa solamente para confirmar una conjetura que es correcta**
+
+--- 
 
 ### Ejemplo Descendencia
 
-<center>
-	<img width="900px" src="arbol_familiar.png" /> 
-</center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=1cm, xshift=4cm] at (current page.south) 
+    {
+        \includegraphics[width=0.8\textwidth]{arbol_familiar.png}
+    };
+\end{tikzpicture}
 
 - Ser vivo K tuvo dos hijos. Cada uno de estos (1ra generación) tuvo otros dos. Luego, pasó lo mismo en la 3ra generación. Así sucesivamente ...
 - Al parecer, la generación $n$-ésima contiene $2^n$ individuos. **Probar**!
 
 ---
-<!-- @auto-scaling math-->
-<!-- https://www.webfx.com/tools/emoji-cheat-sheet/ -->
-1) *Paso base*: $P(1)=2^1$ :metal:
+
+
+1) *Paso base*: $P(1)=2^1$
 2) Ahora supongamos que la conjetura es correcta para un $k\geq 1$ cualquiera. Esto es  $P(k)=2^k$
-3) Intentemos demostrar que $P(k+1)=2^{k+1}$ :smiley_cat:
+3) Intentemos demostrar que $P(k+1)=2^{k+1}$
 4) Consideremos el **hecho** de que en esta familia, cada descendiente tiene siempre 2 hijos.
 	- Entonces, $P(k+1)=2\times P(k)$
 5) Luego, usando el supuesto inductivo $P(k)=2^k$, entonces $P(k+1)=2\times P(k)=2\times (2^k)=2^{k+1}$
-6) Por lo tanto, logramos demostrar el punto (3) para cualquier valor de $k$. :muscle:
+6) Por lo tanto, logramos demostrar el punto (3) para cualquier valor de $k$.  
+
+---
 
 ### Síntesis del primer principio de inducción
 
@@ -134,9 +171,10 @@ $$
 ## El segundo principio de inducción matemática
 
 $$
-\begin{array}{llr}
+\begin{array}{lll}
    1.& P(1)  & \mbox{es verdadero}\\
-   2.& \forall k\in\mathbb{Z}^+ [\forall 1\leq r \leq k\ , P(r)\Rightarrow P(k+1)]  & \mbox{Se usa $P(1),P(2)\ldots P(k)$}
+   2.& \forall k\in\mathbb{Z}^+ [\forall 1\leq r \leq k\ , P(r)\Rightarrow P(k+1)]  & \mbox{Se usa $P(1),$}\\
+     &   & \mbox{$P(2)\ldots P(k)$}   
 \end{array}   
 $$
 
@@ -145,6 +183,7 @@ Luego que se demuestra $P(k+1)$ usando la base inductiva y la hipótesis inducti
 - Es posible demostrar que ambos principios de inducción son equivalentes.
 - En ocasiones es más conveniente usar uno o el otro.
 
+---
 
 ### Ejemplo Factorización de números primos
 
@@ -174,6 +213,8 @@ $$
 	- Entonces, para cualquier caso $(k+1)$ es un producto de primos. 
 	- Se demuestra $P(k+1)$
 
+	
+---
 
 ### Teorema Fundamental de la Aritmética
 
@@ -181,6 +222,7 @@ $$
 
 Para cada entero $n\geq 2$, $n$ es un primo o bien puede ser escrito de manera única (ignorando orden) como producto de números primos.  
 
+---
 
 ### Síntesis del segundo principio de inducción
 
