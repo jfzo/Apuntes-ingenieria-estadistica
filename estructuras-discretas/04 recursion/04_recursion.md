@@ -1,28 +1,52 @@
 ---
-marp: true
-theme: gaia
-_class: lead
-backgroundImage: "linear-gradient(to bottom, #E7F1FD, #FFFFFF)"
-footer: ![width:150px opacity:.5](logo_ie_pucv.png)
-paginate: true
-_paginate: false
+title: 
+- Recursión
+subtitle:
+- EST-1132 / Estructuras Discretas
+author:
+- Juan Zamora O.
+#output: 
+#  beamer_presentation:
+#    citation_package: natbib
+#theme:
+#- Copenhagen
+date:
+- Otoño 2023
+header-includes: |
+    \usepackage{tikz}
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{url}
+    \usepackage{colortbl}
+
+    \setbeamertemplate{footline}{%
+    \raisebox{5pt}{\makebox[0.5\paperwidth]{\hfill\makebox[20pt]{\color{black}\scriptsize\insertframenumber}}}\hspace*{5pt}}
+    \newcommand{\bigCI}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-1 0mu\perp$}}}}
+
+    \definecolor{LightRed}{RGB}{252,160,140}
+    \definecolor{LightBlue}{RGB}{140,186,252}   
+    
+    \newcolumntype{a}{>{\columncolor{LightRed}}c}
+    \newcolumntype{b}{>{\columncolor{LightBlue}}c}
+
+    \newcommand{\empt}[2]{#1^{( #2 )}}
+    \thispagestyle{empty}
+
+    \titlegraphic { 
+    \begin{tikzpicture}[overlay,remember picture]
+    \node[below=-2.6cm] at (current page.south){
+        \includegraphics[width=6cm]{logosAzul.png}
+    };
+    \end{tikzpicture}
+    }
+    \logo{
+	\begin{tikzpicture}[overlay,remember picture]
+		\node[opacity=0.4,right=-0.6cm, above=0.07cm] at ([xshift=-0.6cm]current page.south east){
+    			\includegraphics[height=1cm]{logoAzul.png}
+        };
+	\end{tikzpicture}
+    }
 ---
-
-<!-- marp .\01_introduccion.md -o .\01_introduccion.pdf --allow-local-files --html=true -->
-<!-- marp .\04_recursion.md --html=true -p -o .\04_recursion.html --bespoke.progress -c .\marp.config.js  -->
-
-<!-- headingDivider: 3 -->
-
-### .: Recursión :.
-
-#### EST-1132
-##### Estructuras Discretas
-##### Primer semestre 2022
-
-
-**Juan Zamora O.**
-juan.zamora@pucv.cl
-
 
 # Introducción
 
@@ -102,6 +126,7 @@ Considere el subconjunto $S$ de los enteros, que se define como
 ## Actividad
 
 Considere el conjunto $\mathsf{A}^{*}$ de todas las palabras de largo finito sobre un alfabeto $\mathsf{A}$. Luego, se define recursivamente siguiendo las reglas:
+
 1. La palabra sin símbolos (vacía) $\lambda$ pertenece a $\mathsf{A}^{*}$
 1. Cualquier símbolo de $\mathsf{A}$ pertenece a $\mathsf{A}^{*}$
 1. Si $x$ e $y$ son palabras en $\mathsf{A}^{*}$, entonces también lo será $xy$, es decir la concatenación de las palabras $x$ e $y$
@@ -114,9 +139,9 @@ Considere el conjunto $\mathsf{A}^{*}$ de todas las palabras de largo finito sob
 Entregue una definición recursiva para el conjunto de todas las palabras binarias que se leen de igual manera de derecha a izquierda, que de izquierda a derecha. Por ejemplo, $1001$ y $11011$.
 
 
-###
+---
 
-Solución.
+### Solución.
 
 Sea $\mathsf{A}=\{0,1,\lambda\}$.
 
@@ -127,7 +152,8 @@ Sea $\mathsf{A}=\{0,1,\lambda\}$.
 ## Operaciones definidas recursivamente
 
 - Ciertas operaciones sobre objetos pueden ser definidas recursivamente
-- Por ejemplo, la exponenciación sobre un npumero real distinto de $0$
+- Por ejemplo, la exponenciación sobre un número real distinto de $0$
+
 $$
 \begin{array}{lll}
 1. & p^0 =& 1 \\
@@ -138,6 +164,7 @@ $$
 ---
 
 - O la multiplicación de dos enteros $m$ y $n$
+
 $$
 \begin{array}{lll}
 1. & m(1) &= m \\
@@ -149,9 +176,9 @@ $$
 
 Sea $x$ una palabra en un alfabeto (no es relevante qué alfabeto específico se use para este problema). Entregue una definición recursiva para la operación $x^n$ que representa la concatenación de $x$ con sí misma $n$ veces para $n\geq 1$.
 
-### 
+---
 
-**Ejemplo (solución)**
+### Ejemplo (solución)
 
 Sea $x$ una palabra en un alfabeto (no es relevante qué alfabeto específico se use para este problema). Entregue una definición recursiva para la operación $x^n$ que representa la concatenación de $x$ con sí misma $n$ veces para $n\geq 1$.
 
@@ -176,7 +203,8 @@ $$
 
 - Calcule $S(2),S(3),S(4)$ y $S(5)$.
 
-## 
+---
+
 - Considere un programa que evalua $S(n)$
 
 		Procedimiento S(n un nro entero)$
@@ -194,7 +222,8 @@ $$
 		  fin de bloque Si
 		fin de procedimiento
 
-## 
+---
+
 - Otro enfoque consiste en una definición mucho más corta (**Observe**)
 
 		Procedimiento S(n un nro entero)$
@@ -207,12 +236,16 @@ $$
 
 - Analice como se calcula $S(3)$ con este código.
 
+---
+
 ### Ventajas relativas en algoritmos recursivos e iterativos
 
 - Recursividad ofrece (en ocasiones) una manera más natural para muchos problemas
 - Recursividad genera procedimientos más cortos
 - Operación de alg. recursivo es más compleja
 - Ejecución de Alg. recursivo consume más memoria
+
+---
 
 ### Actividad
 
@@ -224,6 +257,8 @@ $$
    2.& T(n) =& T(n-1) + 3 \mbox{, para }n\geq 2
 \end{array}
 $$ 
+
+---
 
 ### Actividad
 
@@ -276,6 +311,8 @@ $$
 - Se denominan **soluciones cerradas** de una relación de recurrencia
 - Entonces, para nuestro ejemplo, **la solución** $S(n) = 2^n$ **resuelve** la **relación de recurrencia** $S(n) = 2\cdot S(n-1)$
 
+---
+
 ### Relaciones lineales de 1er orden
 
 Una relación $S(n)$ es lineal si sus valores tienen la forma
@@ -283,6 +320,7 @@ $$S(n)=f_1(n)S(n-1)+f_2(n)S(n-2)+\ldots + f_k(n)S(n-k) + g(n)$$
 
 - Las $f$s y $g$ son expresiones que involucran solamente a $n$ más otras constantes
 
+---
 
 ### Caracterizando las relaciones lineales de 1er orden
 
@@ -291,9 +329,11 @@ $$S(n)=f_1(n)S(n-1)+f_2(n)S(n-2)+\ldots + f_k(n)S(n-k) + g(n)$$
 	- La dependencia de $S(n)$ de sus valores anteriores (*orden*)
 	- $g$
 - Dependiendo de estas condiciones estudiaremos ciertos tipos de soluciones para cada tipo de relación 
+
 ---
 
 #### Relaciones de 1er orden con coefs. constantes	
+
 - La relación tendrá coeficientes constantes si todas las $f$s lo son
 - Será de 1er orden si $S(n)$ solo depende de $S(n-1)$
 - Entonces, podemos *continuar* caracterizando de manera general una relación lineal de 1er orden con coeficientes constantes como
@@ -344,6 +384,7 @@ $$
 $$S(n)=2^{n-1}(2)+\sum_{i=2}^{n}0=2^n$$
 
 ---
+
 **En síntesis**
 
 1. Caracterizar la relación y  verificar calce con expresión general
@@ -369,6 +410,8 @@ $$S(n)=f_1(n)S(n-1)+f_2(n)S(n-2)+g(n)$$
 - Consideraremos aquellas relaciones lineales homogeneas y con coeficientes constantes.
 $$S(n)=c_1S(n-1)+c_2S(n-2)$$
 
+---
+
 ### Soluciones
 
 - Buscamos soluciones de la forma
@@ -379,6 +422,7 @@ $$r^2-c_1r-c_2=0$$
 - A esta expresión se le denomina **Ecuación característica** de la relación
 
 ---
+
 - Esta ecuación tendrá 2 raices: $r_1$ y $r_2$
 - A las raices de esta ecuación se le denominan raíces características
 
@@ -433,7 +477,7 @@ Por lo tanto
 
  ---
 
- Reemplazando $n=0$ y $n=1$ en $S(n)=\alpha_1 r_1^n + \alpha_2 r_2^n$
+Reemplazando $n=0$ y $n=1$ en $S(n)=\alpha_1 r_1^n + \alpha_2 r_2^n$
 $$
  \begin{array}{rcl}
  S(0) &=& \alpha_1 + \alpha_2 \\
@@ -445,6 +489,8 @@ Sustituyendo, se llega a que
 $$\alpha_1=\frac{S(1)-S(0)r_2}{r_1-r_2}$$ 
 y 
 $$\alpha_2=S(0)-\frac{S(1)-S(0) r_2}{r_1-r_2}$$
+
+---
 
 ### Mutiplicidad de raíces
 
