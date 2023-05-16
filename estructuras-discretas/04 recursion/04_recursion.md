@@ -18,7 +18,8 @@ header-includes: |
     \usepackage[utf8]{inputenc}
     \usepackage{url}
     \usepackage{colortbl}
-
+	
+	
     \setbeamertemplate{footline}{%
     \raisebox{5pt}{\makebox[0.5\paperwidth]{\hfill\makebox[20pt]{\color{black}\scriptsize\insertframenumber}}}\hspace*{5pt}}
     \newcommand{\bigCI}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-1 0mu\perp$}}}}
@@ -98,8 +99,8 @@ Sugerencia: Revise [el siguiente video](https://www.youtube.com/watch?v=8bCYiUIl
 $$
 \begin{array}{lll}
    1.& F(1) =& 1 \\
-   1.& F(2) =& 1 \\
-   2.& F(n) =& F(n-2) + F(n-1) \mbox{, para }n> 2
+   2.& F(2) =& 1 \\
+   3.& F(n) =& F(n-2) + F(n-1) \mbox{, para }n> 2
 \end{array}
 $$
 
@@ -117,6 +118,7 @@ $$
 ## Ejemplo
 
 Considere el subconjunto $S$ de los enteros, que se define como
+
 1. Paso base: $4\in S$
 1. Paso recursivo: Si $x\in S$ e $y\in S$, entonces $x+y\in S$
 
@@ -324,7 +326,7 @@ $$S(n)=f_1(n)S(n-1)+f_2(n)S(n-2)+\ldots + f_k(n)S(n-k) + g(n)$$
 
 ### Caracterizando las relaciones lineales de 1er orden
 
-- Nos fijaremos ahora en qué condiciones considerar para
+- Revisaremos ahora qué condiciones considerar para
 	- Las $f$s
 	- La dependencia de $S(n)$ de sus valores anteriores (*orden*)
 	- $g$
@@ -452,8 +454,10 @@ Acabamos de afirmar que $S(n)=\alpha_1 r_1^n + \alpha_2 r_2^n$
 
 $$
 \begin{array}{rcl}
-   c_1S(n-1)+c_2S(n-2) &=& c_1(\alpha_1 r_1^{n-1}+\alpha_2 r_2^{n-1}) + c_2(\alpha_1 r_1^{n-2}+\alpha_2 r_2^{n-2}) \\
-   \ldots              &=& c_1(\alpha_1 r_1^{n-2}r_1+\alpha_2 r_2^{n-2}r_2) + c_2(\alpha_1 r_1^{n-2}+\alpha_2 r_2^{n-2}) \\
+   c_1S(n-1)+c_2S(n-2) &=& c_1(\alpha_1 r_1^{n-1}+\alpha_2 r_2^{n-1}) + c_2(\alpha_1 r_1^{n-2}+\\
+   & & \alpha_2 r_2^{n-2}) \\
+   \ldots              &=& c_1(\alpha_1 r_1^{n-2}r_1+\alpha_2 r_2^{n-2}r_2) + c_2(\alpha_1 r_1^{n-2}+\\
+   & & \alpha_2 r_2^{n-2}) \\
    \ldots              &=& \alpha_1 r_1^{n-2}(c_1r_1+c_2) + \alpha_2 r_2^{n-2}(c_1r_2+c_2)\\
    \ldots              &=& \alpha_1 r_1^{n-2}r_1^2 + \alpha_2 r_2^{n-2}r_2^2 \\
    c_1S(n-1)+c_2S(n-2) &=& \alpha_1 r_1^{n} + \alpha_2 r_2^{n}

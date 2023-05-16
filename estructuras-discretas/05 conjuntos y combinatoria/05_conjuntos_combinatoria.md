@@ -1,28 +1,53 @@
 ---
-marp: true
-theme: gaia
-_class: lead
-backgroundImage: "linear-gradient(to bottom, #E7F1FD, #FFFFFF)"
-footer: ![width:150px opacity:.5](logo_ie_pucv.png)
-paginate: true
-_paginate: false
+title: 
+- Conteo y Combinatoria
+subtitle:
+- EST-1132 / Estructuras Discretas
+author:
+- Juan Zamora O.
+#output: 
+#  beamer_presentation:
+#    citation_package: natbib
+#theme:
+#- Copenhagen
+date:
+- Otoño 2023
+header-includes: |
+    \usepackage{tikz}
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{url}
+    \usepackage{colortbl}
+	
+	
+    \setbeamertemplate{footline}{%
+    \raisebox{5pt}{\makebox[0.5\paperwidth]{\hfill\makebox[20pt]{\color{black}\scriptsize\insertframenumber}}}\hspace*{5pt}}
+    \newcommand{\bigCI}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-1 0mu\perp$}}}}
+
+    \definecolor{LightRed}{RGB}{252,160,140}
+    \definecolor{LightBlue}{RGB}{140,186,252}   
+    
+    \newcolumntype{a}{>{\columncolor{LightRed}}c}
+    \newcolumntype{b}{>{\columncolor{LightBlue}}c}
+
+    \newcommand{\empt}[2]{#1^{( #2 )}}
+    \thispagestyle{empty}
+
+    \titlegraphic { 
+    \begin{tikzpicture}[overlay,remember picture]
+    \node[below=-2.6cm] at (current page.south){
+        \includegraphics[width=6cm]{logosAzul.png}
+    };
+    \end{tikzpicture}
+    }
+    \logo{
+	\begin{tikzpicture}[overlay,remember picture]
+		\node[opacity=0.4,right=-0.6cm, above=0.07cm] at ([xshift=-0.6cm]current page.south east){
+    			\includegraphics[height=1cm]{logoAzul.png}
+        };
+	\end{tikzpicture}
+    }
 ---
-
-<!-- marp .\01_introduccion.md -o .\01_introduccion.pdf --allow-local-files --html=true -->
-<!-- marp .\04_recursion.md --html=true -p -o .\04_recursion.html --bespoke.progress -c .\marp.config.js  -->
-
-<!-- headingDivider: 3 -->
-
-
-### .: Conteo y Combinatoria :.
-
-#### EST-1132
-##### Estructuras Discretas
-##### Primer semestre 2022
-
-
-**Juan Zamora O.**
-juan.zamora@pucv.cl
 
 
 # Introducción
@@ -43,6 +68,7 @@ juan.zamora@pucv.cl
 	- Por ejemplo $a,b,c,e,d\ldots$
 
 ---
+
 Siguiendo con la notación
 
 - La pertenencia de un objeto $a$ a un conjunto $D$ se simboliza $a\in D$
@@ -120,8 +146,8 @@ $$C=\{x|(\exists y)(y\in\mathbb{N}\wedge x=2y)\}$$
 
 Indique cuales afirmaciones son verdaderas:
 
-i. $B\subseteq C$ ii. $B\subset A$ iii. $A\subseteq C$ iv. $\{10,12,16,20\}\subset B$
-v. $26\in C$ vi. $\{11,12,13\}\subseteq A$ vii. $\{11,12,13\}\subset C$
+**i.** $B\subseteq C$ **ii.** $B\subset A$ **iii.** $A\subseteq C$ **iv.** $\{10,12,16,20\}\subset B$
+**v.** $26\in C$ **vi.** $\{11,12,13\}\subseteq A$ **vii.** $\{11,12,13\}\subset C$
 
 # El Conjunto Potencia
 
@@ -177,10 +203,12 @@ Sea $S$ un conjunto universo (ej. $\mathbb{N}$)
 
 # Identidades básicas de conjuntos
 
-<center>
-	<img width="1000px" src="conjuntos_identidades.png" /> 
-</center>
-
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=-1cm, xshift=4cm] at (current page.center) 
+    {
+        \includegraphics[width=0.8\textwidth]{conjuntos_identidades.png}
+    };
+\end{tikzpicture}
 
 # Conteo
 
@@ -202,6 +230,7 @@ Revisaremos 4 principios de conteo que nos permitiran resolver varios problemas
 
 Si hay $n_1$ resultados posibles para un primer evento y $n_2$ posibles resultados para un segundo evento, entonces hay $n_1\times n_2$ posibles resultados para la secuencia de los dos eventos.
 
+---
 
 ### Principio de Multiplicación
 
@@ -211,6 +240,8 @@ Un niño puede escoger sólo una gomita de dos opciones disponibles, una roja y 
 
 ![width:500px](dulces.png)
 
+---
+
 ### Extensión del principio
 
 - Este principio puede ser extendido y aplicado para cualquier secuencia finita de eventos
@@ -219,6 +250,8 @@ Un niño puede escoger sólo una gomita de dos opciones disponibles, una roja y 
 ## Principio de Adición
 
 Si se tienen dos eventos disjuntos  $A$ y $B$ con $n_1$ y $n_2$ resultados posibles, respectivamente, entonces el número total de resultados posibles para el evento "$A$ o $B$" es $n_1+n_2$ .
+
+---
 
 ### Principio de Adición
 
@@ -322,6 +355,8 @@ $$P(n,r)=\frac{n!}{(n-r)!}$$
 - ¿Cuantos comites de 3 personas se pueden formar a partir de un grupo de 12?
 - Hay 15 estudiantes. ¿Cuantos grupos de 3 estudiantes pueden formarse?
 
+---
+
 ### Ejercicio
 
 En una clase conformada por 19 estudiantes de primer año y 34 de segundo, se necesita formar un grupo de 8. 
@@ -329,6 +364,8 @@ En una clase conformada por 19 estudiantes de primer año y 34 de segundo, se ne
 1. ¿Cuantos con exactamente 1 de 1ro?
 1. ¿Cuantos con uno de 1ro como máximo?
 1. ¿Cuantos con al menos uno de 1ro?
+
+---
 
 ### Permutaciones con duplicados
 
@@ -348,23 +385,39 @@ $$\frac{n!}{(n_1!)(n_2!)\ldots (n_k!)}$$
 - El cuadrado de binomio $(a+b)^2$ es un caso particular 
 - Este teorema entrega un mecanismo para calcular $(a+b)^n$
 - Revisaremos como puede establecerse este teorema como un problema de conteo
+
 ---
 
 Consideremos el triangulo de pascal:
 
-<center><br><img width="500px" src="triangulo_pascal.png"/></center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=-0.5cm, xshift=3cm] at (current page.center) 
+    {
+        \includegraphics[width=0.45\textwidth]{triangulo_pascal.png}
+    };
+\end{tikzpicture}
 
-
+\vspace{70pt}
 - Podemos tomar la fila $n=2$ y veremos los coeficientes de $(a+b)^2=1a^2+2ab+1b^2$
 
 ---
 
 Luego, 
 
-<center><img width="900px" src="triangulo_pascal_generico.png"/></center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=-5cm, xshift=5cm] at (current page.north) 
+    {
+        \includegraphics[width=0.75\textwidth]{triangulo_pascal_generico.png}
+    };
+\end{tikzpicture}
+
+
+\vspace{80pt}
 
 - Ahora podemos establecer de manera general para cualquier entero no negativo $n$
 $$(a+b)^n=\sum_{k=0}^{n}C(n,k)a^{n-k}b^k$$
+
+---
 
 ### Ejercicios
 
