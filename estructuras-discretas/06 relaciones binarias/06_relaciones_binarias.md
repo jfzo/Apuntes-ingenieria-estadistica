@@ -1,32 +1,58 @@
 ---
-marp: true
-theme: gaia
-_class: lead
-backgroundImage: "linear-gradient(to bottom, #E7F1FD, #FFFFFF)"
-footer: ![width:150px opacity:.5](logo_ie_pucv.png)
-paginate: true
-_paginate: false
+title: 
+- Relaciones Binarias
+subtitle:
+- EST-1132 / Estructuras Discretas
+author:
+- Juan Zamora O.
+#output: 
+#  beamer_presentation:
+#    citation_package: natbib
+#theme:
+#- Copenhagen
+date:
+- Otoño 2023
+header-includes: |
+    \usepackage{tikz}
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{url}
+    \usepackage{colortbl}
+	
+	
+    \setbeamertemplate{footline}{%
+    \raisebox{5pt}{\makebox[0.5\paperwidth]{\hfill\makebox[20pt]{\color{black}\scriptsize\insertframenumber}}}\hspace*{5pt}}
+    \newcommand{\bigCI}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-1 0mu\perp$}}}}
+
+    \definecolor{LightRed}{RGB}{252,160,140}
+    \definecolor{LightBlue}{RGB}{140,186,252}   
+    
+    \newcolumntype{a}{>{\columncolor{LightRed}}c}
+    \newcolumntype{b}{>{\columncolor{LightBlue}}c}
+
+    \newcommand{\empt}[2]{#1^{( #2 )}}
+    \thispagestyle{empty}
+
+    \titlegraphic { 
+    \begin{tikzpicture}[overlay,remember picture]
+    \node[below=-2.6cm] at (current page.south){
+        \includegraphics[width=6cm]{logosAzul.png}
+    };
+    \end{tikzpicture}
+    }
+    \logo{
+	\begin{tikzpicture}[overlay,remember picture]
+		\node[opacity=0.4,right=-0.6cm, above=0.07cm] at ([xshift=-0.6cm]current page.south east){
+    			\includegraphics[height=1cm]{logoAzul.png}
+        };
+	\end{tikzpicture}
+    }
 ---
-
-<!-- marp .\01_introduccion.md -o .\01_introduccion.pdf --allow-local-files --html=true -->
-<!-- marp .\04_recursion.md --html=true -p -o .\04_recursion.html --bespoke.progress -c .\marp.config.js  -->
-
-<!-- headingDivider: 3 -->
-
-### .: Relaciones Binarias :.
-
-#### EST-1132
-##### Estructuras Discretas
-##### Primer semestre 2022
-
-
-**Juan Zamora O.**
-juan.zamora@pucv.cl
-
 
 # Introducción
 
 Estudiaremos 
+
 * relaciones entre **pares** de individuos de un conjunto
 * Propiedades de estas relaciones
     - Ejemplos: *Orden Parcial* y *Equivalencia*
@@ -50,12 +76,15 @@ Estudiaremos
 
 
 ## Relación Binaria sobre un conjunto S
+
 - Es un subconjunto de $S\times S$
 - Entonces 
 $$x\rho y \Leftrightarrow (x,y)\in \rho$$
 
 - Por ejemplo, dado $S=\{1,2,4\}$, y la relación $x\rho y\Leftrightarrow x=\frac{y}{2}$  
     - Entonces, $(1,2)$ y $(2,4)$ satisfacen $\rho$.
+
+---
 
 ### Ejemplo
 
@@ -80,6 +109,7 @@ Entonces $\rho=\{(1,2),(2,1)\}$
 ## Ejercicios
 
 Para cada una de las relaciones binarias $\rho$ sobre $\mathbb{N}$, indique cuales pares ordenados pertenecen.
+
 1. $x\rho y\Leftrightarrow x=y+1;(2,2)(2,3)(3,3)(3,2)$
 1. $x\rho y\Leftrightarrow x\mbox{ divide }y;(2,4)(2,5)(2,6)$
 1. $x\rho y\Leftrightarrow x\mbox{ es impar };(2,3)(3,4)(4,5),(5,6)$
@@ -97,13 +127,19 @@ Para cada una de las relaciones binarias $\rho$ sobre $\mathbb{N}$, indique cual
 
 ---
 
-<center><br><img width="700px" src="tipos_relaciones.png"/></center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=3cm, xshift=5cm] at (current page.south) 
+    {
+        \includegraphics[width=0.8\textwidth]{tipos_relaciones.png}
+    };
 
-(figura extraída del Gersting, cap 5.1)
+\end{tikzpicture}
+
 
 ## Ejercicios
 
 Identifique el tipo de relación sobre $S=\{2,5,7,9\}$ como uno a uno, uno a muchos ...
+
 1. $\{(5,2),(7,5),(9,2)\}$
 2. $\{(2,5),(5,7),(7,2)\}$ 
 3. $\{(7,9),(2,5),(9,9),(2,7)\}$
@@ -122,9 +158,12 @@ $$
 \end{array}
 $$
 
+---
+
 ### Ejercicios
 
 Sean $\rho$ y $\sigma$ dos relaciones binarias sobre $\mathbb{N}$ definidas como
+
 - $x\ \rho\ y\Leftrightarrow x=y$
 - $x\ \sigma\ y\Leftrightarrow x < y$
 
@@ -137,6 +176,7 @@ Entregue una descripción verbal para
 # Propiedades de las relaciones
 
 Una relación binaria $\rho$ sobre un conjunto $S$ puede tener ciertas propiedades
+
 - **Reflexibidad** $(\forall x)(x\in S\Rightarrow (x,x)\in \rho)$
 - **Simetría** $(\forall x)(\forall y)(x\in S\land y\in S\land(x,y)\in \rho\Rightarrow (y,x)\in \rho)$
 - **Transitividad** 
@@ -161,6 +201,7 @@ $$(\forall x)(\forall y)(\forall z)(x\in S\land y\in S\land z\in S\land (x,y)\in
 ## Ejercicios
 
 Sea $S=\{1,2,3\}$  una relación $\rho$ sobre $S$.
+
 1. Si $\rho$ es reflexiva, ¿Qué pares ordenados componen $\rho$?
 1. Si $\rho$ es simétrica, ¿Qué pares ordenados componen $\rho$?
 1. Si $\rho$ es simétrica y $(a,b)\in \rho$, ¿Qué otros pares deben estar en $\rho$?
@@ -169,6 +210,7 @@ Sea $S=\{1,2,3\}$  una relación $\rho$ sobre $S$.
 ## Ejercicios
 
 Compruebe qué propiedades cumple cada relación sobre el conjunto indicado 
+
 1. $x\ \rho\ y\Leftrightarrow x+y$ es par sobre $\mathbb{N}$
 1. $x\ \rho\ y\Leftrightarrow x\mbox{ divide } y$ sobre $\mathbb{Z}^+$
 1. $x\ \rho\ y\Leftrightarrow x=y^2$ sobre $\mathbb{N}$
@@ -177,17 +219,17 @@ Compruebe qué propiedades cumple cada relación sobre el conjunto indicado
 # Clausuras de relaciones
 
 - Dado un conjunto $S$, una relación $\rho$ y una propiedad $P$ (simetría, transiti...)
-- Si $\rho$ sobre $S$ carece de una propiedad $P$ es posible **extender** $\rho$ a una $\rho^*$ sobre $S$ que sí la tenga
-- Luego, $\rho^*$ tendrá los pares $(x,y)$ en $\rho$ más otros adicionales para que se cumpla $P$
-- Si $\rho^*$ es el conjunto más pequeño entonces se denomina la clausura de $\rho$ con respecto a $P$
+- Si $\rho$ sobre $S$ carece de una propiedad $P$ es posible **extender** $\rho$ a una $\rho^{\ast}$ sobre $S$ que sí la tenga
+- Luego, $\rho^{\ast}$ tendrá los pares $(x,y)$ en $\rho$ más otros adicionales para que se cumpla $P$
+- Si $\rho^{\ast}$ es el conjunto más pequeño entonces se denomina la clausura de $\rho$ con respecto a $P$
 
 
 ## Definición
 
-- Una relación $\rho^*$ sobre un conjunto $S$ es la clausura de la relación $\rho$ con respecto a la propiedad $P$ si
-    - $\rho^*$ sí tiene $P$
-    - $\rho \subseteq\rho^*$
-    - $\rho^*$ es subconjunto de cualquier otra relación sobre $S$ que incluya $\rho$ y tenga la propiedad $P$
+- Una relación $\rho^{\ast}$ sobre un conjunto $S$ es la clausura de la relación $\rho$ con respecto a la propiedad $P$ si
+    - $\rho^{\ast}$ sí tiene $P$
+    - $\rho \subseteq\rho^{\ast}$
+    - $\rho^{\ast}$ es subconjunto de cualquier otra relación sobre $S$ que incluya $\rho$ y tenga la propiedad $P$
 
 ## Ejemplo
 
@@ -195,7 +237,7 @@ Compruebe qué propiedades cumple cada relación sobre el conjunto indicado
 - $\rho$ es no reflexiva, no simétrica y no transitiva
 
 La clausura de $\rho$ respecto de la reflexividad es 
-$$\rho^* = \{(1,1),(1,2),(1,3),(3,1),(2,3),(2,2),(3,3)\}$$
+$$\rho^{\ast} = \{(1,1),(1,2),(1,3),(3,1),(2,3),(2,2),(3,3)\}$$
 
 ## Ejercicio
 
@@ -233,6 +275,8 @@ $(c, a), (d, a), (d, d), (d, c), (b, a), (b, c), (c, d)\}$
     1. $x\ \preceq\ y\Leftrightarrow x=y^2$ sobre $\{0,1\}$
 * Importante distinguir que $x\prec y$ si $x\preceq y$ y $x\neq y$
 
+---
+
 ### Restricción en subconjuntos
 
 * Sea $(S,\preceq)$ un poset y sea $A\subseteq S$. 
@@ -242,6 +286,8 @@ $(c, a), (d, a), (d, d), (d, c), (b, a), (b, c), (c, d)\}$
 * Ejemplo: $x\ \preceq\ y\Leftrightarrow x\mbox{ divide } y$ sobre $\mathbb{Z}^+$.
     * Siguiendo def. sabemos que $x\ \preceq\ y\Leftrightarrow x\mbox{ divide } y$ es un orden parcial sobre $\{1,2,3,6,88\}$ (o cualquier otro subcjto. de $\mathbb{Z}^+$)
 
+---
+
 ### Otros ejemplos familiares de posets
 
 - Consideremos el poset $(S,\leq)$
@@ -250,6 +296,7 @@ $(c, a), (d, a), (d, d), (d, c), (b, a), (b, c), (c, d)\}$
 - Un $y$ cualquiera puede tener muchos predecesores (ser sucesor de muchos $x$ distintos)...
 - ... pero cuando $\nexists z| x < z < y$, entonces $x$ es el predecesor inmediato de $y$
 
+---
 
 ### Ejercicio
 
@@ -258,6 +305,8 @@ Consideremos la relación $x|y$ o $x$ divide a $y$ sobre $\{1,2,3,6,12,18\}$
 a. Escriba los pares ordenados de esta relación
 b. Escriba todos los predecesores de $6$
 c. Escriba todos los predecesores inmediatos de $6$
+
+---
 
 ### Diagramas de Hasse
 
@@ -270,21 +319,31 @@ c. Escriba todos los predecesores inmediatos de $6$
 
 **Ejemplo para** $(\{1,2,3,4,5,6,7,8,9,10\}, |)$
 
-<center>
-<img width="300px" src="http://mathonline.wdfiles.com/local--files/hasse-diagrams/Screen%20Shot%202015-08-16%20at%2010.02.14%20PM.png"/>
-</center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=1cm, xshift=4cm] at (current page.south) 
+    {
+        \includegraphics[width=0.3\textwidth]{poset.png}
+    };
+\end{tikzpicture}
+	
+---
 
 ### Ejercicio
 
 Considere el conjunto $\wp(\{1,2\})$ junto a la relación de inclusión de conjuntos.
+
 - Es una restricción del poset $(\wp(\mathbb{N}),\subseteq)$ es un poset.
 - Por lo tanto, también es uno.
 
 **Construya el diagrama de Hasse del poset.**
 
+---
+
 ### Ejercicio
 
 Construya el diagrama de Hasse para la relación  $x\mbox{ divide }y$ sobre $\{1,2,3,6,12,18\}$.
+
+---
 
 ### Elemento menor y minimal
 
@@ -294,10 +353,13 @@ Construya el diagrama de Hasse para la relación  $x\mbox{ divide }y$ sobre $\{1
 - En el diagrama de Hasse, el menor está debajo de todos los demás, mientras que el minimal simplemente es aquel que no tiene otros debajo. 
 - Analogamente, pueden definirse el **elemento mayor** y el **maximal**
 
+---
+
 ### Ejercicio
 
 Para el diagrama del poset de la relación  $x\mbox{ divide }y$ sobre $\{1,2,3,6,12,18\}$ identifique el/los elementos maximales y el elemento mayor (en caso que exista).
 
+---
 
 ### Ejercicio
 
@@ -307,19 +369,27 @@ Construya el diagrama de Hasse para la relación $\leq$ sobre los $\{1,2,3,4\}$
 
 **Solución**
 
-<center><br><img width="70px" src="hasse_cadena.png"/></center>
-
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=1cm, xshift=-4cm] at (current page.south east) 
+    {
+        \includegraphics[width=0.06\textwidth]{hasse_cadena.png}
+    };
+\end{tikzpicture}
+	
 - Un poset en el cual cada elemento está relacionado a todos los demás se denomina **orden total** o **cadena**.
 
 
 ## Relaciones de equivalencia
 
 - Relación binaria sobre un conjunto $S$ que es **reflexiva**, **simétrica** y **transitiva**.
+
 * Algunos ejemplos:
 	1. Sobre cualquier conjunto $S$, $x\rho y \Leftrightarrow x=y$
 	1. Sobre $\mathbb{N}$, $x\rho y\Leftrightarrow x + y$ es par
 	1. Sobre $\{0,1\}$, $x\rho y\Leftrightarrow x=y^2$
 	1. Sobre $\{x|x\mbox{ es estudiante en la clase}\}$, $x\rho y\Leftrightarrow x$ se sienta en la misma fila que $y$
+
+---
 
 ### Partición inducida
 
@@ -331,6 +401,8 @@ Construya el diagrama de Hasse para la relación $\leq$ sobre los $\{1,2,3,4\}$
 
 $$[x]=\{y|y\in S \wedge x\rho y\}=\{y|y\in S \wedge y\rho x\}$$	
 
+---
+
 ### Ejercicio
 
 Considere la relación de equivalencia sobre $\mathbb{N}$ dada por 
@@ -339,12 +411,16 @@ $$x\rho y\Leftrightarrow x+y\mbox{  es par}$$
 1. En cuantas clases de equivalencia particiona a $\mathbb{N}$
 1. Entregue 2 nombres de clases de equivalencia
 
+---
+
 ### Ejemplo
 
 - Considere la relación *congruencia modulo 4* sobre $\mathbb{Z}$ simbolizada por $\equiv_4$.
 - Dos números $x,y\in\mathbb{Z}$ cumplen $x\equiv_4 y$ cuando $(x-y)$ es un multiplo entero de $4$. También simbolizado como $x\equiv y(\mod4)$
 - Esto equivale a decir que $x\rho y\Leftrightarrow (x\mod4)\equiv (y\mod4)$
 - Habrán entonces 4 particiones, una para los números $x$ tal que $(x\mod4)=0$, $(x\mod4)=1$, $(x\mod4)=2$ y $(x\mod4)=3$
+
+---
 
 ### Ejercicio
 
@@ -359,6 +435,8 @@ $$x\rho y\Leftrightarrow x+y\mbox{  es par}$$
 
 $$x\preceq y\Leftrightarrow\mbox{ $x$ es prerequisito de $y$}$$
 
+---
+
 ### Ejercicio
 
 - Explique porque la relación de prerequisito es reflexiva, antisimetrica y transitiva.
@@ -369,6 +447,8 @@ Continuando con el poset de actividades y sus relaciones de dependencias...
 
 - Puede usarse un diagrama de Hasse para visualizar la malla de actividades
 - Podemos también agregar en cada nodo la información del tiempo necesario en cada tarea
+
+---
 
 ### Ejemplo
 
@@ -384,9 +464,15 @@ Continuando con el poset de actividades y sus relaciones de dependencias...
 |   6   	|      4,5      	|        0.5       	|
 
 ---
-- El diagrama para la tabla anterior es:
 
-<center><br><img width="600px" src="hasse_pert.png"/></center>
+El diagrama para la tabla anterior es:
+
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=1cm, xshift=4cm] at (current page.south) 
+    {
+        \includegraphics[width=0.5\textwidth]{hasse_pert.png}
+    };
+\end{tikzpicture}
 
 - El proyecto avanza de izquierda a derecha
 - Tareas 2 y 3 pueden realizarse en paralelo
@@ -395,21 +481,30 @@ Continuando con el poset de actividades y sus relaciones de dependencias...
 
 Por lo tanto, para calcular la duración de cada tarea
 
-**T1**. 3.0
-**T2**. 3.0 + 2.0 = 5.0
-**T3**. 3.0 + 4.0 = 7.0
-**T4**. 5.0 + 3.0 = 8.0
-**T5**. $\max{(T2,T3)}+5.0=\mathbf{T3}+5.0=12.0$
-**T6**. $\max{(T4,T5)}+0.5=\mathbf{T5}+0.5=12.5$
+* **T1**. 3.0
+* **T2**. 3.0 + 2.0 = 5.0
+* **T3**. 3.0 + 4.0 = 7.0
+* **T4**. 5.0 + 3.0 = 8.0
+* **T5**. $\max{(T2,T3)}+5.0=\mathbf{T3}+5.0=12.0$
+* **T6**. $\max{(T4,T5)}+0.5=\mathbf{T5}+0.5=12.5$
 
-- Luego el número mínimo de semanas para realizar todo el proceso es de $12.5$
+Luego el número mínimo de semanas para realizar todo el proceso es de $12.5$
 
+---
 
 ### La **ruta crítica** de la planificación es:
 
-<center><br><img width="600px" src="hasse_pert_critica.png"/></center>
+
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=1cm, xshift=4cm] at (current page.south) 
+    {
+        \includegraphics[width=0.5\textwidth]{hasse_pert_critica.png}
+    };
+\end{tikzpicture}
 
 - Se genera recorriendo del fin al principio seleccionando el prerequisito con mayor valor
+
+---
 
 ### Ejecución del Ordenamiento Topológico
 
@@ -423,5 +518,16 @@ Dado un **orden parcial** $\rho$ sobre un conjunto finito, **siempre existirá**
 
 El O.T. de la planificación es (de izquiera a derecha partiendo por la secuencia de más arriba)
 
-<center><br><img width="900px" src="hasse_tareas_otopologico_1de2.png"/>
-<br><img width="900px" src="hasse_tareas_otopologico_2de2.png"/></center>
+\vspace{10pt}
+
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=-1.4cm, xshift=4cm] at (current page.center) 
+    {
+        \includegraphics[width=0.9\textwidth]{hasse_tareas_otopologico_1de2.png}
+    };
+	
+    \node[above left, yshift=0.9cm, xshift=4cm] at (current page.south) 
+    {
+        \includegraphics[width=0.9\textwidth]{hasse_tareas_otopologico_2de2.png}
+    };	
+\end{tikzpicture}
