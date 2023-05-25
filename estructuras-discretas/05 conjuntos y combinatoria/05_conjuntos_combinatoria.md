@@ -120,10 +120,10 @@ Esto significa que $(\forall x)[(x\in S\Rightarrow P(x))\wedge(P(x)\Rightarrow x
 # Subconjunto de un conjunto
 
 - Considere los conjuntos $A=\{2,3,5,12\}$ y $B=\{2,3,4,5,9,12\}$
-- Se puede ver que cada miembro de $A$ es también un miembro de $B$
-- Cuando ocurre esto, se dice que $A$ es un **subconjunto** de $B$
-$$A\subseteq B$$ 
-- Si se cumple lo anterior, pero $A\neq B$ entonces $A$ es subconjunto propio de $B$ y se indica $A\subset B$
+- Se puede ver que cada miembro de $A$ es también un miembro de $B$, pero existen elementos de $B$ que no están en $A$	
+	- Cuando ocurre esto, se dice que $A$ es un **subconjunto** de $B$
+$$A\subseteq B$$ o bien $$A\subset B$$ 
+- Para indicar que todos los elementos de $A$ están en $B$, pero $A\neq B$ se indica $A$ como subconjunto propio de $B$ y se representa como $A\subset B$
 
 ---
 
@@ -161,10 +161,9 @@ Ej. Dado $S=\{0,1\}$, $\wp(S)=\{\emptyset, \{0\}, \{1\},\{0,1\}\}$
 
 ## Actividad
 
-1.i Para $A=\{1,2,3\}$, ¿Cual es $\wp(A)$?
-1.ii ¿Cuantos elementos tiene este conjunto potencia?
-
-2. Si $S$ tiene $n$ elementos, ¿Cuantos elementos tiene $\wp(S)$?
+1. Para $A=\{1,2,3\}$, ¿Cual es $\wp(A)$?
+2. ¿Cuantos elementos tiene este conjunto potencia?
+3. Si $S$ tiene $n$ elementos, ¿Cuantos elementos tiene $\wp(S)$?
 
 
 
@@ -213,7 +212,7 @@ Sea $S$ un conjunto universo (ej. $\mathbb{N}$)
 # Conteo
 
 * Este problema consiste esencialmente en encontrar la cantidad de elementos de un conjunto determinado
-* Permite por ejemplo abordar preguntas como ¿cuantas operaciones realiza un algoritmo?¿cuanto almacenamiento necesita una base de dato?
+* Permite por ejemplo abordar preguntas como ¿cuantas operaciones realiza un algoritmo?¿cuanto almacenamiento necesita una base de datos?
 * Hasta ahora hemos abordado preguntas similares en varios momentos del Curso
     * ¿Cuantas filas tiene una tabla de verdad con $n$ proposiciones?
     * ¿Cuantos subconjuntos tiene un conjunto con $n$ miembros?
@@ -221,6 +220,7 @@ Sea $S$ un conjunto universo (ej. $\mathbb{N}$)
 ## Principios generales
 
 Revisaremos 4 principios de conteo que nos permitiran resolver varios problemas
+
 1. Multiplicación
 2. Adición
 3. Inclusión y Exclusión
@@ -238,7 +238,13 @@ Si hay $n_1$ resultados posibles para un primer evento y $n_2$ posibles resultad
     
 Un niño puede escoger sólo una gomita de dos opciones disponibles, una roja y otra verde, y un caramelo de tres opciones disponibles, naranjo, amarillo y azul. ¿Cual es la cantidad de elecciones posibles que tiene el niño?
 
-![width:500px](dulces.png)
+
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=1cm, xshift=4cm] at (current page.south) 
+    {
+        \includegraphics[width=0.5\textwidth]{dulces.png}
+    };
+	\end{tikzpicture}
 
 ---
 
@@ -270,6 +276,7 @@ Ejemplos: 4102 , 4499, 5300, 5120 ...
 ---
 
 Primero, se podría dividir la tarea de conformar números de 4 dígitos $4x_1x_2x_3$ en 3 subtareas:
+
 1. Existen 10 resultados posibles para $x_1$
 1. Existen 10 resultados posibles para $x_2$
 1. Existen 10 resultados posibles para $x_3$
@@ -360,6 +367,7 @@ $$P(n,r)=\frac{n!}{(n-r)!}$$
 ### Ejercicio
 
 En una clase conformada por 19 estudiantes de primer año y 34 de segundo, se necesita formar un grupo de 8. 
+
 1. ¿Cuantos grupos de 3 de 1ro y 5 de 2do pueden formarse?
 1. ¿Cuantos con exactamente 1 de 1ro?
 1. ¿Cuantos con uno de 1ro como máximo?
