@@ -180,7 +180,7 @@ Una relación binaria $\rho$ sobre un conjunto $S$ puede tener ciertas propiedad
 - **Reflexibidad** $(\forall x)(x\in S\Rightarrow (x,x)\in \rho)$
 - **Simetría** $(\forall x)(\forall y)(x\in S\land y\in S\land(x,y)\in \rho\Rightarrow (y,x)\in \rho)$
 - **Transitividad** 
-$$(\forall x)(\forall y)(\forall z)(x\in S\land y\in S\land z\in S\land (x,y)\in\rho\land(y,z)\in\rho\Rightarrow (x,z)\in \rho)$$
+$(\forall x)(\forall y)(\forall z)(x\in S\land y\in S\land z\in S\land (x,y)\in\rho\land(y,z)\in\rho\Rightarrow (x,z)\in \rho)$
 - **Antisimetría** $(\forall x)(\forall y)(x\in S\land y\in S\land(x,y)\in \rho\land (y,x)\in\rho\Rightarrow x=y)$
 
 ## Ejemplos
