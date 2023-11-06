@@ -45,6 +45,11 @@
 \usepgfplotslibrary{statistics}
 \pgfplotsset{compat=1.15}
 
+% Do not need to write directory in each figure
+\graphicspath{{fig/}}
+
+\usepackage[outdir=./fig/]{epstopdf}
+
 \usepackage[backend=biber,autocite=plain,style=verbose]{biblatex}
 \addbibresource{bibliography.bib}
 
@@ -103,8 +108,6 @@
 % Display referenced numbers in bibliography
 % \setbeamertemplate{bibliography item}{\insertbiblabel}
 
-% Do not need to write directory in each figure
-\graphicspath{{fig/}}
 
 \newcommand{\parens}[1]{\mathopen{} \mathclose \bgroup \left ( #1 \aftergroup \egroup \right )}
 \newcommand{\vparens}[1]{\mathopen{} \mathclose \bgroup \left \lvert #1 \aftergroup \egroup \right \rvert}
@@ -150,6 +153,7 @@
 \newcommand{\exponential}[1]{\text{Exponencial} \parens{#1}}
 \newcommand{\gammadist}[2]{\Gamma \parens{#1 , #2}}
 \newcommand{\chidist}[1]{\chi^{2} \parens{#1}}
+\newcommand{\tdist}[1]{t \parens{#1}}
 \newcommand{\betadist}[2]{\text{Beta} \parens{#1 , #2}}
 \newcommand{\multinomial}[2]{\text{Mu} \parens{#1 , #2}}
 \newcommand{\dirichlet}[1]{\text{Dir} \parens{#1}}
@@ -160,6 +164,12 @@
 \newcommand{\xvec}{\mathbf{x}}
 \newcommand{\yvec}{\mathbf{y}}
 \newcommand{\zvec}{\mathbf{z}}
+
+
+
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\indicator}[2]{\mathbf{1}_{#1} \parens{#2}}
+
 
 
 % Needed to reduce waste of blank space after block titles
