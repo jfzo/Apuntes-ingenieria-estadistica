@@ -1,0 +1,174 @@
+% Declare that this style file requires at least LaTeX version 2e.
+\NeedsTeXFormat{LaTeX2e}
+
+% Provide the name of your page, the date it was last updated, and a comment about what it's used for
+\ProvidesPackage{pucv_jz}[2023/08/28 Juan Zamora O.]
+
+% Now paste your code from the preamble here
+% Table is required for multicolumn package with beamer
+%\documentclass[table]{beamer}
+% Next line required if document is in spanish
+\usepackage[spanish]{babel}
+% amsmath required for left bracket with list of options at right
+\usepackage{amsmath}
+\usepackage{comment}
+\usepackage{amssymb}
+% blkarray allows matrix and other rows with same alignment
+\usepackage{blkarray}
+% hyperref add URLs at bibliography and by multimedia package
+\usepackage{hyperref}
+\usepackage{multimedia}
+% Vertically centered items in tables need array package
+\usepackage{array}
+% To have multirow cells in tables
+\usepackage{multirow}
+\usepackage{multicol}
+% Background color in tables
+% \usepackage{framed}
+% Draw pie charts using tikz
+\usepackage{pgf-pie}
+% Draw charts
+\usepackage{pgfplots}
+\usepackage{pgfplotstable}
+\usepackage{xcolor}  % Also required for text color
+% In order to add gifs
+% \usepackage{animate}
+% Tikz figures and associated libraries
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+% Draw Bayes nets
+% From: https://github.com/jluttine/tikz-bayesnet
+\usetikzlibrary{bayesnet}
+\usetikzlibrary{positioning}
+% Required for boxplots
+\usetikzlibrary{pgfplots.statistics}
+\usepgfplotslibrary{statistics}
+\pgfplotsset{compat=1.15}
+
+\usepackage[backend=biber,autocite=plain,style=verbose]{biblatex}
+\addbibresource{bibliography.bib}
+
+%\usetheme{CambridgeUS}
+
+\usepackage[T1]{fontenc}
+\usepackage{url}
+\usepackage{colortbl}
+	
+	
+    \setbeamertemplate{footline}{%
+    \raisebox{5pt}{\makebox[0.5\paperwidth]{\hfill\makebox[20pt]{\color{black}\scriptsize\insertframenumber}}}\hspace*{5pt}}
+    \newcommand{\bigCI}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-1 0mu\perp$}}}}
+
+    \definecolor{LightRed}{RGB}{252,160,140}
+    \definecolor{LightBlue}{RGB}{140,186,252}   
+    
+    \newcolumntype{a}{>{\columncolor{LightRed}}c}
+    \newcolumntype{b}{>{\columncolor{LightBlue}}c}
+
+    \newcommand{\empt}[2]{#1^{( #2 )}}
+    \thispagestyle{empty}
+
+    \titlegraphic { 
+    \begin{tikzpicture}[overlay,remember picture]
+    \node[below=-2.0cm] at (current page.south){
+        \includegraphics[width=4cm]{logosAzul.png}
+    };
+    \end{tikzpicture}
+    }
+
+    \logo{
+	\begin{tikzpicture}[overlay,remember picture]
+		\node[opacity=0.4,right=-0.6cm, above=0.07cm] at ([xshift=-0.6cm]current page.south east){
+    			\includegraphics[height=0.6cm]{logoAzul.png}
+        };
+	\end{tikzpicture}
+    }
+
+
+% Remove template navigation buttons
+\beamertemplatenavigationsymbolsempty
+
+% Remove footnote numbers
+\makeatletter
+\def\@makefnmark{}
+\makeatletter
+
+% Do not show footnote number
+\setbeamertemplate{footnote}{
+  \parindent 1em\noindent
+  \raggedright
+  \insertfootnotetext\par
+}
+
+% Display referenced numbers in bibliography
+% \setbeamertemplate{bibliography item}{\insertbiblabel}
+
+% Do not need to write directory in each figure
+\graphicspath{{fig/}}
+
+\newcommand{\parens}[1]{\mathopen{} \mathclose \bgroup \left ( #1 \aftergroup \egroup \right )}
+\newcommand{\vparens}[1]{\mathopen{} \mathclose \bgroup \left \lvert #1 \aftergroup \egroup \right \rvert}
+%\newcommand{\vvparens}[1]{\mathopen{} \mathclose \bgroup \left \lVert #1 \aftergroup \egroup \right \rVert}
+\newcommand{\sparens}[1]{\mathopen{} \mathclose \bgroup \left [ #1 \aftergroup \egroup \right ]}
+\newcommand{\bparens}[1]{\mathopen{} \mathclose \bgroup \left \{ #1 \aftergroup \egroup \right \}}
+\newcommand{\lparens}[1]{\mathopen{} \mathclose \bgroup \left \langle #1 \aftergroup \egroup \right \rangle}
+\newcommand{\evalparens}[1]{\mathopen{} \mathclose \bgroup \left . #1 \aftergroup \egroup \right \rvert}
+
+\newcommand{\pdf}[1]{p \parens{#1}}
+\newcommand{\prob}[1]{P \parens{#1}}
+\newcommand{\ff}[1]{f \parens{#1}}
+
+\newcommand{\cov}[1]{\text{Cov} \parens{#1}}
+\newcommand{\variance}[1]{\mathbb{V} \sparens{#1}}
+\newcommand{\variancedist}[2]{\mathbb{V}_{#1} \sparens{#2}}
+\newcommand{\expected}[1]{\mathbb{E} \sparens{#1}}
+\newcommand{\expecteddist}[2]{\mathbb{E}_{#1} \sparens{#2}}
+\newcommand{\normal}[2]{\mathcal{N} \parens{#1 , #2}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\eventspace}{\mathcal{A}}
+\newcommand{\combin}[2]{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}
+
+
+\newcommand{\ppdf}[2]{p_{#1} \parens{#2}}
+\newcommand{\pprob}[2]{P_{#1} \parens{#2}}
+\newcommand{\qq}[1]{q \parens{#1}}
+\newcommand{\FF}[1]{F \parens{#1}}
+\newcommand{\pFF}[2]{F_{#1} \parens{#2}}
+\newcommand{\pff}[2]{f_{#1} \parens{#2}}
+\newcommand{\sfunc}[1]{\sigma^{2} \parens{#1}}
+
+\newcommand{\corr}[1]{\text{corr} \sparens{#1}}
+
+\newcommand{\integers}{\mathbb{Z}}
+
+\newcommand{\gammafunc}[1]{\Gamma \parens{#1}}
+\newcommand{\betafunc}[2]{B \parens{#1 , #2}}
+\newcommand{\bernoulli}[1]{\text{Bernoulli} \parens{#1}}
+\newcommand{\poisson}[1]{\text{Pois} \parens{#1}}
+\newcommand{\binomial}[2]{B \parens{#1 , #2}}
+\newcommand{\uniform}[2]{U \parens{#1 , #2}}
+\newcommand{\exponential}[1]{\text{Exponencial} \parens{#1}}
+\newcommand{\gammadist}[2]{\Gamma \parens{#1 , #2}}
+\newcommand{\chidist}[1]{\chi^{2} \parens{#1}}
+\newcommand{\betadist}[2]{\text{Beta} \parens{#1 , #2}}
+\newcommand{\multinomial}[2]{\text{Mu} \parens{#1 , #2}}
+\newcommand{\dirichlet}[1]{\text{Dir} \parens{#1}}
+\newcommand{\laplace}[2]{\text{Laplace} \parens{#1 , #2}}
+\newcommand{\Xvec}{\mathbf{X}}
+\newcommand{\Yvec}{\mathbf{Y}}
+\newcommand{\Zvec}{\mathbf{Z}}
+\newcommand{\xvec}{\mathbf{x}}
+\newcommand{\yvec}{\mathbf{y}}
+\newcommand{\zvec}{\mathbf{z}}
+
+
+% Needed to reduce waste of blank space after block titles
+\addtobeamertemplate{block begin}{\setlength\abovedisplayskip{0pt}}{}
+\addtobeamertemplate{block alerted begin}{\setlength\abovedisplayskip{0pt}}{}
+\addtobeamertemplate{block example begin}{\setlength\abovedisplayskip{0pt}}{}
+
+
+
+
+% Finally, we'll use \endinput to indicate that LaTeX can stop reading this file. LaTeX will ignore anything after this line.
+\endinput
