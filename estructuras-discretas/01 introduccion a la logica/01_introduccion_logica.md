@@ -106,6 +106,7 @@ Por ejemplo, analicemos las siguientes proposiciones:
 ## Representaciones simbólicas
 
 Necesitamos una manera de poder tratar proposiciones y conectores que:
+
 1. Sirva para todas las proposiciones (Generalidad)
 2. Facilite la explicación de reglas (Economía en la escritura)
 
@@ -128,13 +129,15 @@ Necesitamos una manera de poder tratar proposiciones y conectores que:
 
 ## Ahora considere la Tabla
 
-\begin{tikzpicture}[remember picture, overlay]
-    \node[above left, yshift=2cm] at (current page.south) 
-    {
-        \includegraphics[width=0.3\textwidth]{tabla_and.png}
-    };
-
-\end{tikzpicture}
+\begin{table}[]
+\begin{tabular}{l|l|l}
+A & B & $A\wedge B$ \\ \hline
+V & V & V                \\
+V & F & F                \\
+F & V & F                \\
+F & F & F               
+\end{tabular}
+\end{table}
 
 ---
 
@@ -148,18 +151,18 @@ Analice nuevamente y compare con su respuesta anterior...
 ## Conjunciones y Disyunciones
 
 - A la expresión $A\land B$ se le denomina **conjunción**.
-- Otro conector muy usado es el de la **disyunción** ($\lor$), cuya Tabla de verdad es:
+- Otro conector muy usado es el de la **disyunción** ($\vee$), cuya Tabla de verdad es:
 
+\begin{table}[]
+\begin{tabular}{l|l|l}
+A & B & $A\vee B$ \\ \hline
+V & V & V                \\
+V & F & V                \\
+F & V & V                \\
+F & F & F               
+\end{tabular}
+\end{table}
 
-\begin{tikzpicture}[remember picture, overlay]
-    \node[above left, yshift=3cm, xshift=3cm] at (current page.south) 
-    {
-        \includegraphics[width=0.3\textwidth]{tabla_or.png}
-    };
-
-	\end{tikzpicture}
-	
-\vspace{2.5cm}
 
 - **Ejercicio** Siguiendo los ejemplos anteriores de conjunciones, construya una proposición compuesta para cada fila de la tabla de este conector.
 
@@ -171,11 +174,25 @@ Analice nuevamente y compare con su respuesta anterior...
 - Indica que el valor de verdad de $A$ implica o conduce al valor de verdad de $B$
 - Recuerda que lo que nos interesa es obtener el valor de verdad de la proposición compuesta a partir de los valores de sus componentes $A$ y $B$.
 
+---
+
+
+\begin{table}[]
+\begin{tabular}{l|l|l}
+A & B & $A\Rightarrow B$ \\ \hline
+V & V & V                \\
+V & F & F                \\
+F & V & V                \\
+F & F & V               
+\end{tabular}
+\end{table}
+
 ## Consideremos la siguiente proposición:
 
 <center>"Si llueve, entonces me mojo"</center>
 
 Examinemos varios casos. Entonces, cuando sabemos que	
+
 - llovió y que además me encuentro mojado, la declaración es **V**
 - llovió y que no me encuentro mojado, la declaración es **F**
 - **no** llovió, entonces independientemente de si me encuentro o no mojado, no podemos decir que la declaración es **F**. Por convención, en este caso la declaración es **V**

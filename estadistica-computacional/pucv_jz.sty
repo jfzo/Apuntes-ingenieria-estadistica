@@ -29,6 +29,9 @@
 \usepackage{pgf-pie}
 % Draw charts
 \usepackage{pgfplots}
+
+\usepgfplotslibrary{fillbetween}
+
 \usepackage{pgfplotstable}
 \usepackage{xcolor}  % Also required for text color
 % In order to add gifs
@@ -131,6 +134,7 @@
 \newcommand{\eventspace}{\mathcal{A}}
 \newcommand{\combin}[2]{\begin{pmatrix} #1 \\ #2 \end{pmatrix}}
 
+\newcommand{\phifunc}[1]{\Phi \parens{#1}}
 
 \newcommand{\ppdf}[2]{p_{#1} \parens{#2}}
 \newcommand{\pprob}[2]{P_{#1} \parens{#2}}
@@ -158,6 +162,7 @@
 \newcommand{\multinomial}[2]{\text{Mu} \parens{#1 , #2}}
 \newcommand{\dirichlet}[1]{\text{Dir} \parens{#1}}
 \newcommand{\laplace}[2]{\text{Laplace} \parens{#1 , #2}}
+
 \newcommand{\Xvec}{\mathbf{X}}
 \newcommand{\Yvec}{\mathbf{Y}}
 \newcommand{\Zvec}{\mathbf{Z}}

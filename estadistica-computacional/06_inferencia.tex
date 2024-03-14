@@ -437,7 +437,11 @@
             \bar{X}_{n} \overset{P}{\to} \mu .
         \end{equation*}
     \end{block}
-    \begin{block}{Casi segura o casi en todas partes (ley \emph{fuerte})}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Nota: Tipos de convergencia}
+   \begin{block}{Casi segura o casi en todas partes (ley \emph{fuerte})}
         \begin{equation*}
             \prob{\lim_{n \rightarrow \infty} \bar{X}_{n} = \mu} = 1 .
         \end{equation*}
@@ -449,6 +453,7 @@
         \end{equation*}
     \end{block}
 \end{frame}
+
 
 \begin{frame}
     \frametitle{Ley débil de los grandes números -- demostración}
@@ -513,7 +518,12 @@
                 \end{equation*}
         \end{itemize}
     \end{block}
-    \begin{block}{Demostración}
+
+\end{frame}
+
+\begin{frame}
+    \frametitle{Ley débil de los grandes números -- demostración}
+   \begin{block}{Demostración}
         \begin{itemize}
             \item Sabemos que $\variance{\bar{X}_{n}} = \frac{\sigma^{2}}{n}$.
             \item Entonces, para todo $k > 0 \in \reals$:
@@ -529,6 +539,7 @@
         \end{itemize}
     \end{block}
 \end{frame}
+
 
 \begin{frame}
     \frametitle{Ley de los grandes números}
@@ -560,9 +571,17 @@
             \item $\prob{X = 1} = \frac{\pi}{4}$ y $\prob{X = 0} = 1 - \frac{\pi}{4}$. Es decir, $X \sim \bernoulli{\frac{\pi}{4}}$.
         \end{itemize}
     \end{block}
-    \begin{center}
-        \includegraphics[width=0.45\textwidth]{montecarlo_pi}
-    \end{center}
+%    \begin{center}
+%        \includegraphics[width=0.45\textwidth]{montecarlo_pi}
+%    \end{center}
+
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=1.3cm, xshift=2cm] at (current page.south) 
+{
+    \includegraphics[width=0.35\textwidth]{montecarlo_pi}
+};
+\end{tikzpicture}  
+
 \end{frame}
 
 \begin{frame}
@@ -1029,9 +1048,17 @@
                 \end{multline*}
         \end{itemize}
     \end{block}
-    \begin{center}
-        \includegraphics[height=0.15\textheight]{intervalo_t}
-    \end{center}
+%    \begin{center}
+%        \includegraphics[height=0.15\textheight]{intervalo_t}
+%    \end{center}
+
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=1.4cm, xshift=-2cm] at (current page.south) 
+{
+    \includegraphics[width=0.4\textheight]{intervalo_t}
+};
+\end{tikzpicture}    
+
 \end{frame}
 
 \begin{frame}
@@ -1052,9 +1079,17 @@
                 \end{multline*}
         \end{itemize}
     \end{block}
-    \begin{center}
-        \includegraphics[height=0.2\textheight]{intervalo_chi}
-    \end{center}
+%    \begin{center}
+%        \includegraphics[height=0.2\textheight]{intervalo_chi}
+%    \end{center}
+
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=1.5cm, xshift=-2cm] at (current page.south) 
+{
+    \includegraphics[width=0.5\textheight]{intervalo_chi}
+};
+\end{tikzpicture}    
+
 \end{frame}
 
 \begin{frame}
