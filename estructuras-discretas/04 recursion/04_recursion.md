@@ -276,7 +276,32 @@ Recuerde la operación recursiva par multiplicar dos números y construya un pse
 
 ## Relaciones de Recurrencia
 
+Estudiaremos funciones $A(n)$ (para $n\geq 0$), donde $A(n)$ depende de alguno(s) de sus términos $A(n-1),\ A(n-2) \ldots A(0)$.
+
+El estudio de estas relaciones de recurrencia o ecuaciones de diferencia corresponde a la contraparte discreta de las EDO
+
+---
+
+### Ejemplo: Interés compuesto
+
 Imagine que una persona deposita \$10.000 en una cuenta de ahorro de un banco con un \%11 de interés anual compuesto. ¿Cuanto se habrá reunido en la cuenta después de 30 años?
+
+---
+
+* Monto inicial: $\$10000$
+* Interés compuesto: $\% 11$ anual
+
+| Monto al final de              | Cálculo | Total |
+| :---------------- | :------: | ----: |
+| Año 1        |  $10000\times 1.11$   | $\$11100$ |
+| Año 2        |  $11100\times 1.11$   | $\$12321$ |
+| Año 3        |  $12321\times 1.11$   | $\$13676$ |
+| $\vdots$ |   $\vdots$  |  $\vdots$  |
+
+
+$$C(n)=1.11\times C(n-1) \mbox{ con } C(0)=10000$$
+
+A partir de esto podemos verificar que $C(n)=10000\times 1.11^n$
 
 ---
 
