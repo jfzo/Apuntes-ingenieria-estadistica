@@ -11,7 +11,7 @@ author:
 #theme:
 #- Copenhagen
 date:
-- Otoño 2023
+- Otoño 2024
 header-includes: |
     \usepackage{tikz}
     \usepackage[T1]{fontenc}
