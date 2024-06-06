@@ -35,7 +35,7 @@ ifeq ($(shell echo "check_quotes"),"check_quotes")
 	WINDOWS := yes
 	EXT := ".exe"
 else
-	EXT := ".exe"
+	EXT := ""
 endif
 
 #ifdef USE_DOCKER
