@@ -28,7 +28,7 @@ CURRENT_DIR := $(dir $(abspath $(firstword $(MAKEFILE_LIST))))
 
 
 # make ARCH_WITH_MD_EXTENSION.pdf USE_DOCKER=no
-USE_DOCKER=no
+USE_DOCKER=yes
 
 # when working on WSL (win) windows is not detected, but exe extensions are needed.
 ifeq ($(shell echo "check_quotes"),"check_quotes")

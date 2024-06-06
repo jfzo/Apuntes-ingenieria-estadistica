@@ -172,7 +172,99 @@ Además usa un gráfico (*reachability  plot*) que muestra la densidad y conecti
 # HDBSCAN Clustering
 
 - Objetivo: Convertir DBSCAN en un método jerárquico
-- Explora todas las posibles escalas de densidad
+- Aproxima las densidades locales
 - Puede ser visto como DBSCAN clustering a lo largo de todos los valores de $\epsilon$
-    - Equivale a encontrar los componentes conectados del grafo de "mutual reachability" para todos los valores de $\epsilon$
-- Parametros: min_cluster_size, min_samples
+
+
+## Procedimiento
+
+- En lugar de fijar un valor de $\epsilon$, se determina el número $k$ de vecinos deseados y se encuentra el mínimo $\epsilon$ que permitiría contener estos $k$ vecinos
+- Estas distintas distancias se denominan *core distances*
+    - Puntos con *core distances* más pequeñas, se encuentran en regiones más densas
+    - Puntos con *core distances* más grandes, se encuentran en regiones más dispersas porque se tuvo que ampliar el umbral de distancia para encontrar suficientes vecinos
+- Encontrar regiones resulta similar a encontrar curvas de nive
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=1.5cm, xshift=4cm] at (current page.south) 
+{
+    \includegraphics[width=0.4\textwidth]{level_set.png}
+};
+\end{tikzpicture}   
+
+---
+
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=0.5cm, xshift=0cm] at (current page.center) 
+{
+    \includegraphics[width=0.6\textwidth]{hdbscan_data.png}
+};
+\end{tikzpicture}   
+
+---
+
+
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=1.5cm, xshift=-4cm] at (current page.center) 
+{
+    \includegraphics[width=0.4\textwidth]{hdbscan_data_cd1.png}
+};
+\end{tikzpicture}   
+
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=1.5cm, xshift=4cm] at (current page.center) 
+{
+    \includegraphics[width=0.4\textwidth]{hdbscan_data_cd2.png}
+};
+\end{tikzpicture}   
+
+
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=-2.5cm, xshift=-4cm] at (current page.center) 
+{
+    \includegraphics[width=0.4\textwidth]{hdbscan_data_cd3.png}
+};
+\end{tikzpicture}   
+
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=-2.5cm, xshift=4cm] at (current page.center) 
+{
+    \includegraphics[width=0.4\textwidth]{hdbscan_data_cd4.png}
+};
+\end{tikzpicture}   
+
+
+---
+
+- A medida que se disminuye el umbral de *core-distances* van apareciendo grupos menos densos
+    - Emergen nuevos clusters y eventualmente otros se fusionan
+- Dos puntos se conectaran dependiendo de la distancia mutua de alcance $$mrd_k(a,b) = \max\{coredist_k(a),coredist_k(b),dist(a,b)\}$$
+
+- Esta métrica "aleja" puntos cercanos en regiones poco densas
+    - Esto hace el agrupamiento más robusto al ruído
+- Puntos en regiones densas no se ven afectados
+- Usando esta nueva métrica se construye el MST
+
+---
+
+- MST : Subgrafo minimamente conectado
+- Luego, se extrae una jerarquía de componentes conexos a partir del MST
+    - Se ordenan los arcos de manera creciente
+    - Se fusionan dos grupos por cada arco 
+
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=-1.9cm, xshift=4.5cm] at (current page.center) 
+{
+    \includegraphics[width=0.5\textwidth]{hdbscan_mst.png}
+};
+\end{tikzpicture}   
+
+---
+
+
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=-1cm, xshift=0cm] at (current page.center) 
+{
+    \includegraphics[width=0.5\textwidth]{hdbscan_dendrogram.png}
+};
+\end{tikzpicture}   
+
+
