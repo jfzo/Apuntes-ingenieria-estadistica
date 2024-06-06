@@ -11,7 +11,7 @@ author:
 #theme:
 #- Copenhagen
 date:
-- Otoño 2023
+- Otoño 2024
 header-includes: |
     \usepackage{tikz}
     \usepackage[T1]{fontenc}
@@ -183,6 +183,16 @@ Una relación binaria $\rho$ sobre un conjunto $S$ puede tener ciertas propiedad
 $(\forall x)(\forall y)(\forall z)(x\in S\land y\in S\land z\in S\land (x,y)\in\rho\land(y,z)\in\rho\Rightarrow (x,z)\in \rho)$
 - **Antisimetría** $(\forall x)(\forall y)(x\in S\land y\in S\land(x,y)\in \rho\land (y,x)\in\rho\Rightarrow x=y)$
 
+---
+
+**Comentarios**
+
+- Antisimetría **no** es lo opuesto de simetría
+    - Relación **No simétrica** implica que si algún $(x,y)\in\rho$, pero no $(y,x)$
+- Ejemplo: $S=\{0,1\},\ x\rho y\Rightarrow x=y^2$
+    - Es reflexiva, transitiva, simétrica y antisimétrica
+
+
 ## Ejemplos
 
 - Identifique qué propiedades cumple $=$ sobre $\mathbb{N}$
@@ -192,7 +202,7 @@ $(\forall x)(\forall y)(\forall z)(x\in S\land y\in S\land z\in S\land (x,y)\in\
 ## Ejemplos (respuestas)
 
 - Identifique qué propiedades cumple $=$ sobre $\mathbb{N}$
-    - $x\rho y\Leftrightarrow x= y$ es reflexiva, transitiva y simetrica
+    - $x\rho y\Leftrightarrow x= y$ es reflexiva, transitiva, simetrica y antisimétrica
 - Identifique qué propiedades cumple $\leq$ sobre $\mathbb{N}$
     - $x\rho y\Leftrightarrow x\leq y$ es reflexiva, transitiva y  antisimetrica
 - Identifique qué propiedades cumple $\subseteq$ sobre $\wp(\mathbb{N})$
