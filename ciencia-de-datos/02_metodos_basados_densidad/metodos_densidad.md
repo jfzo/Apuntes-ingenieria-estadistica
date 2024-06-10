@@ -268,6 +268,64 @@ Además usa un gráfico (*reachability  plot*) que muestra la densidad y conecti
 \end{tikzpicture}   
 
 # Identificación de tendencias
+
+- Un método de clustering intentará encontrar grupos **aún cuando no existan**
+
+¿Existe o no una tendencia de agrupamiento en los datos?
+
+- Una manera que no realiza muchos supuestos es la es la evaluación visual de tendencia (**VAT** e **improved VAT**)
+  
+
+
 ## Método VAT
 
-Visual Aided Tren
+Este método consiste en:
+
+    1. Calcular la matriz de distancia entre los objetos del conjunto de datos
+    2. Re-ordenar las filas/columnas de la matriz de manera que los objetos similares queden próximos. Este proceso genera una matriz de distancias ordenada (MDO).
+    3. Mostrar la MDO.
+
+VAT permite detectar tendencia de manera visual contando los bloques cuadrados a lo largo de la diagonal
+
+---
+
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=0cm, xshift=-3cm] at (current page.center) 
+{
+    \includegraphics[width=0.5\textwidth]{multishapes_data.png}
+};
+\end{tikzpicture}  
+
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=0cm, xshift=4cm] at (current page.center) 
+{
+    \includegraphics[width=0.45\textwidth]{vat_dist_multishapes.png}
+};
+\end{tikzpicture}  
+
+--- 
+
+### VAT e iVAT
+
+```
+- Bezdek, J. C., & Hathaway, R. J. (2002, May). VAT: A tool for visual assessment of (cluster) tendency. In Proceedings of the 2002 International Joint Conference on Neural Networks. IJCNN'02 (Cat. No. 02CH37290) (Vol. 3, pp. 2225-2230). IEEE.
+- Wang, L., Nguyen, U. T., Bezdek, J. C., Leckie, C. A., & Ramamohanarao, K. (2010, June). iVAT and aVAT: enhanced visual analysis for cluster tendency assessment. In Pacific-Asia Conference on Knowledge Discovery and Data Mining (pp. 16-27). Berlin, Heidelberg: Springer Berlin Heidelberg.
+```
+
+# Validación de resultados de Clustering
+
+- El objetivo es poder medir la calidad de solución entregada por un método
+- Estas medidas se categorizan en 3 grupos:
+  1. Medidas internas: No usa referencia externa, solo propiedades intrinsecas de la solución
+  2. Medidas externas: Compara solución con un patrón externo, por ejemplo etiquetas de clase. Permite medir en qué medida el agrupamiento coincide con lo esperado.
+
+## Medidas internas
+
+- A menudo reflejan cohesión/compactitud, conectividad y separación entre particiones
+- Cohesión: Qué tan cercanos están los objetos dentro de cada grupo.
+  - Los distintos indices se basan en medidas de distancia
+  - **Variación intra cluster** es un ejemplo de indicador de cohesión
+- Separación:
+
+
+## Medidas externas

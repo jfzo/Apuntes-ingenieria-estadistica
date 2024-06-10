@@ -41,7 +41,7 @@ ifeq ($(OS), Linux)
 # Run Linux commands 
 	EXT := ""
 endif
-EXT := ".exe"
+#EXT := ".exe"
 
 
 
