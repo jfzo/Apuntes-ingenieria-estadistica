@@ -28,27 +28,37 @@ CURRENT_DIR := $(dir $(abspath $(firstword $(MAKEFILE_LIST))))
 
 
 # make ARCH_WITH_MD_EXTENSION.pdf USE_DOCKER=no
-USE_DOCKER=yes
+USE_DOCKER=no
 
-# when working on WSL (win) windows is not detected, but exe extensions are needed.
-ifeq ($(shell echo "check_quotes"),"check_quotes")
-	WINDOWS := yes
-	EXT := ".exe"
-else
+
+EXT := ".exe"
+OS := $(shell uname)
+ifeq ($(OS), Darwin)
+# Run MacOS commands 
 	EXT := ""
 endif
+ifeq ($(OS), Linux)
+# Run Linux commands 
+	EXT := ""
+endif
+EXT := ".exe"
+
+
 
 #ifdef USE_DOCKER
 ifeq ($(USE_DOCKER),yes)
-PANDOC := docker run --rm --volume "$(CURRENT_DIR):/data" --user $(DOCKER_USER) pandoc-texlive-full-jz
+	PANDOC := docker run --rm --volume "$(CURRENT_DIR):/data" --user $(DOCKER_USER) pandoc-texlive-full-jz
 else
-PANDOC := pandoc$(EXT)
+	PANDOC := pandoc$(EXT)
 endif
+
+
+#$(info PANDOC extension is $(UNAME) )
 
 PANDOC_OPTIONS=--standalone -f markdown+pipe_tables+backtick_code_blocks+auto_identifiers+strikeout+yaml_metadata_block+implicit_figures+all_symbols_escapable+link_attributes+smart+fenced_divs
 PANDOC_HTML_OPTIONS=--to html5
 PANDOC_PDF_OPTIONS=
-PANDOC_XELATEX_PDF_OPTIONS=--dpi=300 --slide-level 2 --toc --citeproc --listings --shift-heading-level=0 --data-dir=./pandoc --template templates/default_mod.latex -H pandoc/templates/preamble.tex --pdf-engine lualatex -V classoption:aspectratio=169 -t beamer
+PANDOC_XELATEX_PDF_OPTIONS=--dpi=300 --slide-level 2 --toc --citeproc --listings --shift-heading-level=0 --data-dir=./pandoc --template templates/default_mod.latex -H pandoc/templates/preamble.tex --pdf-engine lualatex -V classoption:aspectratio=169 -V classoption:t -t beamer
 PANDOC_DOCX_OPTIONS=
 PANDOC_RTF_OPTIONS=
 PANDOC_ODT_OPTIONS=

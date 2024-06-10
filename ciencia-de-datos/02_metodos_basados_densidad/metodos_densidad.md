@@ -261,10 +261,13 @@ Además usa un gráfico (*reachability  plot*) que muestra la densidad y conecti
 
 
 \begin{tikzpicture}[remember picture, overlay]
-\node[yshift=-1cm, xshift=0cm] at (current page.center) 
+\node[yshift=-0.01cm, xshift=0cm] at (current page.center) 
 {
-    \includegraphics[width=0.5\textwidth]{hdbscan_dendrogram.png}
+    \includegraphics[width=0.7\textwidth]{hdbscan_dendrogram.png}
 };
 \end{tikzpicture}   
 
+# Identificación de tendencias
+## Método VAT
 
+Visual Aided Tren
