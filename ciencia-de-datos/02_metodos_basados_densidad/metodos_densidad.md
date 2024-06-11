@@ -312,20 +312,66 @@ VAT permite detectar tendencia de manera visual contando los bloques cuadrados a
 - Wang, L., Nguyen, U. T., Bezdek, J. C., Leckie, C. A., & Ramamohanarao, K. (2010, June). iVAT and aVAT: enhanced visual analysis for cluster tendency assessment. In Pacific-Asia Conference on Knowledge Discovery and Data Mining (pp. 16-27). Berlin, Heidelberg: Springer Berlin Heidelberg.
 ```
 
-# Validación de resultados de Clustering
+# Validación de resultados de Clustering
 
 - El objetivo es poder medir la calidad de solución entregada por un método
 - Estas medidas se categorizan en 3 grupos:
   1. Medidas internas: No usa referencia externa, solo propiedades intrinsecas de la solución
   2. Medidas externas: Compara solución con un patrón externo, por ejemplo etiquetas de clase. Permite medir en qué medida el agrupamiento coincide con lo esperado.
 
+
 ## Medidas internas
 
 - A menudo reflejan cohesión/compactitud, conectividad y separación entre particiones
-- Cohesión: Qué tan cercanos están los objetos dentro de cada grupo.
+- **Cohesión**: Que tan cercanos están los objetos dentro de cada grupo.
   - Los distintos indices se basan en medidas de distancia
   - **Variación intra cluster** es un ejemplo de indicador de cohesión
-- Separación:
+- **Separación**: Que tan bien separado se encuentra un cluster de los otros.
+  - Distancias entre centroides o representantes de cada grupo
+  - Distancias mínimas entre pares de objetos en ambos clusters   
+- **Conectividad**: Grado de conectividad de los clusters basado en k-vecinos más cercanos. 
+  - Principio: Items en el vecindario debieran compartir el mismo cluster.
 
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=1.5cm, xshift=0cm] at (current page.south) 
+{
+    \includegraphics[width=0.55\textwidth]{tres_criterios_clustering.png}
+};
+\end{tikzpicture}  
+
+---
+
+### Coeficiente de Silhouette
+
+- Compara las distancias internas entre los objetos en un cluster con las distancias al cluster más cercano
+- Para el objeto $i$, la distancia promedio mas corta a objetos del cluster más cercano $b_i$
+
+$$S_i=\frac{b_i-a_i}{\max(a_i,b_i)}$$
+
+- Valores de $S_i$ cercanos a $1$ indican una asignación correcta. Valores cercanos a $0$ indica que la observación se encuentra entre 2 grupos. Valores negativos indican una asignación incorrecta.
+
+---
+
+### Indice Dunn
+
+- Contrasta la separación entre los grupos con la dispersión interna de cada uno.
+- Calcula 
+    - Distancia más pequeña entre objetos de clusters distintos ($\alpha$)
+    - Distancia mayor entre objetos del mismo cluster ($\beta$)
+
+$$D=\frac{\alpha}{\beta}$$
+
+- A mayor valor, mayor separación entre los grupos relativa a sus diametros
 
 ## Medidas externas
+
+- En general operan sobre la matriz de contingencia entre clusters y clases indicadas en el conjunto de datos
+- Purity (P): Cada cluster se etiqueta según la clase más frecuente. Se suma la cantidad de objetos correctamente etiquetados y se divide por el total de objetos.
+    - Ojo: Aumenta a medida que aumenta la cantidad de clusters
+    $$P=\frac{1}{n}\sum_{k}\max_{j}|W_k\cap C_j|$$
+- Rand Index (RI): Considera los pares de objetos que son asignados dentro del mismo o en distinto cluster.
+    - $Vp$: Objetos similares que son asignados al mismo cluster
+    - $Vn$: Objetos disimiles asignados en clusters distintos
+    - $Fp$: Objetos disimiles asignados  al mismo cluster
+    - $Fn$: Objetos similares que son asignados en clusters distintos
+    $$RI=\frac{Vp+Vn}{Vp+Vn+Fp+Fn}$$
