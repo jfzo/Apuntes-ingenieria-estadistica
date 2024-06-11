@@ -24,92 +24,94 @@ section-titles: false
 - Si bien la distribución Normal tiene importantes propiedades analíticas, tiene también serias limitaciones para modelar fenómenos reales complejos.
 - Una manera abordar estas limitaciones consiste en utilizar una combinación de distintas distribuciones normales o gausianas.
 
+$$p(x)=\sum_{k=1}^{K}\alpha_k \mathcal{N}(x;\mu_k,\sigma_k^2), \mbox{ con }\alpha_i\geq 0, \ \sum_k \alpha_k=1$$
+
 \begin{tikzpicture}[remember picture, overlay]
-\node[yshift=2.5cm, xshift=0cm] at (current page.south) 
+\node[yshift=2.0cm, xshift=0cm] at (current page.south) 
 {
-    \includegraphics[width=0.55\textwidth]{mezcla_gausianas.jpg}
+    \includegraphics[width=0.45\textwidth]{mezcla_gausianas.jpg}
+};
+\end{tikzpicture} 
+
+## Modelo multivariado
+
+- Dado un conjunto de puntos $\mathbf{X}=\{\mathbf{x}_1,\mathbf{x}_2,\ldots , \mathbf{x}_N\}$ con $\mathbf{x}_i\in\mathbf{R}^d$
+- La variable aleatoria se supone distribuida de acuerdo a una mezcla de $K$ componentes normales multivariados. Es decir, 
+
+$$p(\mathbf{x})=\sum_{k=1}^{K}\alpha_k \mathcal{N}(x;\underbar{\mu}_k,\Sigma_k), \mbox{ con }\sum_k \alpha_k=1$$
+
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=2.0cm, xshift=0cm] at (current page.south) 
+{
+    \includegraphics[width=0.45\textwidth]{3dmixture.png}
 };
 \end{tikzpicture} 
 
 ## Definición del problema
 
-Se tiene un conjunto de puntos $\mathbf{X}=\{\mathbf{x}_1,\mathbf{x}_2,\ldots , \mathbf{x}_N\}$ consistente de $N$ observaciones de una variable aleatoria $d$-dimensional $\mathbf{x}$. La variable aleatoria $\mathbf{x}$ se asume distribuida de acuerdo a una mezcla de $K$ componentes. Es decir, 
+* Dada la representación mediante $K$ componentes normales, el objetivo es estimar los valores de los parámetros $\underbar{\mu}$, $\Sigma$ y $\alpha$
 
-$$p(\mathbf{x})=\sum_{k=1}^{K}\alpha_k \mathcal{p}(\mathbf{x}|\theta_{k})$$ 
-
-Cada densidad $\mathcal{N}(\mu_k, \Sigma_k)$ se denomina componente de la mezcla y tiene sus propios parámetros. Los coeficientes de la mezcla $\alpha_i$ satisfacen:
-- $0\leq\alpha_i\leq 1$
-- $\sum_{i}^K\alpha_i=1$
-
-
-## Definición alternativa
-
-Una manera alternativa de plantear este problema es mediante una variable aleatoria categórica $z_n$ (asociada a un punto cualquiera $\mathbf{x}_n$) que toma valores sobre $1\ldots K$ con probabilidades $\mathcal{p}(z_n=k)=\alpha_k$.
-Esto último también puede ser expresado como $\mathcal{p}(z_{nk}=1)=\alpha_k$ para un punto cualquiera $\mathbf{x}_n$. 
-
-En lugar de usar una sola variable categórica $z_n$, podemos introducir el vector binario aleatorio $K$-dimensional $\mathbf{z}_n$ para anotar la etiqueta del componente para $\mathbf{x}_n$. De esta forma, el vector $\mathbf{z}_n$ solo tendrá un $1$ en la $k$-ésima posición asociada al componente que da origen a $\mathbf{x}_n$ y un $0$ en todos los demás. 
-
----
-
-### Ejemplo
-
-Por ejemplo, para $K=3$ clusters, una observación $\mathbf{x}_n$ que corresponda al cluster donde $z_{n2}=1$, entonces $\mathbf{z}_n$ será representado por el vector columna $\mathbf{z}_n=(0,1,0)$. Luego, la distribución marginal sobre $\mathbf{z}_n$ es:
-$$p(\mathbf{z}_n)=\alpha_1^{z_{n1}}\alpha_2^{z_{n2}}\ldots \alpha_K^{z_{nK}}=\prod_{k=1}^{K}\alpha_k^{z_{nk}}$$
-
----
-
-Similarmente, la distribución condicional de $\mathbf{x}_n$ dado $\mathbf{z}_n$ puede ser expresada de la forma 
-$$\mathcal{p}(\mathbf{x}_n|\mathbf{z}_n)=\prod_{k=1}^{K}\mathcal{p}(\mathbf{x}_n|\theta_k)^{z_{nk}}$$
-
-
-$$p(\mathbf{x}_n)=\sum_{k=1}^{K}\alpha_k \mathcal{p}(\mathbf{x}_n|\theta_k)$$
-
----
-
-Los parámetros que deben ser inferidos son $\{\alpha_1,\alpha_2,\ldots ,\alpha_K,\theta_1, \ldots , \theta_K\}$.
-Si suponemos que los puntos son generados independientemente a partir de la distribución, entonces  la verosimsilitud queda dada por:
+Si suponemos que los puntos son i.i.d la verosimsilitud queda dada por:
 $$p(\mathbf{X}| \Theta)=\prod_{n=1}^N\sum_{k=1}^K\alpha_k \mathcal{p}(\mathbf{x}_n|\theta_k)$$
 
 Generalmente, se utiliza una forma logaritmica de la verosimilitud para deshacerse de la productoria.
 
----
-
-El modelo de mezclas más conocido es el de gausianas **(GMM)**. En este, cada componente corresponde a una distribución gausiana, es decir:
-$$p(\mathbf{x})=\sum_{k=1}^{K}\alpha_k \mathcal{p}(\mathbf{x}|\theta_{k})=\sum_{k=1}^{K}\alpha_k \mathcal{N}(\mathbf{x}|\mu_k, \Sigma_k)$$ 
-
-Usando una cantidad suficiente de gausianas, ajustando sus medias y covarianzas así también como los coeficientes de la combinación lineal, se puede aproximar cualquier densidad continua.
-
-La distribución resultante está governada por los parámetros $\alpha$, $\mu$ y $\Sigma$. 
-Una manera de encontrar los valores para estos parámetros es mediante máxima verosimilitud:
 $$\log{p(X|\alpha,\mu,\Sigma)}=\sum_{i=1}^{n}\log{\left(\sum_{k=1}^{K}\alpha_k\mathcal{N}(x_i|\mu_k, \Sigma_k)\right)}$$
-
 
 ## El algoritmo EM
 
-Una manera elegante para encontrar soluciones de máxima verosimilitud para modelos con variables latentes es el algoritmo de Maximización de la esperanza o **EM**.
+Una manera efectiva para encontrar estimadores de máxima verosimilitud para modelos con variables latentes es el algoritmo de Maximización de la esperanza o **EM**.
 
-Las Probabilidades a posteriori (*responsabilities*) indican que tanto explica el componente $k$ a la observación $x$. Se expresan mediante:
+El algoritmo comienza con una inicialización aleatoria de los parámetros del modelo. Luego, itera entre los siguientes dos pasos hasta converger:
 
-$$p(z_k=1|\mathbf{x})=\frac{p(k)p(\mathbf{x}|k)}{\sum_{l}p(l)p(\mathbf{x}|l)}=\frac{\alpha_k\mathcal{N}(\mathbf{x}|\mu_k, \Sigma_k)}{\sum_{j=1}^{K}\alpha_j\mathcal{N}(\mathbf{x}|\mu_j, \Sigma_j)}$$
-
----
-
-- Al derivar la función de verosimilitud respecto de las medias $\mu_k$ e igualar a $0$ se puede obtener 
-$$\mu_k=\frac{1}{n_k}\sum_{i=1}^{n}p(z_{ik}=1|x)x_i$$
-donde $n_k=\sum_{i=1}^{n}p(z_{ik}=1|x)$.
-
-- Al hacer lo mismo pero respecto de $\Sigma_k$ se obtiene
-$$\Sigma_k=\frac{1}{n_k}\sum_{i=1}^{n}p(z_{ik}=1|x)(x_i-\mu_k)(x_i-\mu_k)^T$$
-
-- Por último, podemos realizar el mismo procedimiento pero respecto de $\alpha_k$ (este paso requiere incorporar una restricción para la suma convexa de los $\alpha_i$) y se obtiene
-$$\alpha_k=\frac{n_k}{n}$$
-
-**Notar** que para cada una de estas 3 cantidades existen dependencias entre los mismos parámetros a través de $p(z_{ik}=1|x)$
+1. **Calculo de la esperanza (E)**: Cálculo de log-verosimilitud esperada del modelo con respecto a la distribución de las variables latentes, dados los datos observados y la estimación actual de los parámetros.
+2. **Maximización de log-verosimilitud (M)**: Actualización de los parámetros del modelo para maximizar la log-verosimilitud de los datos observados, dadas las variables latentes observadas a partir del paso anterior.
 
 ---
 
-Luego, se utiliza un procedimiento iterativo en dos pasos para actualizar cada parámetro: El paso de esperanza (E) y el de maximización (M).
+### Paso E
 
-Se escogen valores iniciales para las medias, covarianzas y coeficientes de mezcla. Se calculan la probabilidades a posteriori y luego, se usan estas probabilidades para re-estimar las medias, covarianzas y coeficientes de mezcla.
+La variable latente a calcular corresponde a la pertenencia de cada uno de los $n$ puntos en cada uno de los $K$ componentes gausianos.
 
-El algoritmo EM toma bastantes más iteraciones que K-means. Una alternativa es usar este último para encontrar una solución inicial, luego calcular las matrices de covarianza para cada grupo y finalmente, usar esta información para inicializar la mezcla de gausianas.
+Sea $Z_i=k$ la variable que indica que $x_i$ pertenece al componente $k$.  Luego, $$p(Z_i=k|x_i;\theta)=\frac{p(x_i|Z_i=k;\theta)p(Z_i=k;\theta)}{p(x_i;\theta)}=\frac{\alpha_k\cdot p(x_i|Z_i=k;\theta)}{\sum_{j=1}^{K} \alpha_j p(x_i|Z_i=j;\theta)}$$
+
+Considerando que $p(x_i|Z_i=k;\theta)=\mathcal{N}(x_i;\underbar{\mu}_k,\Sigma_k)$, $$p(Z_i=k|x_i;\theta)=\frac{}{\sum_{j=1}^{K} \alpha_j \mathcal{N}(x_i;\underbar{\mu}_k,\Sigma_k)}=\gamma(z_{ik})$$
+
+$\gamma(z_{ik})$ se denomina responsabilidad del componente $k$ por la observación $i$
+
+---
+
+La log-verosimilitud esperada con respecto a la distribución de las variables latentes se escribe como una suma ponderada de las log-verosimilitudes de todos los puntos bajo cada uno de los componentes:
+$$Q(\theta)=\sum_{i=1}^{n}\sum_{k=1}^{K}\gamma(z_{ik})\log{\alpha_k\mathcal{N}(x_i|\mu_k, \Sigma_k)}$$
+
+
+Esta función $Q$ representa la log-verosimilitud esperada sobre los datos observados y las distribuciones estimadas de variables latentes 
+
+---
+
+### Paso M
+
+- $\theta$ corresponde a los vectores de medias, matrices de covarianza y pesos de mezcla.
+- En este paso se actualizan los parámetros en $\theta$ de manera que se maximice la log-verosimilitud esperada $Q(\theta)$ 
+- Las **medias** de cada componente se actualizan mediante $$\underbar{\mu}_k^{*}=\frac{\sum_{i=1}^{n}\gamma(z_{ik})\mathbf{x}_i}{\sum_{i=1}^{n}\gamma(z_{ik})}$$
+    - El vector de medias del $k$-ésimo componente corresponde a una promedio ponderado de todos los puntos, usando las probabilidades de pertenencia de cada punto
+    - Esta ecuación proviene de la maximización de la log-verosimilitud esperada ($Q$) con respecto al vector de medias $\rightarrow \dfrac{\partial Q}{\partial \underbar{\mu}_k}=0$
+
+---
+
+- Las **covarianzas** para componente  se actualizan mediante 
+$$\Sigma_k^{*}=\frac{\sum_{i=1}^{n}\gamma(z_{ik})(\mathbf{x}_i-\underbar{\mu}_k^{*})(\mathbf{x}_i-\underbar{\mu}_k^{*})^{T}}{\sum_{i=1}^{n}\gamma(z_{ik})}$$
+    - La nueva matriz de covarianza corresponde a un promedio ponderado de las desviaciones de cada punto desde la media del componente.
+
+- Los pesos de la mezcla se actualizan mediante 
+$$\alpha_k^{*}=\frac{\sum_{i=1}^{n}\gamma(z_{ik})}{n}$$
+    - El nuevo peso del componente $k$-ésimo corresponde a la probabilidad total de los puntos que pertenecen a este componente, normalizado por la cantidad de puntos
+
+---
+
+### Inicialización y convergencia
+
+- Este procedimiento converte a un máximo local
+- Se repite hasta que la función de verosimilitud sufra cambios muy pequeños o permanezca constante.
+- Toma bastantes más iteraciones que K-means
+- Una alternativa es usar este último para encontrar una solución inicial, luego calcular las matrices de covarianza para cada grupo y finalmente, usar esta información para inicializar la mezcla de gausianas.
