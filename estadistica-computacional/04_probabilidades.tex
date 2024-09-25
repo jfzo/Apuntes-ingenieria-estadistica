@@ -894,21 +894,62 @@ Estos mecanismos de conteo son útiles cuando el espacio muestral es finito y to
 \begin{frame}
 %Falta la definicion de indenpendencia.
 %Falta ejemplo en que la definicion de a pares no funciona.
-
 \frametitle{Independencia}
-\begin{block}{Ejemplo: Obtener al menos un seis en 4 lanzamientos de un dado.}
+\begin{block}{Ejemplo: Lanzamiento de un par de dados}
     \begin{itemize}
-        \item Cada lanzamiento es independiente de los demás
-        \item En cada lanzamiento la probabilidad de obtener un 6 es de $\frac{1}{6}$ y de no obtenerlo es $\frac{5}{6}$
+        \item Sea $A_1$ el evento en que el primer dado arroja un número impar.
+        \item Sea $A_2$ el evento en que el segundo dado arroja un número impar.
+        \item Sea $A_3$ el evento en que la suma de ambos dados es impar.
     \end{itemize}
-    \begin{center}
-        $$\prob{\mbox{Obtener 0 en los 4 lanzamientos}}$$
-    \end{center}
 \end{block}
-
-
 \end{frame}
 
+\begin{frame}
+%Falta la definicion de indenpendencia.
+%Falta ejemplo en que la definicion de a pares no funciona.
+\frametitle{Independencia}
+\begin{block}{Ejemplo: Lanzamiento de un par de dados}
+    \begin{itemize}
+        \item $A_1$ y $A_2$ son independientes con probabilidades: $$\prob{A_1}=\frac{1}{2},\ \prob{A_2}=\frac{1}{2}$$
+        \item Adicionalmente $\prob{A_3}=\frac{18}{36}=\frac{1}{2}$
+        \item Dado que $A_1$ ocurrió, $A_3$ puede ocurrir solo si el segundo dado arroja un número par $\Rightarrow$ $\prob{A_3|A_1}=\dfrac{9}{18}=\dfrac{1}{2}$
+        \item Ídem para $\prob{A_3|A_2}$
+    \end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame}
+%Falta la definicion de indenpendencia.
+%Falta ejemplo en que la definicion de a pares no funciona.
+\frametitle{Independencia}
+\begin{block}{Ejemplo: Lanzamiento de un par de dados}
+    \begin{itemize}
+        \item Luego, $\prob{A_3|A_1}=\prob{A_3}$, $\prob{A_3|A_2}=\prob{A_3}$
+        \item Por lo tanto, los eventos $A_1$ y $A_2$ son independientes, así como tambien lo son los eventos $A_2$ y $A_3$
+    \end{itemize}
+\end{block}
+¿Que ocurre con $\prob{A_1,A_2,A_3}$?
+\pause
+
+$A_3$ no puede ocurrir si $A_1$ y $A_2$ ocurren simultáneamente. Es decir, $$\prob{A_1,A_2,A_3}=0$$
+
+entonces $$\prob{A_1,A_2,A_3}\neq \prob{A_1}\prob{A_2}\prob{A_3}$$
+\end{frame}
+
+
+\begin{frame}
+    \frametitle{Independencia generalización}
+    \begin{block}{Definición}
+        \begin{itemize}
+            \item Los eventos $A_1,A_2,\ldots ,A_n$ son independientes (mutuamente) si:
+                $$\prob{A_i, A_j} = \prob{A_i} \prob{A_j},$$
+                $$\prob{A_i, A_j, A_k} = \prob{A_i} \prob{A_j} \prob{A_k},$$
+                $$\ldots$$
+                $$\prob{A_1,A_2,\ldots ,A_n}=\prob{A_1} \prob{A_2}\ldots \prob{A_n}$$
+            \item Para todas las combinaciones de índices tales que $i\neq j\neq k\in [1\ldots n]$
+        \end{itemize}
+    \end{block}
+\end{frame}
 
 \begin{frame}
     \frametitle{Regla del producto}
