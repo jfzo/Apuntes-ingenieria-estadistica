@@ -10,8 +10,8 @@ author:
 #    citation_package: natbib
 #theme:
 #- Copenhagen
-date:
-- Otoño 2023
+#date:
+#- Otoño 2023
 header-includes: |
     \usepackage{tikz}
     \usepackage[T1]{fontenc}
