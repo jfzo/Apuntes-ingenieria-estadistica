@@ -11,7 +11,6 @@ author:
 #theme:
 #- Copenhagen
 date:
-- Otoño 2024
 header-includes: |
     \usepackage{tikz}
     \usepackage[T1]{fontenc}
@@ -50,6 +49,10 @@ header-includes: |
 ---
 
 # Introducción
+
+<!--
+   pandoc -t beamer ./04_recursion.md -o 04_recursion.pdf --katex --slide-level=2
+-->
 
 - En ocasiones es dificil definir una función u objeto de manera explícita
 - Alternativa: Definición en función de sí mismo
