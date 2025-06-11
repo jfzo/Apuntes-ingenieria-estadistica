@@ -15,7 +15,6 @@ logo: logoAzul.png
 section-titles: false
 toc: true
 toc-title: Estructura de la Presentación
-section-titles: false
 ---
 
 
@@ -167,7 +166,7 @@ Enfoque basado en densidad no supone forma específica.
 Además usa un gráfico (*reachability  plot*) que muestra la densidad y conectividad de los puntos. **Útil** para distinguir clusters
 
 \begin{tikzpicture}[remember picture, overlay]
-\node[yshift=0.7cm, xshift=4cm] at (current page.south) 
+\node[yshift=1.9cm, xshift=3cm] at (current page.south) 
 {
     \includegraphics[width=0.6\textwidth]{reachability_plot.jpeg}
 };
@@ -188,9 +187,6 @@ Además usa un gráfico (*reachability  plot*) que muestra la densidad y conecti
 * **`metric` (Métrica de distancia):**
     * **Definición:** La función de distancia utilizada (ej., euclidiana, manhattan, etc.).
     * **Ajuste:** Depende de la naturaleza de tus datos. La euclidiana es común para datos numéricos.
-
----
-
 
 
 # HDBSCAN Clustering
