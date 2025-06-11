@@ -145,50 +145,89 @@ Enfoque basado en densidad no supone forma específica.
 - Algunas extensiones son OPTICS y HDBSCAN
 
 
-# OPTICS Clustering
+# OPTICS: Ordering Points To Identify the Clustering Structure
 
 - Dificil caracterizar estructura intrinseca de grupos mediante parámetros globales de densidad
 - Pueden existir grupos de diversa densidad en distintas regiones del espacio
 - *Idea base*: Grupos de mayor densidad están contenidos en grupos con menor densidad
 - Se construyen *simultaneamente* grupos con diferentes densidades para un valor fijo de *MinPts*
 
-## Conceptos relevantes
+## Conceptos y ventajas
 
-OPTICS introduce dos conceptos:
 
-1. *Core-distance*: Valor $\epsilon$ más pequeño para un punto $p$ que lo convierte en *core-point*.
-2. *reachability-distance*: Distancia más pequeña entre un par de puntos $p$ y $q$ que los hace directamente alcanzables
+* **Concepto:** OPTICS es una generalización de **DBSCAN** que aborda la dificultad de elegir el parámetro $\epsilon$ (radio). Genera un orden de los puntos basado en su **densidad** y su **distancia de alcanzabilidad** (reachability distance).
+* **Salida:** Produce un "**diagrama de alcanzabilidad**" (reachability plot) que visualiza la estructura jerárquica de clústeres. Los valles en el diagrama corresponden a clústeres.
+* **Ventajas:**
+    * No requiere un valor global de $\epsilon$.
+    * Puede descubrir clústeres de **diferentes densidades**.
+    * Identifica **ruido** de manera efectiva.
+
+---
 
 Además usa un gráfico (*reachability  plot*) que muestra la densidad y conectividad de los puntos. **Útil** para distinguir clusters
 
 \begin{tikzpicture}[remember picture, overlay]
-\node[yshift=1.5cm, xshift=4cm] at (current page.south) 
+\node[yshift=0.7cm, xshift=4cm] at (current page.south) 
 {
-    \includegraphics[width=0.4\textwidth]{reachability_plot.jpeg}
+    \includegraphics[width=0.6\textwidth]{reachability_plot.jpeg}
 };
 \end{tikzpicture}   
+
+
+
+---
+
+### Parámetros y Ajuste
+
+* **`min_samples` (Mínimo de muestras):**
+    * **Definición:** El número mínimo de puntos requeridos para formar un núcleo denso.
+    * **Ajuste:** Un valor más alto requiere clústeres más densos. Típicamente se elige entre 2 y el doble de la dimensionalidad de los datos. Se puede empezar con un valor bajo (ej. 5) y aumentarlo.
+* **`max_eps` (Máximo épsilon):**
+    * **Definición:** El radio máximo para considerar vecinos. Limita la distancia máxima para buscar vecinos. No es el $\epsilon$ global de DBSCAN.
+    * **Ajuste:** Un valor demasiado pequeño puede resultar en clústeres no detectados. Un valor demasiado grande puede hacer que el cálculo sea lento y unir clústeres distintos. A menudo se establece en `inf` (infinito) para permitir a OPTICS explorar todas las posibles densidades, o un valor grande basado en la escala de tus datos.
+* **`metric` (Métrica de distancia):**
+    * **Definición:** La función de distancia utilizada (ej., euclidiana, manhattan, etc.).
+    * **Ajuste:** Depende de la naturaleza de tus datos. La euclidiana es común para datos numéricos.
+
+---
+
 
 
 # HDBSCAN Clustering
 
-- Objetivo: Convertir DBSCAN en un método jerárquico
-- Aproxima las densidades locales
-- Puede ser visto como DBSCAN clustering a lo largo de todos los valores de $\epsilon$
+
+## HDBSCAN: Hierarchical Density-Based Spatial Clustering of Applications with Noise
+
+### Concepto y Ventajas
+
+* **Concepto:** Basado en DBSCAN, pero construye una **jerarquía de clústeres** a partir de un árbol de conectividad mínima (MST) de los datos, usando la "distancia de conectividad mutua inversa".
+* **Aislamiento de clústeres:** Identifica la **estabilidad de los clústeres** a través de diferentes umbrales de densidad, seleccionando los clústeres más "estables".
+* **Ventajas:**
+    * **No requiere el parámetro $\epsilon$**.
+    * Puede encontrar clústeres de diferentes densidades.
+    * Maneja el **ruido** de manera robusta.
+    * Generalmente más eficiente que OPTICS para extraer clústeres.
 
 
-## Procedimiento
+---
 
-- En lugar de fijar un valor de $\epsilon$, se determina el número $k$ de vecinos deseados y se encuentra el mínimo $\epsilon$ que permitiría contener estos $k$ vecinos
-- Estas distintas distancias se denominan *core distances*
-    - Puntos con *core distances* más pequeñas, se encuentran en regiones más densas
-    - Puntos con *core distances* más grandes, se encuentran en regiones más dispersas porque se tuvo que ampliar el umbral de distancia para encontrar suficientes vecinos
-- Encontrar regiones resulta similar a encontrar curvas de nive
-\begin{tikzpicture}[remember picture, overlay]
-\node[yshift=1.5cm, xshift=4cm] at (current page.south) 
-{
-    \includegraphics[width=0.4\textwidth]{level_set.png}
-};
-\end{tikzpicture}   
+### Parámetros y Ajuste
+
+* **`min_cluster_size` (Tamaño mínimo del clúster):**
+    * **Definición:** El número mínimo de puntos para que se considere un clúster válido.
+    * **Ajuste:** Un valor más pequeño detectará clústeres más pequeños y posiblemente más ruidosos. Un valor más grande solo identificará clústeres substanciales. Depende del dominio del problema; empezar con 2-10 es razonable.
+* **`min_samples` (Mínimo de muestras / `min_points`):**
+    * **Definición:** El número mínimo de puntos para considerar un punto como un "núcleo" de un clúster. También influye en el suavizado del árbol de conectividad.
+    * **Ajuste:** Similar a `min_samples` en OPTICS. Un valor más alto hace que los clústeres sean más "densos" y ruidosos. A menudo se elige igual o ligeramente menor que `min_cluster_size`.
+
+---
+
+* **`cluster_selection_epsilon`:**
+    * **Definición:** Un umbral de distancia que permite que puntos adyacentes se unan a clústeres existentes, incluso si no son parte de un núcleo denso. Rara vez se usa y no se recomienda modificarlo al principio.
+    * **Ajuste:** Generalmente se deja en su valor por defecto (0.0). Solo se ajusta en casos muy específicos donde se necesita una relajación en la definición de densidad.
+* **`metric` (Métrica de distancia):**
+    * **Definición:** La función de distancia utilizada.
+    * **Ajuste:** Similar a OPTICS. La euclidiana es la más común.
 
 ---
 
@@ -234,31 +273,6 @@ Además usa un gráfico (*reachability  plot*) que muestra la densidad y conecti
 
 ---
 
-- A medida que se disminuye el umbral de *core-distances* van apareciendo grupos menos densos
-    - Emergen nuevos clusters y eventualmente otros se fusionan
-- Dos puntos se conectaran dependiendo de la distancia mutua de alcance $$mrd_k(a,b) = \max\{coredist_k(a),coredist_k(b),dist(a,b)\}$$
-
-- Esta métrica "aleja" puntos cercanos en regiones poco densas
-    - Esto hace el agrupamiento más robusto al ruído
-- Puntos en regiones densas no se ven afectados
-- Usando esta nueva métrica se construye el MST
-
----
-
-- MST : Subgrafo minimamente conectado
-- Luego, se extrae una jerarquía de componentes conexos a partir del MST
-    - Se ordenan los arcos de manera creciente
-    - Se fusionan dos grupos por cada arco 
-
-\begin{tikzpicture}[remember picture, overlay]
-\node[yshift=-1.9cm, xshift=4.5cm] at (current page.center) 
-{
-    \includegraphics[width=0.5\textwidth]{hdbscan_mst.png}
-};
-\end{tikzpicture}   
-
----
-
 
 \begin{tikzpicture}[remember picture, overlay]
 \node[yshift=-0.01cm, xshift=0cm] at (current page.center) 
@@ -266,6 +280,30 @@ Además usa un gráfico (*reachability  plot*) que muestra la densidad y conecti
     \includegraphics[width=0.7\textwidth]{hdbscan_dendrogram.png}
 };
 \end{tikzpicture}   
+
+
+
+
+
+
+## Comparación: OPTICS vs. HDBSCAN
+
+
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=0cm, xshift=0cm] at (current page.center) 
+{
+    \includegraphics[width=0.6\textwidth]{hbscan_optics.png}
+};
+\end{tikzpicture}
+
+---
+
+### Consideraciones Finales
+
+* **Ajuste de Parámetros Global:** Ambos métodos se benefician de un buen conocimiento del dominio de los datos. La validación interna (ej. coeficientes de silueta adaptados a ruido) o el análisis visual pueden guiar el ajuste.
+* **Recomendación:** Si bien OPTICS proporciona una visión más granular, HDBSCAN es a menudo el preferido para la mayoría de las aplicaciones debido a su capacidad para extraer clústeres de forma automática y robusta sin la necesidad de definir un $\epsilon$ global.
+
+
 
 # Identificación de tendencias
 
