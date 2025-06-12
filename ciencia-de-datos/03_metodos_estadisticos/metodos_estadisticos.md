@@ -187,19 +187,20 @@ $$ 3.6, 3.1, 4.1, 5.0,5.1, 4.9, 5.2, 5.3, 5.9, 6.2, 5.4\}$$
 
 ## Resultados finales
 
-- Medias estimadas: $\mu_1 \approx 1.1$, $\mu_2 \approx 5.1$
+- Medias estimadas: $\mu_1 \approx 4.41$, $\mu_2 \approx 0.98$
 
 - Varianzas pequeñas en cada grupo.
 
-- Pesos aproximadamente 0.5 y 0.5 (5 puntos por grupo).
+- Pesos aproximadamente $0.56$ y $0.44$ (12 a 14 puntos por grupo).
 
 
 \begin{tikzpicture}[remember picture, overlay]
-\node[yshift=0.0cm, xshift=0cm] at (current page.center) 
+\node[yshift=-1.8cm, xshift=0cm] at (current page.center) 
 {
-    \includegraphics[width=0.45\textwidth]{gmm_final.png}
+    \includegraphics[width=0.65\textwidth]{gmm_final.png}
 };
 \end{tikzpicture} 
+
 
 
 ## Conclusión
