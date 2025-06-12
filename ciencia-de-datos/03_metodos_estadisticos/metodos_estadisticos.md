@@ -15,7 +15,6 @@ logo: logoAzul.png
 section-titles: false
 toc: true
 toc-title: Estructura de la Presentación
-section-titles: false
 ---
 
 
@@ -115,3 +114,101 @@ $$\alpha_k^{*}=\frac{\sum_{i=1}^{n}\gamma(z_{ik})}{n}$$
 - Se repite hasta que la función de verosimilitud sufra cambios muy pequeños o permanezca constante.
 - Toma bastantes más iteraciones que K-means
 - Una alternativa es usar este último para encontrar una solución inicial, luego calcular las matrices de covarianza para cada grupo y finalmente, usar esta información para inicializar la mezcla de gausianas.
+
+
+## En síntesis ¿Qué es el algoritmo EM?
+
+- **E-step (Expectation):** Calcula la probabilidad de que cada punto
+  pertenezca a cada componente (responsabilidades).
+
+- **M-step (Maximization):** Actualiza los parámetros de las gaussianas
+  usando las responsabilidades.
+
+- Se repite hasta que converge el log-likelihood.
+
+- Utilizado para ajustar modelos de mezcla, como el **Gaussian Mixture
+  Model (GMM)**.
+
+
+## Ejemplo
+### Datos de entrada **Datos utilizados (1D):**
+$$X = \{0.1, 0.2, 0.6, 1.2, 0.8, 1.0, 1.1, 0.9, 1.2,1.3, 2.0, 1.8, 2.7,3.2, 3.5,$$
+$$ 3.6, 3.1, 4.1, 5.0,5.1, 4.9, 5.2, 5.3, 5.9, 6.2, 5.4\}$$ 
+
+**Visualización (histograma):**
+
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=-1.9cm, xshift=1cm] at (current page.center) 
+{
+    \includegraphics[width=0.55\textwidth]{histograma.png}
+};
+\end{tikzpicture} 
+
+---
+
+### Paso 0: Inicialización
+
+- Se escogen aleatoriamente 2 medias iniciales (por ejemplo, $3.6$ y
+  $1.8$).
+
+- Se inicializan las varianzas y pesos:
+  $$\mu_1 = 3.6,\quad \mu_2 = 1.8,\quad \sigma_1^2 = \sigma_2^2 = \text{var}(X),\quad \pi_1 = \pi_2 = 0.5$$
+
+
+---
+
+### Paso 1: E-step
+
+- Para cada punto $x_i$, calculamos:
+  $$\gamma_{ik} = \frac{\pi_k \cdot \mathcal{N}(x_i | \mu_k, \sigma_k^2)}{\sum_{j=1}^K \pi_j \cdot \mathcal{N}(x_i | \mu_j, \sigma_j^2)}$$
+
+- Esto nos da una matriz $N \times K$ de responsabilidades.
+
+--- 
+
+### Paso 2: M-step
+
+- Usamos las responsabilidades para actualizar los parámetros:
+  $$N_k = \sum_{i=1}^N \gamma_{ik}$$
+  $$\mu_k = \frac{1}{N_k} \sum_{i=1}^N \gamma_{ik} x_i$$
+  $$\sigma_k^2 = \frac{1}{N_k} \sum_{i=1}^N \gamma_{ik} (x_i - \mu_k)^2$$
+  $$\pi_k = \frac{N_k}{N}$$
+
+
+---
+
+### Paso 3: Iteración y convergencia
+
+- Repetimos los pasos E y M hasta que:
+  $$|\text{log-likelihood}_{t} - \text{log-likelihood}_{t-1}| < \varepsilon$$
+
+- En este ejemplo, converge en pocas iteraciones.
+
+
+## Resultados finales
+
+- Medias estimadas: $\mu_1 \approx 1.1$, $\mu_2 \approx 5.1$
+
+- Varianzas pequeñas en cada grupo.
+
+- Pesos aproximadamente 0.5 y 0.5 (5 puntos por grupo).
+
+
+\begin{tikzpicture}[remember picture, overlay]
+\node[yshift=0.0cm, xshift=0cm] at (current page.center) 
+{
+    \includegraphics[width=0.45\textwidth]{gmm_final.png}
+};
+\end{tikzpicture} 
+
+
+## Conclusión
+
+- El algoritmo EM permite estimar los parámetros de una mezcla de
+  gaussianas sin etiquetas.
+
+- Es eficiente y converge rápidamente con buenos datos iniciales.
+
+- Este ejemplo muestra cómo segmentar automáticamente dos grupos en
+  datos 1D.
+
