@@ -1,0 +1,252 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, bm}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tikz}
+
+%\usetheme{Madrid}
+
+\title{Método de Lee y Seung para la Descomposición No Negativa de Matrices (NMF)}
+\author{Presentado por ChatGPT}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+
+% Slide 1: Introducción a NMF
+\begin{frame}{¿Qué es NMF?}
+\begin{itemize}
+    \item Dada una matriz no negativa \( V \in \mathbb{R}^{m \times n} \), se busca una aproximación:
+    \[
+    V \approx WH
+    \]
+    \item Donde:
+    \begin{itemize}
+        \item \( W \in \mathbb{R}^{m \times r} \): matriz base
+        \item \( H \in \mathbb{R}^{r \times n} \): matriz de coeficientes
+        \item \( r \ll \min(m, n) \): número de componentes latentes
+    \end{itemize}
+    \item Las tres matrices tienen entradas no negativas.
+\end{itemize}
+\end{frame}
+
+% Slide 2: Objetivo de la factorización
+\begin{frame}{Objetivo de la factorización}
+\begin{itemize}
+    \item Minimizar la diferencia entre \( V \) y \( WH \):
+    \[
+    \min_{W, H \geq 0} \quad D(V \Vert WH)
+    \]
+    \item Funciones de costo comunes:
+    \begin{itemize}
+        \item Error cuadrático: \( \| V - WH \|_F^2 \)
+        \item Divergencia KL: \( D(V \Vert WH) \)
+    \end{itemize}
+    \item Restricción: \( W, H \geq 0 \)
+\end{itemize}
+\end{frame}
+
+% Slide 3: Algoritmo de Lee y Seung
+\begin{frame}{Método de Lee y Seung}
+\begin{itemize}
+    \item Propuesto en 1999 (versión mejorada en 2001).
+    \item Basado en actualizaciones multiplicativas.
+    \item Asegura que las matrices \( W \) y \( H \) sigan siendo no negativas.
+    \item Dos versiones: para el error cuadrático y para la divergencia KL.
+\end{itemize}
+\end{frame}
+
+% Slide 4: Caso 1 - Error cuadrático
+\begin{frame}{Actualizaciones para el error cuadrático}
+\begin{itemize}
+    \item Función de pérdida:
+    \[
+    \mathcal{L} = \frac{1}{2} \| V - WH \|_F^2
+    \]
+    \item Reglas de actualización:
+    \[
+    H \leftarrow H \circ \frac{W^\top V}{W^\top W H}
+    \]
+    \[
+    W \leftarrow W \circ \frac{V H^\top}{W H H^\top}
+    \]
+    \item Donde \( \circ \) denota multiplicación elemento a elemento.
+\end{itemize}
+\end{frame}
+
+% Slide 5: Caso 2 - Divergencia KL
+\begin{frame}{Actualizaciones para la divergencia KL}
+\begin{itemize}
+    \item Función de pérdida:
+    \[
+    D(V \Vert WH) = \sum_{i,j} \left( V_{ij} \log \frac{V_{ij}}{(WH)_{ij}} - V_{ij} + (WH)_{ij} \right)
+    \]
+    \item Reglas de actualización:
+    \[
+    H_{ak} \leftarrow H_{ak} \cdot \frac{\sum_i W_{ia} \frac{V_{ik}}{(WH)_{ik}}}{\sum_i W_{ia}}
+    \]
+    \[
+    W_{ia} \leftarrow W_{ia} \cdot \frac{\sum_k H_{ak} \frac{V_{ik}}{(WH)_{ik}}}{\sum_k H_{ak}}
+    \]
+\end{itemize}
+\end{frame}
+
+
+%%%%%%%%
+% Introducción
+\begin{frame}{¿Qué es NMF?}
+    \textbf{Descomposición No Negativa de Matrices (NMF)} busca factorizar una matriz \( V \in \mathbb{R}^{m \times n} \), con \( V \geq 0 \), en el producto de dos matrices no negativas:
+    \[
+        V \approx WH, \quad W \in \mathbb{R}^{m \times r}, \quad H \in \mathbb{R}^{r \times n}
+    \]
+    \pause
+    \textbf{Aplicaciones:}
+    \begin{itemize}
+        \item Minería de texto
+        \item Reconocimiento de patrones
+        \item Procesamiento de imágenes y bioinformática
+    \end{itemize}
+\end{frame}
+
+% Método de Lee y Seung
+\begin{frame}{Método de Lee y Seung (2001)}
+    Lee y Seung propusieron reglas de actualización multiplicativas para minimizar:
+    \[
+        \min_{W,H \geq 0} \| V - WH \|_F^2
+    \]
+    Las reglas de actualización son:
+    \begin{align*}
+        H &\leftarrow H \circ \frac{W^\top V}{W^\top WH} \\
+        W &\leftarrow W \circ \frac{V H^\top}{WHH^\top}
+    \end{align*}
+    donde \( \circ \) denota el producto elemento a elemento (Hadamard).
+\end{frame}
+
+% Datos iniciales
+\begin{frame}{Ejemplo numérico: datos iniciales}
+\begin{itemize}
+    \item Matriz original:
+    \[
+        V = \begin{bmatrix}
+            5 & 3 & 1 \\
+            2 & 3 & 4
+        \end{bmatrix}
+    \]
+    \item Inicialización aleatoria:
+    \[
+        W^{(0)} = \begin{bmatrix}
+            0.6 & 0.8 \\
+            0.3 & 0.4
+        \end{bmatrix}, \quad
+        H^{(0)} = \begin{bmatrix}
+            1 & 0.5 & 0.2 \\
+            0.3 & 0.8 & 0.6
+        \end{bmatrix}
+    \]
+\end{itemize}
+\end{frame}
+
+% Iteración 1 - actualizar H
+\begin{frame}{Iteración 1: actualización de \( H \)}
+\textbf{Paso 1: Calcular} \( H^{(1)} = H \circ \frac{W^\top V}{W^\top WH} \)
+
+\[
+W^\top V =
+\begin{bmatrix}
+4.2 & 2.7 & 1.8 \\
+4.8 & 3.6 & 2.4
+\end{bmatrix}, \quad
+W^\top W H =
+\begin{bmatrix}
+0.63 & 0.705 & 0.45 \\
+0.84 & 0.94 & 0.60
+\end{bmatrix}
+\]
+
+\[
+H^{(1)} =
+\begin{bmatrix}
+6.67 & 1.91 & 0.80 \\
+1.71 & 3.06 & 2.40
+\end{bmatrix}
+\]
+\end{frame}
+
+% Iteración 2 - actualizar H
+\begin{frame}{Iteración 2: actualización de \( H \)}
+\textbf{Paso 2: Usamos \( H^{(1)} \) para una nueva actualización}
+
+\[
+W^\top W H^{(1)} \approx
+\begin{bmatrix}
+4.03 & 2.70 & 1.80 \\
+5.37 & 3.59 & 2.40
+\end{bmatrix}
+\quad
+W^\top V =
+\begin{bmatrix}
+4.2 & 2.7 & 1.8 \\
+4.8 & 3.6 & 2.4
+\end{bmatrix}
+\]
+
+\[
+H^{(2)} \approx
+\begin{bmatrix}
+6.95 & 1.91 & 0.80 \\
+1.53 & 3.07 & 2.40
+\end{bmatrix}
+\]
+\end{frame}
+
+% Iteración 2 - actualizar W
+\begin{frame}{Iteración 2: actualización de \( W \)}
+\textbf{Paso 3: actualizar \( W \)}
+
+\[
+H^{(2)} =
+\begin{bmatrix}
+6.95 & 1.91 & 0.80 \\
+1.53 & 3.07 & 2.40
+\end{bmatrix}
+\Rightarrow
+H H^\top \approx
+\begin{bmatrix}
+52.6 & 18.41 \\
+18.41 & 17.52
+\end{bmatrix}
+\]
+
+\[
+V H^\top \approx
+\begin{bmatrix}
+41.28 & 19.26 \\
+22.83 & 21.87
+\end{bmatrix}
+\]
+
+\[
+W^{(2)} = W \circ \frac{V H^\top}{W H H^\top}
+\]
+(operación elemento a elemento)
+\end{frame}
+
+% Conclusión
+\begin{frame}{Conclusión}
+\begin{itemize}
+    \item El método de Lee y Seung ofrece una forma eficiente y sencilla de resolver el problema NMF.
+    \item Sus actualizaciones multiplicativas preservan la no negatividad.
+    \item El ejemplo con dos iteraciones mostró cómo evoluciona la aproximación.
+\end{itemize}
+\pause
+\textbf{¿Ventajas?}
+\begin{itemize}
+    \item Fácil implementación.
+    \item Estabilidad garantizada (convergencia del error).
+\end{itemize}
+\end{frame}
+
+\end{document}
