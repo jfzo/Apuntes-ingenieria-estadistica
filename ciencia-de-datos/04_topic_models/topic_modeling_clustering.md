@@ -68,49 +68,49 @@ $X$ es aproximada con bajo rango (low-rank) cuando $rango(X) << \min(m,n)$
     - LSI
     - pLSI
 
----
+
+## ¿Qué es LDA?
 
 - LDA aparece a principio del 2000
 - Incluye un modelo generativo para los documentos, además de los tópicos
-- La idea es que documentos son representados como mezclas aleatorias de tópicos latentes
-- Cada tópico se caracteriza como una una distribución sobre las palabras
+- Cada documento es una mezcla de temas
+- Cada tema es una distribución de palabras
 - Distribución apriori de tópicos es una Dirichlet
 
 Referencias: [Blei et al. 2003](http://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf)
 
-## Idea fundamental
+——-
 
-* Consideremos un conjunto de $D$ documentos $\{W_1,W_2\ldots W_D\}$ 
-* Cada documento $W_d$ contiene $N_d$ palabras, es decir $W_d=\{w_{d1},w_{d2}\ldots w_{dN_d}\}$
-* El objetivo es agrupar los documentos y sus palabras en $G$ grupos, denominados *tópicos*
+### Distribuciones de probabilidad en LDA
+
+- \( \theta_d \sim \text{Dirichlet}(\alpha) \): distribución de temas en un documento.
+- \( \phi_k \sim \text{Dirichlet}(\beta) \): distribución de palabras en un tema.
+- \( z_{d,n} \sim \text{Multinomial}(\theta_d) \): elección de tema para palabra \( n \) en documento \( d \).
+    \item \( w_{d,n} \sim \text{Multinomial}(\phi_{z_{d,n}}) \): elección de palabra según el tema.
 
 
-## El Modelo *generativo* LDA
+### Estimación de parámetros
 
-- Para cada documento $W_d$ de los $D$ documentos, $\theta_d$ representa su proporción de tópicos y $\theta_d\sim Dir(\alpha)$
-    - $\alpha=(\alpha_1,\alpha_2\ldots \alpha_G)$ es un apriori común sobre los tópicos para todos los documentos
-- La distribución $\psi_g$, para el tópico $g\in\{1\ldots G\}$ también cumple con que $\psi_g\sim Dir(\beta)$
-    - $\beta=(\beta_1,\beta_2\ldots \beta_V)$ y $V$ es el tamaño del vocabulario
-- Luego, el tópico $z_{id}$ de la $i$-ésima palabra en el documento $d$ sigue una distribución multinomial, es decir $z_{id}\sim M(1,\theta_d)$
+- El modelo observa solo las palabras. Los temas son variables latentes.
+- Se busca inferir:
+  - \( \theta_d \): proporción de temas en cada documento.
+  - \( \phi_k \): distribución de palabras por tema.
+  - \( z_{d,n} \): asignación de temas a palabras.
+ 
+- Métodos comunes:
+  -  Muestreo de Gibbs (Gibbs Sampling)
+  - Inferencia variacional (Variational Bayes)
 
-## El Modelo *generativo* LDA
+### ¿Qué es Gibbs Sampling?
 
-- Dado este tópico $z_{id}$, la $i$-ésima palabra en el documento $d$ es también tomada a partir de una distribución multinomial, es decir $w_{id}\sim M(1,\psi_{z_{id}})$
-- Notar que la distribución de palabras sobre los tópicos es una mezcla de multinomiales 
-$$w_{id}|\theta\sim \sum_{g=1}^{G}\theta_{dg}M(1, \psi_g)$$
+- Método de Monte Carlo para estimar distribuciones condicionales.
+- En LDA:
+  - Se fija el tema de todas las palabras excepto una.
+  - Se estima la probabilidad condicional de cada posible tema para esa palabra.
+  - Se repite este proceso para todas las palabras, muchas veces.
+- El resultado converge a una estimación de la distribución posterior conjunta.
 
----
 
-### Resumen gráfico de LDA
-
-- La inferencia puede ser realizada usando el algoritmo *EM Bayesiano Variacional*, MCMC o Expectation-Propagation
-
-\begin{tikzpicture}[remember picture, overlay]
-\node[yshift=3.0cm, xshift=0cm] at (current page.south)
-{
-    \includegraphics[width=0.6\textwidth]{tm_model.png}
-};
-\end{tikzpicture}
 
 ---
 
