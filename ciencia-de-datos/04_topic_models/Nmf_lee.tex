@@ -19,15 +19,15 @@
 % Slide 1: Introducción a NMF
 \begin{frame}{¿Qué es NMF?}
 \begin{itemize}
-    \item Dada una matriz no negativa \( V \in \mathbb{R}^{m \times n} \), se busca una aproximación:
+    \item Dada una matriz no negativa $ V \in \mathbb{R}^{m \times n} $, se busca una aproximación:
     \[
     V \approx WH
     \]
     \item Donde:
     \begin{itemize}
-        \item \( W \in \mathbb{R}^{m \times r} \): matriz base
-        \item \( H \in \mathbb{R}^{r \times n} \): matriz de coeficientes
-        \item \( r \ll \min(m, n) \): número de componentes latentes
+        \item $ W \in \mathbb{R}^{m \times r} $: matriz base
+        \item $ H \in \mathbb{R}^{r \times n} $: matriz de coeficientes
+        \item $ r \ll \min(m, n) $: número de componentes latentes
     \end{itemize}
     \item Las tres matrices tienen entradas no negativas.
 \end{itemize}
@@ -36,16 +36,16 @@
 % Slide 2: Objetivo de la factorización
 \begin{frame}{Objetivo de la factorización}
 \begin{itemize}
-    \item Minimizar la diferencia entre \( V \) y \( WH \):
+    \item Minimizar la diferencia entre $ V $ y $ WH $:
     \[
     \min_{W, H \geq 0} \quad D(V \Vert WH)
     \]
     \item Funciones de costo comunes:
     \begin{itemize}
-        \item Error cuadrático: \( \| V - WH \|_F^2 \)
-        \item Divergencia KL: \( D(V \Vert WH) \)
+        \item Error cuadrático: $ \| V - WH \|_F^2 $
+        \item Divergencia KL: $ D(V \Vert WH) $
     \end{itemize}
-    \item Restricción: \( W, H \geq 0 \)
+    \item Restricción: $ W, H \geq 0 $
 \end{itemize}
 \end{frame}
 
@@ -54,7 +54,7 @@
 \begin{itemize}
     \item Propuesto en 1999 (versión mejorada en 2001).
     \item Basado en actualizaciones multiplicativas.
-    \item Asegura que las matrices \( W \) y \( H \) sigan siendo no negativas.
+    \item Asegura que las matrices $ W $ y $ H $ sigan siendo no negativas.
     \item Dos versiones: para el error cuadrático y para la divergencia KL.
 \end{itemize}
 \end{frame}
@@ -73,7 +73,7 @@
     \[
     W \leftarrow W \circ \frac{V H^\top}{W H H^\top}
     \]
-    \item Donde \( \circ \) denota multiplicación elemento a elemento.
+    \item Donde $ \circ $ denota multiplicación elemento a elemento.
 \end{itemize}
 \end{frame}
 
@@ -98,7 +98,7 @@
 %%%%%%%%
 % Introducción
 \begin{frame}{¿Qué es NMF?}
-    \textbf{Descomposición No Negativa de Matrices (NMF)} busca factorizar una matriz \( V \in \mathbb{R}^{m \times n} \), con \( V \geq 0 \), en el producto de dos matrices no negativas:
+    \textbf{Descomposición No Negativa de Matrices (NMF)} busca factorizar una matriz $ V \in \mathbb{R}^{m \times n} $, con $ V \geq 0 $, en el producto de dos matrices no negativas:
     \[
         V \approx WH, \quad W \in \mathbb{R}^{m \times r}, \quad H \in \mathbb{R}^{r \times n}
     \]
@@ -122,7 +122,7 @@
         H &\leftarrow H \circ \frac{W^\top V}{W^\top WH} \\
         W &\leftarrow W \circ \frac{V H^\top}{WHH^\top}
     \end{align*}
-    donde \( \circ \) denota el producto elemento a elemento (Hadamard).
+    donde $ \circ $ denota el producto elemento a elemento (Hadamard).
 \end{frame}
 
 % Datos iniciales
@@ -150,8 +150,8 @@
 \end{frame}
 
 % Iteración 1 - actualizar H
-\begin{frame}{Iteración 1: actualización de \( H \)}
-\textbf{Paso 1: Calcular} \( H^{(1)} = H \circ \frac{W^\top V}{W^\top WH} \)
+\begin{frame}{Iteración 1: actualización de $ H $}
+\textbf{Paso 1: Calcular} $ H^{(1)} = H \circ \frac{W^\top V}{W^\top WH} $
 
 \[
 W^\top V =
@@ -176,8 +176,8 @@ H^{(1)} =
 \end{frame}
 
 % Iteración 2 - actualizar H
-\begin{frame}{Iteración 2: actualización de \( H \)}
-\textbf{Paso 2: Usamos \( H^{(1)} \) para una nueva actualización}
+\begin{frame}{Iteración 2: actualización de $ H $}
+\textbf{Paso 2: Usamos $ H^{(1)} $ para una nueva actualización}
 
 \[
 W^\top W H^{(1)} \approx
@@ -203,8 +203,8 @@ H^{(2)} \approx
 \end{frame}
 
 % Iteración 2 - actualizar W
-\begin{frame}{Iteración 2: actualización de \( W \)}
-\textbf{Paso 3: actualizar \( W \)}
+\begin{frame}{Iteración 2: actualización de $ W $}
+\textbf{Paso 3: actualizar $ W $}
 
 \[
 H^{(2)} =
