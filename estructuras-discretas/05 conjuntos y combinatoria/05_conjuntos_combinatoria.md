@@ -10,6 +10,7 @@ author:
 #    citation_package: natbib
 #theme:
 #- Copenhagen
+classoption: t
 date:
 - Otoño 2024
 header-includes: |

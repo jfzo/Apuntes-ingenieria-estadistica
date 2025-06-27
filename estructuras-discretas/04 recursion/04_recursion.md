@@ -5,6 +5,7 @@ subtitle:
 - EST-1132 / Estructuras Discretas
 author:
 - Juan Zamora O.
+classoption: t
 #output: 
 #  beamer_presentation:
 #    citation_package: natbib

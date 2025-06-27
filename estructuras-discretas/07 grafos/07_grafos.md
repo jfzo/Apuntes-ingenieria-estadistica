@@ -1,57 +1,93 @@
 ---
-marp: true
-theme: gaia
-_class: lead
-backgroundImage: "linear-gradient(to bottom, #E7F1FD, #FFFFFF)"
-footer: ![width:150px opacity:.5](logo_ie_pucv.png)
-paginate: true
-_paginate: false
+title: 
+- Grafos, Representaciones y Algoritmos
+subtitle:
+- EST-1132 / Estructuras Discretas
+author:
+- Juan Zamora O.
+classoption: t
+#output: 
+#  beamer_presentation:
+#    citation_package: natbib
+#theme:
+#- Copenhagen
+date:
+- Otoño 2024
+header-includes: |
+    \usepackage{tikz}
+    \usepackage[T1]{fontenc}
+    \usepackage[utf8]{inputenc}
+    \usepackage{url}
+    \usepackage{colortbl}
+    
+    
+    \setbeamertemplate{footline}{%
+    \raisebox{5pt}{\makebox[0.5\paperwidth]{\hfill\makebox[20pt]{\color{black}\scriptsize\insertframenumber}}}\hspace*{5pt}}
+    \newcommand{\bigCI}{\mathrel{\text{\scalebox{1.07}{$\perp\mkern-1 0mu\perp$}}}}
+
+    \definecolor{LightRed}{RGB}{252,160,140}
+    \definecolor{LightBlue}{RGB}{140,186,252}   
+    
+    \newcolumntype{a}{>{\columncolor{LightRed}}c}
+    \newcolumntype{b}{>{\columncolor{LightBlue}}c}
+
+    \newcommand{\empt}[2]{#1^{( #2 )}}
+    \thispagestyle{empty}
+
+    \titlegraphic { 
+    \begin{tikzpicture}[overlay,remember picture]
+    \node[below=-2.6cm] at (current page.south){
+        \includegraphics[width=6cm]{logosAzul.png}
+    };
+    \end{tikzpicture}
+    }
+    \logo{
+    \begin{tikzpicture}[overlay,remember picture]
+        \node[opacity=0.4,right=-0.6cm, above=0.07cm] at ([xshift=-0.6cm]current page.south east){
+                \includegraphics[height=1cm]{logoAzul.png}
+        };
+    \end{tikzpicture}
+    }
 ---
 
-<!-- marp .\01_introduccion.md -o .\01_introduccion.pdf --allow-local-files --html=true -->
-<!-- marp .\04_recursion.md --html=true -p -o .\04_recursion.html --bespoke.progress -c .\marp.config.js  -->
 
-<!-- headingDivider: 3 -->
-
-### .: Grafos, Representaciones y Algoritmos :.
-
-#### EST-1132
-##### Estructuras Discretas
-##### Primer semestre 2022
-
-
-**Juan Zamora O.**
-juan.zamora@pucv.cl
-
-
-# Introducción
+## Introducción
 
 Estudiaremos 
+
 - Qué es un Grafo y qué tipo de información permite representar
 - Algoritmos para recorrer grafos 
 - Cómo poder representar estas estructuras computacionalmente
 - Uso de grafos en problemáticas reales
 
-# Ejemplo de la Aerolínea
+## Ejemplo de la Aerolínea
 
 - Imagine una aerolínea y sus rutas de viaje
 - Un párrafo explicando esta información con distancias y quizás tiempos de viaje resulta algo dificil de asimilar en un primer acercamiento
 
-<center>
-<img width="600px" src="https://drive.google.com/uc?export=download&id=1DGSPBLbjYfNJmMPPidEMbraTX3lDFVsA"/>
-</center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=3cm, xshift=5cm] at (current page.south) 
+    {
+        \includegraphics[width=0.8\textwidth]{grafo_aerolinea.png}
+    };
 
-# Una aproximación informal
+\end{tikzpicture}
+
+## Una aproximación informal
 
 - Un grafo es un conjunto no vacío de nodos o vértices, y arcos, donde cada uno conecta dos nodos
 - 5 nodos/6arcos. Arco $a_1$ conecta nodos 1 y 2...
 
-<center>
-<img width="600px" src="https://drive.google.com/uc?export=download&id=1OaDkoG1JblOmtDyGFw31tv5Mt1KcSyHx"/>
-</center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=3cm, xshift=5cm] at (current page.south) 
+    {
+        \includegraphics[width=0.8\textwidth]{grafo_g5.png}
+    };
+
+\end{tikzpicture}
 
 
-# Definición formal
+## Definición formal
 
 - Un grafo es una tupla  $(N,A,g)$ donde
     - $N$ un conjunto no vacío de nodos
@@ -60,9 +96,15 @@ Estudiaremos
 
 ---
 
-<center>
-<img width="600px" src="https://drive.google.com/uc?export=download&id=1OaDkoG1JblOmtDyGFw31tv5Mt1KcSyHx"/>
-</center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=0cm, xshift=5cm] at (current page.center) 
+    {
+        \includegraphics[width=0.8\textwidth]{grafo_g5.png}
+    };
+
+\end{tikzpicture}
+
+\vspace{4cm}
 
 - función $g$ asocia arcos con terminales
 - $g(a_1)=1-2$;$g(a_2)=1-2$;$g(a_3)=2-2$;$g(a_4)=2-3$;$g(a_5)=1-3$;$g(a_6)=3-4$;
@@ -71,7 +113,7 @@ Estudiaremos
 
 Dibuje un grafo con nodos $\{1,2,3,4,5\}$, arcos $\{a_1,a_2,a_3,a_4,a_5,a_6\}$, y función $g(a_1)=1-2$;$g(a_2)=1-3$;$g(a_3)=3-4$;$g(a_4)=3-4$;$g(a_5)=4-5$;$g(a_6)=5-5$;
 
-# Grafo Dirigido
+## Grafo Dirigido
 
 - Hasta ahora no hemos considerado orden en cada par de nodos
 - Un grafo es una tupla  $(N,A,g)$ donde
@@ -81,14 +123,18 @@ Dibuje un grafo con nodos $\{1,2,3,4,5\}$, arcos $\{a_1,a_2,a_3,a_4,a_5,a_6\}$, 
 
 ---
 
-<center>
-<img width="600px" src="https://drive.google.com/uc?export=download&id=1aks7EAcRrXHoM-GXG-2NCaJL2haGCuFx"/>
-</center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=3cm, xshift=5cm] at (current page.center) 
+    {
+        \includegraphics[width=0.8\textwidth]{grafo_dirigido1.png}
+    };
+
+\end{tikzpicture}
 
 - 5 nodos/5 arcos. La función $g$ hace asociaciones como $g(a_1)=(1,2)$. 
     - Esto significa que el arco $a_1$ comienza en el nodo 1 y termina en el 2.
 
-# Algo de terminología
+## Algo de terminología
 
 - Nodos adyacentes: Nodos terminales asociados con un mismo arco
 - Retorno: Arco con mismo nodo como inicial y terminal.
@@ -105,19 +151,23 @@ Dibuje un grafo con nodos $\{1,2,3,4,5\}$, arcos $\{a_1,a_2,a_3,a_4,a_5,a_6\}$, 
 - Grafo conexo: Aquel en que existe un camino entre cada par de nodos
 
 
-<center>
-<img width="600px" src="https://drive.google.com/uc?export=download&id=1Ve_6vQucXjpBU4Ks0uriJ8v4RKhx3OV_"/>
-</center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=0cm, xshift=5cm] at (current page.center) 
+    {
+        \includegraphics[width=0.8\textwidth]{grafo_conexo_no_conexo.png}
+    };
+
+\end{tikzpicture}
 
 - Ciclo: Camino que comienza y termina en el mismo nodo donde ningun arco aparece más de una vez en la secuencia.
 
-# Representaciones computacionales
+## Representaciones computacionales
 
 - Si bien una característica importante de  un grafo es la posibilidad de visualizarlo, esta no es su virtud más relevante
 - Grafos representan información relacional
 - Esta información puede ser manipulada (filtrada, buscada, comparada ...) independientemente de la visualización
 
-<center><i>¿Qué debe ser almacenado para reconstruir la información y la visualización de un grafo?</i></center>
+*¿Qué debe ser almacenado para reconstruir la información y la visualización de un grafo?*
 
 ---
 
@@ -125,7 +175,7 @@ Las dos representaciones más comunes de grafos en un computador son:
 1. Matriz de adyacencia
 2. Lista de adyacencia
 
-## Matriz de Adyacencia
+**Matriz de Adyacencia**
 
 - Supongamos un grafo con $n$ nodos numerados $n_1,n_2,\ldots ,n_n$
 - Esta numeración es arbitraria. Sin embargo, no tiene impacto en la interpretación del grafo.
@@ -136,7 +186,13 @@ Las dos representaciones más comunes de grafos en un computador son:
 
 **Considere** el siguiente grafo:
 
-<center><img width="800px" src="https://drive.google.com/uc?export=download&id=1DRBPqQqPDoWPSs_LDCKTVzoBdx3nnFz2"/></center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=0cm, xshift=5cm] at (current page.center) 
+    {
+        \includegraphics[width=0.8\textwidth]{grafo_matriz.png}
+    };
+
+\end{tikzpicture}
 
 ---
 
@@ -147,7 +203,13 @@ Las dos representaciones más comunes de grafos en un computador son:
 
 **Para el caso de un grafo dirigido**
 
-<center><img width="700px" src="https://drive.google.com/uc?export=download&id=1W4hrxk-s0WYNA-AgOytCXWeRW9-Bp4wP"/></center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=0cm, xshift=5cm] at (current page.center) 
+    {
+        \includegraphics[width=0.8\textwidth]{grafo_matriz_dirigido.png}
+    };
+
+\end{tikzpicture}
 
 - Notar que no es simétrica
 
@@ -170,16 +232,30 @@ Las dos representaciones más comunes de grafos en un computador son:
 
 ---
 
-<center><img width="1000px" src="https://drive.google.com/uc?export=download&id=1dylzX20Q9ODkDar-CVt7FwO3Ji6r7LwC"/></center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=0cm, xshift=5cm] at (current page.center) 
+    {
+        \includegraphics[width=0.8\textwidth]{grafos_lista_adyacencia.png}
+    };
+
+\end{tikzpicture}
+
+---
 
 ### Ejercicio
 
 - Anote la lista de adyacencia para el siguiente grafo:
 
-<center><img src="https://drive.google.com/uc?export=download&id=1kwOBBRByb1PLQc482POWi2l3YX5IA1-O" width="300px"/></center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=0cm, xshift=5cm] at (current page.center) 
+    {
+        \includegraphics[width=0.8\textwidth]{grafo_actividad.png}
+    };
+
+\end{tikzpicture}
 
 
-# Recorriendo un  grafo
+## Recorriendo un  grafo
 
 Objetivo: Encontrar un camino que visite cada nodo al menos una vez 
 
@@ -206,11 +282,17 @@ Objetivo: Encontrar un camino que visite cada nodo al menos una vez
 
     La secuencia de nodos registrados conformaran el oden por profundidad del grafo
 
+---
+
 ### Ejemplo
 
-<center>
-<img width="400px" src="https://drive.google.com/uc?export=download&id=1fmfnkepXcEt1ssbIKgMJjjJ_OwP4Oel3"/>
-</center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=0cm, xshift=5cm] at (current page.center) 
+    {
+        \includegraphics[width=0.8\textwidth]{grafos_dfs_ejemplo.png}
+    };
+
+\end{tikzpicture}
 
 ---
 
@@ -226,10 +308,14 @@ Objetivo: Encontrar un camino que visite cada nodo al menos una vez
 
 - $a,b,c,d,f,g,e,h,i,k,j$
 
-<center>
-<img width="370px" src="
-https://drive.google.com/uc?export=download&id=1qp-42lh1oZDf-Q88PIg4JPn3SYYezL7o"/>
-</center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=0cm, xshift=5cm] at (current page.center) 
+    {
+        \includegraphics[width=0.8\textwidth]{grafos_dfs_ejemplo_marcado.png}
+    };
+
+\end{tikzpicture}
+
 
 ## Breadth-First Search (BFS)
 
@@ -250,11 +336,18 @@ https://drive.google.com/uc?export=download&id=1qp-42lh1oZDf-Q88PIg4JPn3SYYezL7o
                     encolar B en Q
             remover el primer nodo en Q
 
+---
+
 ### Ejemplo
 
-<center>
-<img width="400px" src="https://drive.google.com/uc?export=download&id=1fmfnkepXcEt1ssbIKgMJjjJ_OwP4Oel3"/>
-</center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=0cm, xshift=5cm] at (current page.center) 
+    {
+        \includegraphics[width=0.8\textwidth]{grafos_dfs_ejemplo.png}
+    };
+
+\end{tikzpicture}
+
 
 ---
 
@@ -270,4 +363,11 @@ https://drive.google.com/uc?export=download&id=1qp-42lh1oZDf-Q88PIg4JPn3SYYezL7o
 
 - finalmente el orden BFS a partir de $a$ es $a,b,e,h,i,c,j,k,d,f,g$
 
-<center><img width="360px" src="https://drive.google.com/uc?export=download&id=1W_DaP43RG6VbW6tTH2q3hOGqmBdEEbG7"/></center>
+\begin{tikzpicture}[remember picture, overlay]
+    \node[above left, yshift=0cm, xshift=5cm] at (current page.center) 
+    {
+        \includegraphics[width=0.8\textwidth]{grafos_bfs_ejemplo_marcado.png}
+    };
+
+\end{tikzpicture}
+
