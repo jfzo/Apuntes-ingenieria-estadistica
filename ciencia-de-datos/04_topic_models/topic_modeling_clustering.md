@@ -59,7 +59,7 @@ Las reglas de actualización son:
     H &\leftarrow H \circ \frac{W^\top V}{W^\top WH} \\
     W &\leftarrow W \circ \frac{V H^\top}{WHH^\top}
 \end{align*}
-donde $ \circ $ denota el producto elemento a elemento (Hadamard).
+donde $\circ$ denota el producto elemento a elemento (Hadamard).
 
 ---
 
@@ -78,9 +78,11 @@ V = \begin{bmatrix}
 $$
 
 Factorizar $V \approx W H$, con $W \in \mathbb{R}^{3 \times 2}_{\geq 0}$, $H \in \mathbb{R}^{2 \times 2}_{\geq 0}$.
-\end{frame}
 
-\begin{frame}{Inicialización}
+---
+
+### Inicialización
+
 Matrices iniciales:
 
 $$
@@ -174,6 +176,8 @@ H^{(2)} = \begin{bmatrix}
 \end{bmatrix}
 $$
 
+---
+
 ### Iteración 2: Actualización de $W$
 
 $$
@@ -198,6 +202,8 @@ W^{(2)} = \begin{bmatrix}
 \end{bmatrix}
 $$
 
+---
+
 ### Iteración 3: Actualización de $H$
 
 $$
@@ -218,6 +224,8 @@ H^{(3)} = \begin{bmatrix}
 2.73 & 0.95
 \end{bmatrix}
 $$
+
+---
 
 ### Iteración 3: Actualización de $W$
 
@@ -289,7 +297,6 @@ $$
 W^{(4)} H^{(4)} \approx V
 $$
 
----
 
 # Aplicación de NMF para extracción de tópicos en texto
 
@@ -329,9 +336,9 @@ Referencias: [Blei et al. 2003](http://www.jmlr.org/papers/volume3/blei03a/blei0
 ### Distribuciones de probabilidad en LDA
 
 - $\theta_d \sim \text{Dirichlet}(\alpha)$: distribución de temas en un documento.
-- $\phi_k \sim \text{Dirichlet}(\beta)$: distribución de palabras en un tema.
+- $\phi_k  \sim \text{Dirichlet}(\beta)$: distribución de palabras en un tema.
 - $z_{d,n} \sim \text{Multinomial}(\theta_d)$: elección de tema para palabra$n$en documento$d$.
-    \item$w_{d,n} \sim \text{Multinomial}(\phi_{z_{d,n}})$: elección de palabra según el tema.
+- $w_{d,n} \sim \text{Multinomial}(\phi_{z_{d,n}})$: elección de palabra según el tema.
 
 ---
 
@@ -392,3 +399,5 @@ Referencias: [Blei et al. 2003](http://www.jmlr.org/papers/volume3/blei03a/blei0
     - Se calcula tomando la log-verosimilitud de los documentos con los tópicos resultantes
     - Que tanto es posible reproducir la composición de los documentos dados los tópicos
     - El bjetivo es escoger el número de tópicos que minimiza la Perplexity 
+
+
