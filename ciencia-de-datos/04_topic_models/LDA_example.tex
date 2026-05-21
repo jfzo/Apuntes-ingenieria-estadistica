@@ -1,0 +1,144 @@
+\documentclass{beamer}
+%\usetheme{albatross}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{listings}
+\usepackage{color}
+
+\title{Latent Dirichlet Allocation (LDA) en R}
+\author{}
+\date{}
+
+% Estilo para código R
+\definecolor{lightgray}{gray}{0.95}
+\lstset{
+  language=R,
+  basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{lightgray},
+  frame=single,
+  breaklines=true,
+  captionpos=b
+}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{¿Qué es LDA?}
+  \begin{itemize}
+    \item LDA es un modelo generativo para modelar temas en documentos.
+    \item Supone que:
+    \begin{itemize}
+      \item Cada documento es una mezcla de temas.
+      \item Cada tema es una distribución de palabras.
+    \end{itemize}
+    \item Utiliza distribuciones Dirichlet como priors.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Distribuciones de probabilidad en LDA}
+  \begin{itemize}
+    \item \( \theta_d \sim \text{Dirichlet}(\alpha) \): distribución de temas en un documento.
+    \item \( \phi_k \sim \text{Dirichlet}(\beta) \): distribución de palabras en un tema.
+    \item \( z_{d,n} \sim \text{Multinomial}(\theta_d) \): elección de tema para palabra \( n \) en documento \( d \).
+    \item \( w_{d,n} \sim \text{Multinomial}(\phi_{z_{d,n}}) \): elección de palabra según el tema.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Estimación de parámetros}
+  \begin{itemize}
+    \item El modelo observa solo las palabras. Los temas son variables latentes.
+    \item Se busca inferir:
+    \begin{itemize}
+      \item \( \theta_d \): proporción de temas en cada documento.
+      \item \( \phi_k \): distribución de palabras por tema.
+      \item \( z_{d,n} \): asignación de temas a palabras.
+    \end{itemize}
+    \item Métodos comunes:
+    \begin{itemize}
+      \item Muestreo de Gibbs (Gibbs Sampling)
+      \item Inferencia variacional (Variational Bayes)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{¿Qué es Gibbs Sampling?}
+  \begin{itemize}
+    \item Método de Monte Carlo para estimar distribuciones condicionales.
+    \item En LDA:
+    \begin{itemize}
+      \item Se fija el tema de todas las palabras excepto una.
+      \item Se estima la probabilidad condicional de cada posible tema para esa palabra.
+      \item Se repite este proceso para todas las palabras, muchas veces.
+    \end{itemize}
+    \item El resultado converge a una estimación de la distribución posterior conjunta.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Corpus de ejemplo en R}
+\begin{lstlisting}
+docs <- c(
+  "el gato duerme en la casa",
+  "el perro ladra en la noche",
+  "la casa está vacía",
+  "el gato y el perro juegan",
+  "la noche es oscura y silenciosa",
+  "los animales duermen durante la noche"
+)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Preprocesamiento con \texttt{tm}}
+\begin{lstlisting}
+library(tm)
+
+corpus <- VCorpus(VectorSource(docs))
+corpus <- tm_map(corpus, content_transformer(tolower))
+corpus <- tm_map(corpus, removePunctuation)
+corpus <- tm_map(corpus, removeNumbers)
+corpus <- tm_map(corpus, removeWords, stopwords("spanish"))
+corpus <- tm_map(corpus, stripWhitespace)
+
+dtm <- DocumentTermMatrix(corpus)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Modelo LDA con \texttt{topicmodels}}
+\begin{lstlisting}
+library(topicmodels)
+
+lda_model <- LDA(dtm, k = 2, control = list(seed = 1234))
+terms(lda_model, 5)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}{Resultados esperados}
+  \begin{itemize}
+    \item El modelo encuentra temas latentes agrupando palabras frecuentes.
+    \item Por ejemplo:
+    \begin{block}{Tema 1}
+      noche, oscura, silenciosa, animales, ladra
+    \end{block}
+    \begin{block}{Tema 2}
+      casa, gato, duerme, vacía, perro
+    \end{block}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Aplicaciones de LDA}
+  \begin{itemize}
+    \item Análisis de contenido en redes sociales.
+    \item Recomendación de artículos o noticias.
+    \item Exploración de grandes corpus de texto.
+    \item Clasificación temática automática.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \centering
+  \Huge ¡Gracias!
+\end{frame}
+
+\end{document}

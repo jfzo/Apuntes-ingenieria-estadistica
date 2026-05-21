@@ -1,0 +1,310 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+
+\title{Ejemplo de NMF con algoritmo de Lee y Seung}
+\author{JFZO - EST297}
+\date{2025}
+
+\begin{document}
+
+\frame{\titlepage}
+
+
+% Slide 1: Introducción a NMF
+\begin{frame}{¿Qué es NMF?}
+\begin{itemize}
+    \item Dada una matriz no negativa \( V \in \mathbb{R}^{m \times n} \), se busca una aproximación:
+    \[
+    V \approx WH
+    \]
+    \item Donde:
+    \begin{itemize}
+        \item \( W \in \mathbb{R}^{m \times r} \): matriz base
+        \item \( H \in \mathbb{R}^{r \times n} \): matriz de coeficientes
+        \item \( r \ll \min(m, n) \): número de componentes latentes
+    \end{itemize}
+    \item Las tres matrices tienen entradas no negativas.
+\end{itemize}
+\end{frame}
+
+% Slide 2: Objetivo de la factorización
+\begin{frame}{Objetivo de la factorización}
+\begin{itemize}
+    \item Minimizar la diferencia entre \( V \) y \( WH \):
+    \[
+    \min_{W, H \geq 0} \quad D(V \Vert WH)
+    \]
+    \item Funciones de costo comunes:
+    \begin{itemize}
+        \item Error cuadrático: \( \| V - WH \|_F^2 \)
+        \item Divergencia KL: \( D(V \Vert WH) \)
+    \end{itemize}
+    \item Restricción: \( W, H \geq 0 \)
+\end{itemize}
+\end{frame}
+
+% Slide 3: Algoritmo de Lee y Seung
+\begin{frame}{Método de Lee y Seung}
+\begin{itemize}
+    \item Propuesto en 1999 (versión mejorada en 2001).
+    \item Basado en actualizaciones multiplicativas.
+    \item Asegura que las matrices \( W \) y \( H \) sigan siendo no negativas.
+    \item Dos versiones: para el error cuadrático y para la divergencia KL.
+\end{itemize}
+\end{frame}
+
+% Slide 4: Caso 1 - Error cuadrático
+\begin{frame}{Actualizaciones para el error cuadrático}
+\begin{itemize}
+    \item Función de pérdida:
+    \[
+    \mathcal{L} = \frac{1}{2} \| V - WH \|_F^2
+    \]
+    \item Reglas de actualización:
+    \[
+    H \leftarrow H \circ \frac{W^\top V}{W^\top W H}
+    \]
+    \[
+    W \leftarrow W \circ \frac{V H^\top}{W H H^\top}
+    \]
+    \item Donde \( \circ \) denota multiplicación elemento a elemento.
+\end{itemize}
+\end{frame}
+
+% Slide 5: Caso 2 - Divergencia KL
+\begin{frame}{Actualizaciones para la divergencia KL}
+\begin{itemize}
+    \item Función de pérdida:
+    \[
+    D(V \Vert WH) = \sum_{i,j} \left( V_{ij} \log \frac{V_{ij}}{(WH)_{ij}} - V_{ij} + (WH)_{ij} \right)
+    \]
+    \item Reglas de actualización:
+    \[
+    H_{ak} \leftarrow H_{ak} \cdot \frac{\sum_i W_{ia} \frac{V_{ik}}{(WH)_{ik}}}{\sum_i W_{ia}}
+    \]
+    \[
+    W_{ia} \leftarrow W_{ia} \cdot \frac{\sum_k H_{ak} \frac{V_{ik}}{(WH)_{ik}}}{\sum_k H_{ak}}
+    \]
+\end{itemize}
+\end{frame}
+
+
+%%%%%% nuevo ejemplo mas detallado
+
+\begin{frame}{Matriz original y objetivo}
+Matriz original \( V \):
+
+\[
+V = \begin{bmatrix}
+5 & 3 \\
+3 & 2 \\
+4 & 1
+\end{bmatrix}
+\]
+
+Factorizar \( V \approx W H \), con \( W \in \mathbb{R}^{3 \times 2}_{\geq 0} \), \( H \in \mathbb{R}^{2 \times 2}_{\geq 0} \).
+\end{frame}
+
+\begin{frame}{Inicialización}
+Matrices iniciales:
+
+\[
+W^{(0)} = \begin{bmatrix}
+1 & 0.5 \\
+0.5 & 1 \\
+1 & 1
+\end{bmatrix}
+\quad , \quad
+H^{(0)} = \begin{bmatrix}
+1 & 2 \\
+1 & 1
+\end{bmatrix}
+\]
+\end{frame}
+
+\begin{frame}{Iteración 1: Actualización de \( H \)}
+\[
+H_{ij} \leftarrow H_{ij} \times \frac{(W^T V)_{ij}}{(W^T W H)_{ij}}
+\]
+
+\[
+W^T V = \begin{bmatrix}
+9.5 & 4.0 \\
+9.5 & 4.5
+\end{bmatrix}
+\quad , \quad
+W^T W H^{(0)} = \begin{bmatrix}
+4.25 & 6.5 \\
+4.25 & 6.25
+\end{bmatrix}
+\]
+
+\[
+H^{(1)} = \begin{bmatrix}
+2.235 & 1.231 \\
+2.235 & 0.72
+\end{bmatrix}
+\]
+\end{frame}
+
+\begin{frame}{Iteración 1: Actualización de \( W \)}
+\[
+W_{ij} \leftarrow W_{ij} \times \frac{(V H^T)_{ij}}{(W H H^T)_{ij}}
+\]
+
+\[
+V H^{(1)T} = \begin{bmatrix}
+14.88 & 13.365 \\
+9.21 & 8.085 \\
+10.171 & 9.16
+\end{bmatrix}
+\quad , \quad
+W^{(0)} H^{(1)} H^{(1)T} = \begin{bmatrix}
+9.54 & 8.49 \\
+8.06 & 8.4 \\
+12.6 & 11.26
+\end{bmatrix}
+\]
+
+\[
+W^{(1)} = \begin{bmatrix}
+1.56 & 0.79 \\
+0.57 & 0.96 \\
+0.81 & 0.81
+\end{bmatrix}
+\]
+\end{frame}
+
+\begin{frame}{Iteración 2: Actualización de \( H \)}
+\[
+W^{(1)T} V = \begin{bmatrix}
+13.89 & 6.75 \\
+11.37 & 5.04
+\end{bmatrix}
+\quad , \quad
+W^{(1)T} W^{(1)} H^{(1)} = \begin{bmatrix}
+12.98 & 5.76 \\
+9.94 & 4.21
+\end{bmatrix}
+\]
+
+\[
+H^{(2)} = \begin{bmatrix}
+2.39 & 1.44 \\
+2.56 & 0.86
+\end{bmatrix}
+\]
+\end{frame}
+
+\begin{frame}{Iteración 2: Actualización de \( W \)}
+\[
+V H^{(2)T} = \begin{bmatrix}
+20.35 & 17.45 \\
+12.87 & 11.12 \\
+11.98 & 10.17
+\end{bmatrix}
+\quad , \quad
+W^{(1)} H^{(2)} H^{(2)T} = \begin{bmatrix}
+18.1 & 15.7 \\
+14.9 & 13.2 \\
+15.9 & 14.2
+\end{bmatrix}
+\]
+
+\[
+W^{(2)} = \begin{bmatrix}
+1.75 & 0.88 \\
+0.49 & 0.81 \\
+0.61 & 0.58
+\end{bmatrix}
+\]
+\end{frame}
+
+\begin{frame}{Iteración 3: Actualización de \( H \)}
+\[
+W^{(2)T} V = \begin{bmatrix}
+14.6 & 7.1 \\
+11.4 & 5.2
+\end{bmatrix}
+\quad , \quad
+W^{(2)T} W^{(2)} H^{(2)} = \begin{bmatrix}
+13.9 & 6.1 \\
+10.7 & 4.7
+\end{bmatrix}
+\]
+
+\[
+H^{(3)} = \begin{bmatrix}
+2.51 & 1.68 \\
+2.73 & 0.95
+\end{bmatrix}
+\]
+\end{frame}
+
+\begin{frame}{Iteración 3: Actualización de \( W \)}
+\[
+V H^{(3)T} = \begin{bmatrix}
+21.2 & 18.1 \\
+13.2 & 11.5 \\
+12.1 & 10.5
+\end{bmatrix}
+\quad , \quad
+W^{(2)} H^{(3)} H^{(3)T} = \begin{bmatrix}
+19.3 & 16.8 \\
+15.8 & 14.0 \\
+16.8 & 15.0
+\end{bmatrix}
+\]
+
+\[
+W^{(3)} = \begin{bmatrix}
+1.92 & 0.95 \\
+0.41 & 0.67 \\
+0.44 & 0.41
+\end{bmatrix}
+\]
+\end{frame}
+
+\begin{frame}{Iteración 4: Actualización de \( H \) y resultado final}
+\[
+W^{(3)T} V = \begin{bmatrix}
+15.1 & 7.3 \\
+11.2 & 5.0
+\end{bmatrix}
+\quad , \quad
+W^{(3)T} W^{(3)} H^{(3)} = \begin{bmatrix}
+14.6 & 6.4 \\
+10.9 & 4.7
+\end{bmatrix}
+\]
+
+\[
+H^{(4)} = \begin{bmatrix}
+2.60 & 1.92 \\
+2.80 & 1.01
+\end{bmatrix}
+\]
+
+Resultado final aproximado:
+
+\[
+W^{(4)} \approx \begin{bmatrix}
+1.92 & 0.95 \\
+0.41 & 0.67 \\
+0.44 & 0.41
+\end{bmatrix}
+\quad , \quad
+H^{(4)} \approx \begin{bmatrix}
+2.60 & 1.92 \\
+2.80 & 1.01
+\end{bmatrix}
+\]
+
+y
+
+\[
+W^{(4)} H^{(4)} \approx V
+\]
+\end{frame}
+\end{document}

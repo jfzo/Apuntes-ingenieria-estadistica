@@ -1,0 +1,464 @@
+\documentclass[10pt]{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath,amsfonts,amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{listings}
+
+%\usetheme{Madrid}
+
+% Configuración de listings
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.95}
+
+\lstdefinestyle{Rstyle}{
+    backgroundcolor=\color{backcolour},
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\footnotesize\ttfamily,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2
+}
+
+\lstset{style=Rstyle}
+
+\title{Evaluación de la Calidad de Temas: Coherence Score y Perplexity}
+\author{Tu Nombre}
+\institute{Universidad o Institución}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Contenido}
+\tableofcontents
+\end{frame}
+
+\section{¿Qué es el Coherence Score?}
+\begin{frame}
+\frametitle{¿Qué es el Coherence Score?}
+
+    
+- Métrica para evaluar la calidad semántica de los temas generados por modelos como LDA.
+    
+- Mide qué tan coherentes son las palabras asociadas a un tema.
+    
+- Cuanto más alto, mejor interpretabilidad del tema.
+
+\end{frame}
+
+\section{Tipos de Coherence Scores}
+\begin{frame}
+\frametitle{Tipos de Coherence Scores}
+
+    
+- \textbf{Umass}: basado en frecuencias conjuntas de pares de palabras.
+    
+- \textbf{UCI}: usa PMI (Pointwise Mutual Information) sobre ngrams.
+    
+- \textbf{NPMI}: normalización de PMI para evitar sesgo por frecuencia.
+    
+- \textbf{Cv} (\textit{el más usado}): combinación intuitiva de varios enfoques.
+
+\end{frame}
+
+\section{Fórmula Matemática del Coherence C_v}
+\begin{frame}
+\frametitle{Fórmula del Coherence C_v}
+Sea $ W = \{w_1, w_2, ..., w_N\} $ el conjunto de las N palabras más representativas de un tema.
+
+Para cada par $ i < j $:
+$$
+s_{C_v}(w_i, w_j) = \frac{\log \left( \frac{D(w_i, w_j) + \epsilon}{D(w_i)} \right)}{-\log \left( \frac{D(w_j)}{|D|} \right)}
+$$
+Donde:
+
+    
+- $ D(w_i) $: número de documentos donde aparece $ w_i $
+    
+- $ D(w_i, w_j) $: documentos donde aparecen ambas palabras
+    
+- $ |D| $: total de documentos
+    
+- $ \epsilon $: constante pequeña (ej. $ 10^{-12} $)
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Coherence Final del Tema}
+Promedio de similitudes entre todos los pares de palabras:
+
+$$
+\text{Coherence}_{C_v} = \frac{1}{\binom{N}{2}} \sum_{i<j} s_{C_v}(w_i, w_j)
+$$
+
+Interpretación:
+
+    
+- Valores cercanos a 1 → Temas muy coherentes
+    
+- Valores cercanos a 0 o negativos → Temas poco interpretables
+
+\end{frame}
+
+\section{Ejemplo Numérico}
+\begin{frame}
+\frametitle{Ejemplo Numérico}
+Tema: \{"gobierno", "ley", "país", "elecciones", "senado"\}
+
+Datos:
+
+    
+- $ D = 1000 $ documentos
+    
+- $ D(\text{"gobierno"}) = 200 $
+    
+- $ D(\text{"ley"}) = 150 $
+    
+- $ D(\text{"gobierno", "ley"}) = 100 $
+
+
+Cálculo:
+$$
+s_{C_v}(\text{"gobierno"}, \text{"ley"}) = \frac{\log(100/200)}{-\log(150/1000)} = \frac{\log(0.5)}{-\log(0.15)} \approx \frac{-0.693}{1.823} \approx -0.38
+$$
+\end{frame}
+
+\section{Implementación en R}
+\begin{frame}[fragile]
+\frametitle{Instalación de paquetes necesarios}
+\begin{lstlisting}[language=R]
+install.packages("topicmodels")
+install.packages("tm")
+install.packages("LDAvis")
+install.packages("dplyr")
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Preprocesamiento básico en R}
+\begin{lstlisting}[language=R]
+library(tm)
+library(topicmodels)
+
+# Ejemplo de datos
+docs <- c(
+  "El gobierno anuncia nuevas leyes",
+  "La ley fue aprobada por el senado",
+  "Elecciones importantes en el país",
+  "Los ciudadanos votan en elecciones"
+)
+
+# Crear corpus y DTM
+corpus <- Corpus(VectorSource(docs))
+corpus <- tm_map(corpus, content_transformer(tolower))
+corpus <- tm_map(corpus, removePunctuation)
+corpus <- tm_map(corpus, removeWords, stopwords("es"))
+
+dtm <- DocumentTermMatrix(corpus)
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Entrenamiento de modelo LDA}
+\begin{lstlisting}[language=R]
+lda_model <- LDA(dtm, k = 2, control = list(seed = 1234))
+terms(lda_model, 5)
+\end{lstlisting}
+
+Salida:
+\begin{verbatim}
+      Topic 1       Topic 2
+[1,] "elecciones"  "gobierno"
+[2,] "país"        "ley"
+[3,] "ciudadanos"  "senado"
+[4,] "votan"       "anuncia"
+[5,] "nuevas"      "aprobada"
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Visualización con LDAvis}
+\begin{lstlisting}[language=R]
+library(LDAvis)
+vis_data <- prepare.LDAvis(lda_model, dtm)
+ser_vis <- saveLDAvis(vis_data, outfile = "lda.html")
+\end{lstlisting}
+
+Este código genera un archivo HTML interactivo que puedes abrir en tu navegador para explorar visualmente los temas.
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Cálculo del Coherence Score C_v (manual)}
+\begin{lstlisting}[language=R]
+coherence_cv <- function(topic_words, dtm) {
+  library(Matrix)
+  N <- length(topic_words)
+  score <- 0
+  count <- 0
+  for (i in 1:(N-1)) {
+    for (j in (i+1):N) {
+      w1 <- topic_words[i]
+      w2 <- topic_words[j]
+      df_w1 <- sum(colSums(dtm[, w1]) > 0)
+      df_w2 <- sum(colSums(dtm[, w2]) > 0)
+      df_both <- sum(rowSums(dtm[, c(w1, w2)]) == 2)
+      D <- nrow(dtm)
+      if (df_w1 > 0 && df_w2 > 0) {
+        num <- log((df_both + 1e-12) / df_w1)
+        den <- -log(df_w2 / D)
+        score <- score + num / den
+        count <- count + 1
+      }
+    }
+  }
+  return(score / count)
+}
+\end{lstlisting}
+\end{frame}
+
+\section{Perplejidad}
+\begin{frame}
+\frametitle{¿Qué es la Perplejidad?}
+
+    
+- Métrica estadística que mide cómo de bien un modelo predice datos nuevos.
+    
+- Cuanto menor sea su valor, mejor será el modelo.
+    
+- No siempre refleja la coherencia semántica de los temas.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Fórmula Matemática}
+Para un conjunto de documentos de prueba $ D_{test} $, la perplejidad se define como:
+
+$$
+\text{Perplexity}(D_{test}) = \exp\left( -\frac{\sum_{d=1}^{M} \log p(w_d)}{\sum_{d=1}^{M} N_d} \right)
+$$
+
+Donde:
+
+    
+- $ \log p(w_d) $: log-verosimilitud del documento $ d $
+    
+- $ N_d $: número de palabras en el documento $ d $
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Ejemplo Numérico}
+Documentos de prueba:
+
+    
+- Doc1: ["gobierno", "ley"] → $ \log p(w_d) = -3.0 $
+    
+- Doc2: ["país", "elecciones"] → $ \log p(w_d) = -4.0 $
+
+
+Total de palabras: $ N = 4 $
+
+$$
+\text{Perplexity} = \exp\left( -\frac{-3.0 -4.0}{4} \right) = \exp\left( \frac{7.0}{4} \right) = \exp(1.75) \approx 5.75
+$$
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Cálculo de Perplejidad en R}
+\begin{lstlisting}[language=R]
+library(topicmodels)
+
+# Entrenamiento del modelo
+lda_model <- LDA(dtm_train, k = 2, control = list(seed = 1234))
+
+# Cálculo de perplejidad en datos de prueba
+log_likelihood <- mean(sapply(seq_len(nrow(dtm_test)), function(i) {
+  logLikelihood(lda_model, dtm_test[i, ]) # Puede requerir función auxiliar
+}))
+
+num_words <- sum(colSums(dtm_test))
+perplexity <- exp(-log_likelihood / num_words)
+
+cat("Perplexity:", perplexity, "\n")
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}
+\frametitle{Interpretación de los Valores}
+\begin{center}
+\begin{tabular}{cl}
+\toprule
+Valor & Interpretación \\
+\midrule
+< 100     & Modelo muy ajustado \\
+100 – 500 & Modelo razonable \\
+> 500     & Modelo poco ajustado \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Nota: ¡No garantiza mejores temas interpretativos!
+\end{frame}
+
+\section{Comparativa Coherence vs Perplexity}
+\begin{frame}[fragile]
+\frametitle{Gráfico Comparativo}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{coherence_perplexity_plot.png}
+\end{center}
+
+Este gráfico muestra cómo varían el Coherence Score y la Perplejidad al aumentar el número de temas (\texttt{K}).
+
+\textbf{Cómo interpretarlo:}
+
+    
+- Elige el valor de $ K $ donde el Coherence Score es más alto.
+    
+- La Perplejidad debe ser lo más baja posible.
+    
+- Busca un equilibrio entre ambas métricas.
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Función R para Evaluación Automática}
+\begin{lstlisting}[language=R]
+evaluate_lda_models <- function(dtm, k_values = 2:10) {
+  results <- tibble::tibble(K = integer(), Coherence = numeric(), Perplexity = numeric())
+  for (k in k_values) {
+    lda_model <- LDA(dtm, k = k)
+    topic_terms <- purrr::map(1:k, ~ terms(lda_model, 10)[, .x])
+    coherence_scores <- sapply(topic_terms, coherence_cv, dtm = dtm)
+    perplexity <- calcular_perplejidad(...)
+    results <- bind_rows(results, tibble(K = k, Coherence = mean(coherence_scores), Perplexity = perplexity))
+  }
+  return(results)
+}
+\end{lstlisting}
+\end{frame}
+
+
+
+\section{Comparativa Coherence vs Perplexity v2}
+\begin{frame}
+\frametitle{Coherence Score vs Perplexity v2}
+Ambas métricas ayudan a elegir el número óptimo de temas:
+
+
+    
+- \textbf{Coherence Score}: prioriza temas interpretables.
+    
+- \textbf{Perplexity}: prioriza ajuste estadístico.
+
+
+\textbf{Recomendación:}
+- Usa Coherence Score si buscas temas humanamente comprensibles.
+- Usa Perplexity si priorizas capacidad predictiva.
+- Combínalas para equilibrio entre ambos objetivos.
+\end{frame}
+
+\begin{frame}
+\frametitle{Gráfico Comparativo}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{coherence_perplexity_plot.png}
+\end{center}
+
+Este gráfico muestra cómo varían el Coherence Score y la Perplejidad al aumentar el número de temas (`K`). El punto óptimo suele estar donde el Coherence Score es máximo y la Perplejidad mínima.
+
+> Nota: Puedes generar este gráfico con R usando `ggplot2` después de calcular ambos valores para distintos `K`.
+\end{frame}
+
+\section{Interpretación del Valor}
+\begin{frame}
+\frametitle{Interpretación del Score}
+\begin{center}
+\begin{tabular}{cl}
+\toprule
+Rango & Interpretación \\
+\midrule
+0.2 – 0.4 & Temas aceptables \\
+0.4 – 0.6 & Temas buenos \\
+> 0.6     & Temas muy claros y coherentes \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{frame}
+
+\section{Ventajas y Limitaciones}
+\begin{frame}
+\frametitle{Ventajas del Coherence Score C_v}
+
+    
+- Combina múltiples enfoques estadísticos.
+    
+- Correlaciona bien con evaluación humana.
+    
+- Fácil de interpretar e implementar.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Limitaciones}
+
+    
+- No garantiza perfectamente la relevancia semántica.
+    
+- Puede verse afectado por ruido en el texto.
+    
+- Es sensible al preprocesamiento.
+
+\end{frame}
+
+\section{Conclusión}
+\begin{frame}
+\frametitle{Conclusión}
+
+    
+- El Coherence Score C_v es una herramienta clave para evaluar modelos de topic modeling.
+    
+- En R, se puede usar `topicmodels` y funciones personalizadas para calcularlo.
+    
+- La Perplejidad complementa esta evaluación desde una perspectiva estadística.
+    
+- Ambas métricas ayudan a elegir el número óptimo de temas.
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Referencias}
+\footnotesize
+\begin{thebibliography}{9}
+\bibitem{roder2015}
+M. Röder, A. Both, A. Hinze.
+\textit{Exploring the Space of Topic Coherence Measures}.
+In Proceedings of WSDM, 2015.
+
+\bibitem{topicmodels}
+B. Grün and K. Hornik (2011).
+\textit{topicmodels: An R Package for Fitting Topic Models}.
+Journal of Statistical Software, 40(13), 1–30.
+
+\bibitem{R-LDAvis}
+Chase, D. M. (2015). LDAvis: A Method for Visualizing and Interpreting Topics.
+\end{thebibliography}
+\end{frame}
+
+\end{document}
