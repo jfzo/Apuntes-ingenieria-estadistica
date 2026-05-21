@@ -15,7 +15,6 @@ section-titles: false
 toc: true
 toc-title: Estructura de la Presentación
 graphics: true
-imagepath: ./imgs
 linespread: 1.2
 ---
 

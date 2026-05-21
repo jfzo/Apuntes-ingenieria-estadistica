@@ -10,11 +10,15 @@ innertheme: circles
 urlcolor: blue
 linkstyle: bold
 aspectratio: 169
-titlegraphic: logosAzul.png
-logo: logoAzul.png
 section-titles: false
 toc: true
 toc-title: Estructura de la Presentación
+titlegraphic: logosAzul.png
+logo: logoAzul.png
+section-titles: false
+graphics: true
+imagepath: ./imgs
+linespread: 1.2
 ---
 
 

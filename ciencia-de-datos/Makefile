@@ -11,13 +11,17 @@ MD_FILES := $(shell find $(SRC_DIR) -type f -name "*.md" ! -path "$(OUT_DIR)/*")
 PDF_FILES := $(patsubst $(SRC_DIR)/%.md,$(OUT_DIR)/pdf/%.pdf,$(MD_FILES))
 
 
+
 pdf: $(PDF_FILES)
 	@echo "✓ PDF conversion done"
 
 # PDF generation rule
 $(OUT_DIR)/pdf/%.pdf: $(SRC_DIR)/%.md
 	@mkdir -p $(dir $@)
-	pandoc $(PANDOC_OPTIONS) $(PANDOC_XELATEX_PDF_OPTIONS) -o $@ $<
+	pandoc $(PANDOC_OPTIONS) $(PANDOC_XELATEX_PDF_OPTIONS) -o $@ -V graphicspath="$(<D)/imgs" $<
 
 
 all: pdf 
+
+
+

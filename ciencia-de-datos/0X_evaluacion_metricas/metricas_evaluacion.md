@@ -15,6 +15,9 @@ logo: logoAzul.png
 section-titles: false
 toc: false
 toc-title: Estructura de la Presentación
+graphics: true
+imagepath: ./imgs
+linespread: 1.2
 ---
 
 

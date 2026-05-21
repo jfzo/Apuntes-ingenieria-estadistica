@@ -16,6 +16,9 @@ section-titles: false
 toc: true
 toc-title: Estructura de la Presentación
 classoption: t 
+graphics: true
+imagepath: ./imgs
+linespread: 1.2
 ---
 
 # Aproximaciones Low-Rank para Clustering
