@@ -2,9 +2,9 @@
 title: EST-297
 subtitle: Métodos de Clustering basados en Densidad
 author: Juan Zamora O.
-date: Junio, 2024.
+date: Ciencia de Datos
 fonttheme: "professionalfonts"
-fontsize: 11pt
+fontsize: 12pt
 theme: default
 innertheme: circles
 urlcolor: blue
@@ -15,9 +15,7 @@ toc: true
 toc-title: Estructura de la Presentación
 titlegraphic: logosAzul.png
 logo: logoAzul.png
-section-titles: false
 graphics: true
-imagepath: ./imgs
 linespread: 1.2
 ---
 
