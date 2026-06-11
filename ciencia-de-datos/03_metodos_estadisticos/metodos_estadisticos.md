@@ -29,7 +29,7 @@ linespread: 1.2
 $$p(x)=\sum_{k=1}^{K}\alpha_k \mathcal{N}(x;\mu_k,\sigma_k^2), \mbox{ con }\alpha_i\geq 0, \ \sum_k \alpha_k=1$$
 
 \begin{tikzpicture}[remember picture, overlay]
-\node[yshift=2.0cm, xshift=0cm] at (current page.south) 
+\node[yshift=1.8cm, xshift=0cm] at (current page.south) 
 {
     \includegraphics[width=0.45\textwidth]{mezcla_gausianas.jpg}
 };
@@ -77,7 +77,7 @@ La variable latente a calcular corresponde a la pertenencia de cada uno de los $
 
 Sea $Z_i=k$ la variable que indica que $x_i$ pertenece al componente $k$.  Luego, $$p(Z_i=k|x_i;\theta)=\frac{p(x_i|Z_i=k;\theta)p(Z_i=k;\theta)}{p(x_i;\theta)}=\frac{\alpha_k\cdot p(x_i|Z_i=k;\theta)}{\sum_{j=1}^{K} \alpha_j p(x_i|Z_i=j;\theta)}$$
 
-Considerando que $p(x_i|Z_i=k;\theta)=\mathcal{N}(x_i;\underbar{\mu}_k,\Sigma_k)$, $$p(Z_i=k|x_i;\theta)=\frac{}{\sum_{j=1}^{K} \alpha_j \mathcal{N}(x_i;\underbar{\mu}_k,\Sigma_k)}=\gamma(z_{ik})$$
+Considerando que $p(x_i|Z_i=k;\theta)=\mathcal{N}(x_i;\underbar{\mu}_k,\Sigma_k)$, $$p(Z_i=k|x_i;\theta)=\frac{\alpha_k\cdot \mathcal{N}(x_i;\underbar{\mu}_k,\Sigma_k)}{\sum_{j=1}^{K} \alpha_j \mathcal{N}(x_i;\underbar{\mu}_k,\Sigma_k)}=\gamma(z_{ik})$$
 
 $\gamma(z_{ik})$ se denomina responsabilidad del componente $k$ por la observación $i$
 
@@ -134,16 +134,19 @@ $$\alpha_k^{*}=\frac{\sum_{i=1}^{n}\gamma(z_{ik})}{n}$$
 
 
 ## Ejemplo
-### Datos de entrada **Datos utilizados (1D):**
+### Datos de entrada 
+
+**Datos utilizados (1D):**
+
 $$X = \{0.1, 0.2, 0.6, 1.2, 0.8, 1.0, 1.1, 0.9, 1.2,1.3, 2.0, 1.8, 2.7,3.2, 3.5,$$
 $$ 3.6, 3.1, 4.1, 5.0,5.1, 4.9, 5.2, 5.3, 5.9, 6.2, 5.4\}$$ 
 
 **Visualización (histograma):**
 
 \begin{tikzpicture}[remember picture, overlay]
-\node[yshift=-1.9cm, xshift=1cm] at (current page.center) 
+\node[yshift=-2.3cm, xshift=1cm] at (current page.center) 
 {
-    \includegraphics[width=0.55\textwidth]{histograma.png}
+    \includegraphics[width=0.45\textwidth]{histograma.png}
 };
 \end{tikzpicture} 
 
@@ -155,7 +158,7 @@ $$ 3.6, 3.1, 4.1, 5.0,5.1, 4.9, 5.2, 5.3, 5.9, 6.2, 5.4\}$$
   $1.8$).
 
 - Se inicializan las varianzas y pesos:
-  $$\mu_1 = 3.6,\quad \mu_2 = 1.8,\quad \sigma_1^2 = \sigma_2^2 = \text{var}(X),\quad \pi_1 = \pi_2 = 0.5$$
+  $$\mu_1 = 3.6,\quad \mu_2 = 1.8,\quad \sigma_1^2 = \sigma_2^2 = \text{var}(X),\quad \alpha_1 = \pi_2 = 0.5$$
 
 
 ---
@@ -163,7 +166,7 @@ $$ 3.6, 3.1, 4.1, 5.0,5.1, 4.9, 5.2, 5.3, 5.9, 6.2, 5.4\}$$
 ### Paso 1: E-step
 
 - Para cada punto $x_i$, calculamos:
-  $$\gamma_{ik} = \frac{\pi_k \cdot \mathcal{N}(x_i | \mu_k, \sigma_k^2)}{\sum_{j=1}^K \pi_j \cdot \mathcal{N}(x_i | \mu_j, \sigma_j^2)}$$
+  $$\gamma_{ik} = \frac{\alpha_k \cdot \mathcal{N}(x_i | \mu_k, \sigma_k^2)}{\sum_{j=1}^K \alpha_j \cdot \mathcal{N}(x_i | \mu_j, \sigma_j^2)}$$
 
 - Esto nos da una matriz $N \times K$ de responsabilidades.
 
@@ -175,7 +178,7 @@ $$ 3.6, 3.1, 4.1, 5.0,5.1, 4.9, 5.2, 5.3, 5.9, 6.2, 5.4\}$$
   $$N_k = \sum_{i=1}^N \gamma_{ik}$$
   $$\mu_k = \frac{1}{N_k} \sum_{i=1}^N \gamma_{ik} x_i$$
   $$\sigma_k^2 = \frac{1}{N_k} \sum_{i=1}^N \gamma_{ik} (x_i - \mu_k)^2$$
-  $$\pi_k = \frac{N_k}{N}$$
+  $$\alpha_k = \frac{N_k}{N}$$
 
 
 ---
@@ -198,9 +201,9 @@ $$ 3.6, 3.1, 4.1, 5.0,5.1, 4.9, 5.2, 5.3, 5.9, 6.2, 5.4\}$$
 
 
 \begin{tikzpicture}[remember picture, overlay]
-\node[yshift=-1.8cm, xshift=0cm] at (current page.center) 
+\node[yshift=-1.6cm, xshift=0cm] at (current page.center) 
 {
-    \includegraphics[width=0.65\textwidth]{gmm_final.png}
+    \includegraphics[width=0.55\textwidth]{gmm_final.png}
 };
 \end{tikzpicture} 
 
