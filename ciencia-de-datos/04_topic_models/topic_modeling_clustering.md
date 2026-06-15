@@ -1,8 +1,8 @@
 ---
 title: EST-297
-subtitle: Fundamentos de Ciencia de Datos
+subtitle: Modelos de Clustering para Texto
 author: Juan Zamora O.
-date: Junio, 2024.
+date: Ciencia de Datos
 fonttheme: "professionalfonts"
 fontsize: 11pt
 theme: default
@@ -14,8 +14,8 @@ titlegraphic: logosAzul.png
 logo: logoAzul.png
 section-titles: false
 toc: true
-toc-title: Estructura de la Presentación
 classoption: t 
+toc-title: Estructura de la Presentación
 graphics: true
 imagepath: ./imgs
 linespread: 1.2
@@ -23,10 +23,11 @@ linespread: 1.2
 
 # Aproximaciones Low-Rank para Clustering
 
-Una matriz$X$de rango$r$admite una factorización de la forma$$X=BC^T, \ B\in\mathbf{R}^{m\times r}, \ C\in\mathbf{R}^{n\times r}$$
+Una matriz $X$ de rango $r$ admite una factorización de la forma 
+$$X=BC^T, \ B\in\mathbf{R}^{m\times r}, \ C\in\mathbf{R}^{n\times r}$$
 
 
-$X$es aproximada con bajo rango (low-rank) cuando$rango(X) << \min(m,n)$
+$X$ es aproximada con bajo rango (low-rank) cuando $rango(X) << \min(m,n)$
 
 \begin{tikzpicture}[remember picture, overlay]
 \node[yshift=2.7cm, xshift=0cm] at (current page.south) 
@@ -37,17 +38,17 @@ $X$es aproximada con bajo rango (low-rank) cuando$rango(X) << \min(m,n)$
 
 # (NMF) Factorización de matrices no-negativas
 
-- Grupo de algoritmos de de análisis multivariado y algebra lineal donde una matriz$X$es factorizada en dos matrices$W$y$H$
-- Cada columna de$X$es aproximada por una combinación lineal no-negativa de las columnas de$W$, donde los coeficientes de mezcla corresponden a las columnas de$H$
+- Grupo de algoritmos de de análisis multivariado y algebra lineal donde una matriz $X$ es factorizada en dos matrices $W$ y $H$
+- Cada columna de $X$ es aproximada por una combinación lineal no-negativa de las columnas de $W$, donde los coeficientes de mezcla corresponden a las columnas de $H$
 - Las tres matrices tienen elementos no-negativos
 - Usado en sistemas recomendadores, procesamiento de audio, agrupamiento de texto.
 
 # NMF
 
-- Dada  una matriz no-negativa$X\in \mathbf{R}^{m\times n}$y un$k\in\mathbf{Z}<< \min(m,n)$
-- Encuentra matrices no-negativas$W\in \mathbf{R}^{m\times k}$y$H\in \mathbf{R}^{k\times n}$tales que minimizan$$\lVert X-WH \rVert^{2}_{F}=\sum_i\sum_j(X_{ij}-[WH]_{ij})^2$$
+- Dada  una matriz no-negativa $X\in \mathbf{R}^{m\times n}$ y un $k\in\mathbf{Z}<< \min(m,n)$ 
+- Encuentra matrices no-negativas $W\in \mathbf{R}^{m\times k}$ y $H\in \mathbf{R}^{k\times n}$  tales que minimizan $$\lVert X-WH \rVert^{2}_{F}=\sum_i\sum_j(X_{ij}-[WH]_{ij})^2$$
 
-*$W$: base para un espacio$k$-dimensional, la$i$-ésima columna de H: corresponde a representación k-dim de$i$-ésima columna de$X$
+* $W$: base para un espacio $k$-dimensional, la $i$-ésima columna de H: corresponde a representación k-dim de $i$-ésima columna de $X$
 
 
 ## Método de Lee y Seung (2001)
@@ -304,7 +305,7 @@ $$
 # Aplicación de NMF para extracción de tópicos en texto
 
 - Se construye matriz de terminos vs documentos
-- Se aplica NMF para obtener$W$y$H$
+- Se aplica NMF para obtener $W$ y $H$
 
 
 \begin{tikzpicture}[remember picture, overlay]
@@ -372,10 +373,10 @@ Referencias: [Blei et al. 2003](http://www.jmlr.org/papers/volume3/blei03a/blei0
 
 ---
 
-### *Ejemplo* de las palabras más representativas en$11$tópicos 
+### *Ejemplo* de las palabras más representativas en $11$ tópicos 
 
 \begin{tikzpicture}[remember picture, overlay]
-\node[yshift=3.4cm, xshift=0cm] at (current page.south)
+\node[yshift=4.4cm, xshift=0cm] at (current page.south)
 {
     \includegraphics[width=1.05\textwidth]{topics_top10palabras.jpeg}
 };
@@ -384,7 +385,7 @@ Referencias: [Blei et al. 2003](http://www.jmlr.org/papers/volume3/blei03a/blei0
 ---
 
 \begin{tikzpicture}[remember picture, overlay]
-\node[yshift=4cm, xshift=0cm] at (current page.south)
+\node[yshift=5cm, xshift=0cm] at (current page.south)
 {
     \includegraphics[width=0.9\textwidth]{heat_topics.png}
 };
@@ -399,8 +400,12 @@ Referencias: [Blei et al. 2003](http://www.jmlr.org/papers/volume3/blei03a/blei0
 * Los tópicos estimados tienen un significado identificado por el/la analista
 
 * Para encontrar la cantidad de tópicos se utiliza una medida denominada *Perplexity*
+
+---
+
+* Para encontrar la cantidad de tópicos se utiliza una medida denominada *Perplexity*
     - Se calcula tomando la log-verosimilitud de los documentos con los tópicos resultantes
     - Que tanto es posible reproducir la composición de los documentos dados los tópicos
-    - El bjetivo es escoger el número de tópicos que minimiza la Perplexity 
+    - El objetivo es escoger el número de tópicos que minimiza la Perplexity 
 
 

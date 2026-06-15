@@ -2,7 +2,7 @@
 title: EST-297
 subtitle: Enfoques estadísticos de Clustering
 author: Juan Zamora O.
-date: Mezcla de Gausianas
+date: Ciencia de Datos
 fonttheme: "professionalfonts"
 fontsize: 11pt
 theme: default
