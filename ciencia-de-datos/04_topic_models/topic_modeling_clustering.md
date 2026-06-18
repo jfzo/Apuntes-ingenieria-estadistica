@@ -399,13 +399,149 @@ Referencias: [Blei et al. 2003](http://www.jmlr.org/papers/volume3/blei03a/blei0
 
 * Los tópicos estimados tienen un significado identificado por el/la analista
 
-* Para encontrar la cantidad de tópicos se utiliza una medida denominada *Perplexity*
+
+## Evaluación de modelos LDA
+ 
+- Evaluar la calidad de los tópicos descubiertos no es trivial
+    - **No existe** una "respuesta correcta" contra la cual comparar.
+ 
+\vspace{0.3cm}
+
+Existen dos enfoques complementarios:
+ 
+- **Perplexity**: métrica estadística que mide qué tan bien el modelo predice datos no vistos (ajuste probabilístico).
+    - Blei, Ng & Jordan (2003) 
+- **Coherence**: métrica semántica que mide si las palabras de un tópico tienen sentido conjunto para un humano.
+    - Newman et al. (2010) y Röder et al. (2015) posteriormente mostraron que perplexity no siempre se correlaciona con interpretabilidad humana.
+ 
+---
+ 
+### Perplexity
+ 
+Mide la capacidad del modelo de predecir un conjunto de documentos no usados en el entrenamiento (*held-out*). Se basa en la *log-verosimilitud* del modelo.
+ 
+**(Blei, Ng & Jordan, 2003):**
+ 
+$$
+\text{Perplexity}(D_{test}) = \exp\left(-\frac{\sum_{d=1}^{M} \log p(w_d)}{\sum_{d=1}^{M} N_d}\right)
+$$
+ 
+donde:
+
+- $D_{test}$ = conjunto de documentos de prueba (*held-out*), de tamaño $M$
+- $M$ = número total de documentos en $D_{test}$
+- $w_d$ = vector de palabras (todos los tokens) del documento $d$
+- $N_d$ = número de palabras (tokens) en el documento $d$
+- $p(w_d)$ = probabilidad del documento $d$, marginalizando sobre tópicos: $p(w_d) = \prod_{i=1}^{N_d} \sum_{k=1}^{K} p(w_{d,i} \mid z_{d,i}=k) \, p(z_{d,i}=k \mid d)$
+
 
 ---
 
-* Para encontrar la cantidad de tópicos se utiliza una medida denominada *Perplexity*
-    - Se calcula tomando la log-verosimilitud de los documentos con los tópicos resultantes
-    - Que tanto es posible reproducir la composición de los documentos dados los tópicos
-    - El objetivo es escoger el número de tópicos que minimiza la Perplexity 
+**Acerca de la notación**: $M$ aparece en ambas sumatorias (numerador y denominador) 
+
+— El numerador es la log-verosimilitud total del corpus de prueba; el denominador es el número total de tokens en ese mismo corpus.
+ 
+**Interpretación:**
+
+- Rango: $(0, \infty)$
+- **Menor perplexity = mejor modelo** (el modelo está menos "sorprendido" por datos nuevos)
+- Perplexity decreciente indica mejor ajuste estadístico del modelo a los datos
+    - No garantiza tópicos interpretables
+ 
+---
+ 
+### Coherence 
+ 
+Mide si las palabras top de un tópico co-ocurren de manera consistente en los documentos, capturando la interpretabilidad semántica.
+ 
+**UMass Coherence, Mimno et al. 2011:**
+ 
+$$
+C_{UMass}(t) = \sum_{i=2}^{N} \sum_{j=1}^{i-1} \log \frac{D(w_i, w_j) + 1}{D(w_j)}
+$$
+ 
+donde:
+
+- $w_1, ..., w_N$ = las $N$ palabras más probables del tópico $t$ (ordenadas por relevancia)
+- $D(w_j)$ = número de documentos donde aparece la palabra $w_j$
+- $D(w_i, w_j)$ = número de documentos donde co-ocurren $w_i$ y $w_j$
+- El $+1$ es un suavizado (Laplace) para evitar $\log(0)$
+
+---
+
+**Variante más usada en la práctica — Coherence $C_v$ (Röder et al., 2015):**
+
+- Combina similitud coseno de vectores *Normalized Pointwise Mutual Information* con una ventana deslizante de co-ocurrencia
+- Muestra mejor correlación con juicio humano que UMass.
+ 
+**Interpretación:**
+
+- **Mayor coherence = tópicos más interpretables** (palabras que tienden a aparecer juntas)
+- Valores de $C_v$ suelen ubicarse entre 0.3 y 0.7 en corpus reales
+- Valores >0.5 son considerados aceptables
+
+---
+
+Los rangos varían según la métrica:
+ 
+| Métrica | Rango | Interpretación |
+|---------|-------|----------------|
+| **$C_v$ (histórica)** | $[0, 1]$ | Mayor = mejor; típicamente 0.4–0.7; **NO recomendada** |
+| **$C_{UMass}$** | $(-\infty, 0]$ | Mayor (menos negativo) = mejor; $-2$ a $-10$ típico |
+| **$C_{UCI}$ (PMI)** | $(-\infty, +\infty)$ | Mayor = mejor; típicamente $-1$ a $+2$ |
+| **$C_{NPMI}$ (normalizado)** | $[-1, +1]$ | Mayor = mejor; $0.0$ a $0.2$ común en LDA |
+ 
+
+
+---
+ 
+### Validación y selección de modelos
+ 
+**Flujo de trabajo recomendado:**
+ 
+1. **Entrenar múltiples modelos LDA** variando el número de tópicos $k$
+2. **Calcular perplexity** sobre un conjunto *held-out* para cada $k$, se grafica curva y busca el "codo" donde deja de mejorar sustancialmente
+3. **Calcular coherence** ($C_v$ o UMass) para cada $k$, buscar el máximo o un punto estable alto
+4. **Triangular ambas métricas**: rara vez coinciden exactamente en el mismo $k$, priorizae *coherence* para interpretabilidad
+5. **Validación humana final**: inspeccionar manualmente las top-X palabras de los tópicos del modelo  candidato antes de decidir
+
+---
+
+
+### Advertencia respecto a la cantidad de tópicos
+
+- Más tópicos $=$ mejor ajuste estadístico **pero** tópicos redundantes o fragmentados
+
+- *Chang et al. (2009)* demostraron que perplexity puede mejorar mientras la interpretabilidad humana empeora
+    - Coherence se considera el estándar en la práctica
+
+---
+
+**Ejemplo en R (paquete `topicmodels` + `ldatuning`):**
+ 
+```r
+library(ldatuning)
+ 
+# CaoJuan2009 y Griffiths2004 son métricas similares a Coherence
+resultado <- FindTopicsNumber(
+  dtm,
+  topics = seq(2, 15, by = 1),
+  metrics = c("Griffiths2004", "CaoJuan2009", "Deveaud2014"),
+  method = "Gibbs",
+  control = list(seed = 42, iter = 500),
+  mc.cores = 2L
+)
+
+FindTopicsNumber_plot(resultado)
+```
+
+ 
+## Referencias
+ 
+- **Blei, D. M., Ng, A. Y., & Jordan, M. I. (2003).** "Latent Dirichlet Allocation." *Journal of Machine Learning Research*, 3, 993–1022.
+- **Chang, J., Gerrish, S., Wang, C., Boyd-Graber, J., & Blei, D. (2009).** "Reading tea leaves: How humans interpret topic models." *Advances in Neural Information Processing Systems*, 22.
+- **Mimno, D., Wallach, H., Talley, E., Leenders, M., & McCallum, A. (2011).** "Optimizing semantic coherence in topic models." *Proceedings of EMNLP*, 262–272.
+- **Röder, M., Both, A., & Hinneburg, A. (2015).** "Exploring the space of topic coherence measures." *Proceedings of WSDM*, 399–408.
+- **Newman, D., Lau, J. H., Grieser, K., & Baldwin, T. (2010).** "Automatic evaluation of topic coherence." *Proceedings of NAACL*, 100–108.
 
 
