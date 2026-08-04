@@ -2,7 +2,7 @@
 title: EST-1141
 subtitle: Lenguajes de Programación
 author: Juan Zamora O.
-date: Agosto, 2024.
+date: Introducción al lenguaje Haskell
 fonttheme: "professionalfonts"
 fontsize: 11pt
 theme: default
@@ -12,7 +12,6 @@ linkstyle: bold
 aspectratio: 169
 titlegraphic: logosAzul.png
 logo: logoAzul.png
-section-titles: false
 toc: true
 toc-title: Estructura
 section-titles: false
